@@ -20,9 +20,6 @@ public class DisplayTicket  extends AppCompatActivity
         myToast.show();
 
 
-
-
-
         Button myBtn = findViewById(R.id.displayTicketBtn);
         myBtn.setOnClickListener(new View.OnClickListener() {
 
