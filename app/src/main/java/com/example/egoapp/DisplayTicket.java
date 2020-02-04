@@ -19,6 +19,7 @@ public class DisplayTicket  extends AppCompatActivity
         Toast myToast = Toast.makeText(getApplicationContext(), "we are in layout 2 and the new value is " + ShareData.something + " and " + ShareData.something2, Toast.LENGTH_SHORT);
         myToast.show();
 
+
         Button myBtn = findViewById(R.id.displayTicketBtn);
         myBtn.setOnClickListener(new View.OnClickListener() {
 
