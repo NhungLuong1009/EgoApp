@@ -21,6 +21,8 @@ public class DisplayTicket  extends AppCompatActivity
 
 
 
+
+
         Button myBtn = findViewById(R.id.displayTicketBtn);
         myBtn.setOnClickListener(new View.OnClickListener() {
 
