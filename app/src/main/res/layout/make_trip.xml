@@ -1,25 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MakeTrip">
 
-    <LinearLayout
-        android:layout_width="418dp"
-        android:layout_height="725dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="7dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="2"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-82dp">
+
+        <TableRow>
+            <TextView
+                android:inputType="textPersonName"
+                android:text="MAKE TRIP" />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/startCity"
+                android:inputType="textPersonName"
+                android:text="Start:" />
+
+            <Spinner
+                android:id="@+id/listStartCity"
+                 />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/endCity"
+                android:inputType="textPersonName"
+                android:text="End:" />
+
+            <Spinner
+                android:id="@+id/listEndCity"
+                 />
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/in_date_textview"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Date:" />
+
+            <EditText
+                android:id="@+id/in_date"
+                android:layout_width="208dp" />
+
+            <Button
+                android:text="SELECT DATE"
+                android:id="@+id/btn_date" />
+
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/in_time_textview"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Time:" />
+
+            <EditText
+                android:id="@+id/in_time"
+                android:layout_width="208dp" />
+
+            <Button
+                android:text="SELECT TIME"
+                android:id="@+id/btn_time" />
+
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/passenger_textview"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:text="No. Passenger:" />
+
+            <EditText
+                android:id="@+id/passenger_edittext"
+                android:layout_width="208dp" />
+
+
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/roundtrip_textview"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Round trip:" />
+            <RadioGroup
+                android:id="@+id/roundtrip_radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioYes"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="yes"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/radioNo"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="no" />
+
+            </RadioGroup>
+
+
+
+        </TableRow>
+
 
         <Button
             android:id="@+id/makeTripBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/dodgerblue"
-            android:text="Confirm" />
-
-    </LinearLayout>
+            android:layout_height="78dp"
+            android:text="Confirm"
+            android:textColor="@color/dodgerblue" />
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
