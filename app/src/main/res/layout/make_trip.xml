@@ -9,33 +9,48 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:stretchColumns="2"
+        android:stretchColumns="3"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-82dp">
 
-        <TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="200dp">
+
             <TextView
+                android:layout_gravity="center"
+                android:layout_span="3"
+                android:gravity="center"
                 android:inputType="textPersonName"
-                android:text="MAKE TRIP" />
+                android:text="MAKE YOUR TRIP"
+                android:textSize="20sp" />
 
         </TableRow>
 
         <TableRow>
+
             <TextView
                 android:id="@+id/startCity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="textPersonName"
-                android:text="Start:" />
+                android:text="Start:"
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/listStartCity"
-                 />
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow>
+
             <TextView
                 android:id="@+id/endCity"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:inputType="textPersonName"
-                android:text="End:" />
+                android:text="End:"
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/listEndCity"
@@ -48,14 +63,15 @@
                 android:id="@+id/in_date_textview"
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Date:" />
+                android:text="Date:"
+                android:textSize="20sp"/>
 
             <EditText
                 android:id="@+id/in_date"
                 android:layout_width="208dp" />
 
             <Button
-                android:text="SELECT DATE"
+                android:text="SELECT"
                 android:id="@+id/btn_date" />
 
         </TableRow>
@@ -66,14 +82,15 @@
                 android:id="@+id/in_time_textview"
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Time:" />
+                android:text="Time:"
+                android:textSize="20sp"/>
 
             <EditText
                 android:id="@+id/in_time"
                 android:layout_width="208dp" />
 
             <Button
-                android:text="SELECT TIME"
+                android:text="SELECT"
                 android:id="@+id/btn_time" />
 
         </TableRow>
@@ -84,7 +101,8 @@
                 android:id="@+id/passenger_textview"
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
-                android:text="No. Passenger:" />
+                android:text="No. Passenger:"
+                android:textSize="20sp"/>
 
             <EditText
                 android:id="@+id/passenger_edittext"
@@ -99,7 +117,8 @@
                 android:id="@+id/roundtrip_textview"
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Round trip:" />
+                android:text="Round trip:"
+                android:textSize="20sp"/>
             <RadioGroup
                 android:id="@+id/roundtrip_radioGroup"
                 android:layout_width="wrap_content"

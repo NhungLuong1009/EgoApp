@@ -35,8 +35,8 @@ public class MakeTrip  extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.make_trip);
 
-//        Toast myToast = Toast.makeText(getApplicationContext(), "we are in layout 2 and the new value is " + ShareData.something + " and " + ShareData.something2, Toast.LENGTH_SHORT);
-//        myToast.show();
+     Toast myToast = Toast.makeText(getApplicationContext(), "we are in layout 2 and the new value is " + ShareData.tripNumberOfPassenger + " and " + ShareData.something2, Toast.LENGTH_SHORT);
+      myToast.show();
 
         // Start city spinner
         final Spinner spinner1 = (Spinner) findViewById(R.id.listStartCity);

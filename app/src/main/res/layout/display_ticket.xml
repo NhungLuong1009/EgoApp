@@ -1,24 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DisplayTicket">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:collapseColumns="2"
+        tools:ignore="MissingConstraints">
 
-    <LinearLayout
-        android:layout_width="418dp"
-        android:layout_height="725dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="7dp">
 
-        <Button
-            android:id="@+id/displayTicketBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/dodgerblue"
-            android:text="FINISH" />
-    </LinearLayout>
+        <!-- first row of the table layout-->
+        <TableRow android:layout_span="2">
+            <TextView
+                android:id="@+id/displayTrip"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:text="Your Trip:"
+                android:textSize="25sp"
+                android:textColor="#013220"/>
 
+        </TableRow>
+        <TableRow
+            android:id="@+id/row1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/dateToGo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:text="Go on "
+                android:textSize="20sp"
+                android:textColor="#0e1111"/>
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/timeToGo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:text="Time "
+                android:textSize="20sp"
+                android:textColor="#0e1111" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/startCity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:text="From "
+                android:textSize="20sp"
+                android:textColor="#0e1111" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/endCity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:text="To "
+                android:textSize="20sp"
+                android:textColor="#0e1111"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_span="2"
+            android:layout_height="200dp">
+        <TextView
+            android:id="@+id/numOfPassenger"
+            android:inputType="textPersonName"
+            android:text="NO. Passenger:"
+            android:textSize="25sp"
+            android:textColor="#013220"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/displayTicketBtn"
+        android:layout_width="404dp"
+        android:layout_height="100dp"
+        android:shadowColor="#008000"
+        android:text="FINISH"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="175dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
