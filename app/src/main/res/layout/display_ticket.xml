@@ -1,24 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DisplayTicket">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:collapseColumns="2"
+        tools:ignore="MissingConstraints">
 
-    <LinearLayout
-        android:layout_width="418dp"
-        android:layout_height="725dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="7dp">
+
+
+        <!-- first row of the table layout-->
+        <TableRow android:layout_span="2">
+
+
+
+            <TextView
+                android:id="@+id/displayTrip"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                android:text="Your Trip:"
+                android:textColor="#013220"
+                android:textSize="25dp"
+                android:gravity="center"/>
+
+
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/row1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/dateToGo"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                android:text="Go on "
+                android:textSize="20sp"
+                android:textColor="#0e1111"/>
+
+
+
+            <TextView
+                android:id="@+id/showedDate"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+
+
+
+        </TableRow>
+
+
+
+        <TableRow>
+            <TextView
+                android:id="@+id/timeToGo"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                android:text="Time "
+                android:textSize="20sp"
+                android:textColor="#0e1111" />
+            <TextView
+                android:id="@+id/showedTime"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+        </TableRow>
+
+
+
+        <TableRow>
+            <TextView
+                android:id="@+id/startCity"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                android:text="From "
+                android:textSize="20sp"
+                android:textColor="#0e1111" />
+            <TextView
+                android:id="@+id/showedStartCity"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+        </TableRow>
+
+
+
+        <TableRow>
+            <TextView
+                android:id="@+id/endCity"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                android:text="To "
+                android:textSize="20sp"
+                android:textColor="#0e1111"/>
+            <TextView
+                android:id="@+id/showedEndCity"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+        </TableRow>
+
+
+
+
+
+        <TableRow android:layout_span="2">
+
+
+
+            <TextView
+                android:id="@+id/displayTicket"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                android:text="Your Ticket:"
+                android:textColor="#013220"
+                android:textSize="25dp"
+                android:gravity="center"/>
+
+
+
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_span="2"
+            android:layout_height="200dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/amountPerCustomer"
+                android:inputType="textPersonName"
+                android:text="Amount Per :"
+                android:textSize="20sp"
+                android:textColor="#013220"/>
+            <TextView
+                android:id="@+id/showedAmount"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_span="2"
+            android:layout_height="200dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/numOfPassenger"
+                android:inputType="textPersonName"
+                android:text="No.Passenger :"
+                android:textSize="20sp"
+                android:textColor="#013220"/>
+            <TextView
+                android:id="@+id/showedNumberOfPassenger"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_span="2"
+            android:layout_height="200dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/tax"
+                android:inputType="textPersonName"
+                android:text="Tax :"
+                android:textSize="20sp"
+                android:textColor="#013220"/>
+            <TextView
+                android:id="@+id/showedTax"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_span="2"
+            android:layout_height="200dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/totalAmount"
+                android:inputType="textPersonName"
+                android:text="Total Amount :"
+                android:textSize="20sp"
+                android:textColor="#013220"/>
+            <TextView
+                android:id="@+id/showedTotalAmount"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+        </TableRow>
+
+
 
         <Button
             android:id="@+id/displayTicketBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/dodgerblue"
-            android:text="FINISH" />
-    </LinearLayout>
+            android:layout_height="78dp"
+            android:background="#008000"
+            android:text="FINISH"
+            android:textColor="#FFFFFF" />
+    </TableLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
