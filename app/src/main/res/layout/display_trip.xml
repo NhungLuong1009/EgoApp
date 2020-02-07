@@ -12,29 +12,33 @@
         android:stretchColumns="2"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-82dp">
+
         <TableRow>
+
             <TextView
-                android:inputType="textPersonName"
-                android:text="MAKE TRIP" />
+                android:layout_width="398dp"
+                android:layout_span="2"
+                android:gravity="center"
+                android:text="YOUR TRIP"
+                android:layout_height="80dp"
+                android:textColor="#013220"
+                android:textSize="25sp" />
 
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="49dp">
 
             <TextView
                 android:id="@+id/startCityLabel"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:inputType="textPersonName"
                 android:text="Start City:"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="#013220"/>
 
-            <!--
-            <EditText
-                android:id="@+id/startCity"
-                android:layout_width="250dp"
-                android:layout_height="match_parent" />
-            -->
 
             <TextView
                 android:id="@+id/startCity"
@@ -45,57 +49,50 @@
 
         <TableRow>
             <TextView
-                android:layout_width="30dp"
+                android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:id="@+id/endCityLabel"
                 android:inputType="textPersonName"
                 android:textSize="20sp"
-                android:text="End City:" />
+                android:text="End City:"
+                android:textColor="#013220"/>
 
             <TextView
                 android:id="@+id/endCity"
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
                 android:textSize="20sp" />
-            <!--
-            <EditText
-                android:id="@+id/endCity"
-                android:layout_width="250dp" />
-            -->
+
         </TableRow>
 
         <TableRow android:layout_width="match_parent">
 
             <TextView
-                android:layout_width="30dp"
+                android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:id="@+id/in_selected_date"
                 android:inputType="textPersonName"
                 android:textSize="20sp"
-                android:text="Selected Date:" />
+                android:text="Selected Date:"
+                android:textColor="#013220"/>
 
             <TextView
                 android:id="@+id/inSelectedDate"
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
                 android:textSize="20sp" />
-
-            <!--
-            <EditText
-                android:id="@+id/inSelectedDate"
-                android:layout_width="250dp" />
-            -->
         </TableRow>
 
         <TableRow android:layout_width="match_parent">
 
             <TextView
-                android:layout_width="30dp"
+                android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:id="@+id/in_selected_time"
                 android:inputType="textPersonName"
                 android:textSize="20sp"
-                android:text="Selected Time:" />
+                android:text="Selected Time:"
+                android:textColor="#013220"/>
 
             <TextView
                 android:id="@+id/inSelectedTime"
@@ -114,31 +111,32 @@
 
             <TextView
                 android:id="@+id/in_selected_passenger"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:inputType="textPersonName"
                 android:textSize="20sp"
-                android:text="No. Passenger:" />
+                android:text="No. Passenger:"
+                android:textColor="#013220"/>
 
             <TextView
                 android:id="@+id/inSelectedPassenger"
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
                 android:textSize="20sp" />
-            <!--
-            <EditText
-                android:id="@+id/inSelectedPassenger"
-                android:layout_width="250dp" />
-            -->
         </TableRow>
 
-        <TableRow android:layout_width="match_parent">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="47dp">
 
             <TextView
                 android:id="@+id/roundtrip_textview"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:inputType="textPersonName"
+                android:text="Round trip:"
                 android:textSize="20sp"
-                android:text="Round trip:" />
+                android:textColor="#013220"/>
 
             <TextView
                 android:id="@+id/inSelectedRoundTrip"
@@ -151,8 +149,9 @@
         <Button
             android:id="@+id/displayTripBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/dodgerblue"
+            android:layout_height="78dp"
+            android:background="#008000"
+            android:textColor="#ffffff"
             android:text="DISPLAY TICKET" />
 
     </TableLayout>
