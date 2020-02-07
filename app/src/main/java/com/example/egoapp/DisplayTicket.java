@@ -6,6 +6,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Map;
+
 public class DisplayTicket  extends AppCompatActivity implements View.OnClickListener
 {
 
@@ -28,7 +31,12 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
         TextView tax = findViewById(R.id.showedTax);
         TextView amount = findViewById(R.id.showedAmount);
 
-        amount.setText("10");
+        // get PriceInfo with startCity, endCity
+        Map<PriceVO, String> hMap = PriceMetaData.setPriceMeta();
+        //int price = PriceMetaData.getPriceInfo(hMap,"Waterloo", "Ottawa");
+        int price = PriceMetaData.getPriceInfo(hMap, startCity.getText().toString().trim(), endCity.getText().toString().trim());
+        //int price = PriceMetaData.getPriceInfo(hMap, ShareData.tripSelectedStartCity, ShareData.tripSelectedEndCity);
+        amount.setText(String.valueOf(price));
 
         TextView total = findViewById(R.id.showedTotalAmount);
 
@@ -52,11 +60,6 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
         tax.setText(Float.toString(convertTax));
         total.setText(Float.toString(totalAmount));
 
-        //TextView amountPerCustomer = findViewById(R. id.amountPerCustomer);
-        //amountPerCustomer.setText(ShareData.amountPerCustomer);
-
-        // Toast myToast = Toast.makeText(getApplicationContext(), "we are in layout 2 and the new value is " + ShareData.something + " and " + ShareData.something2, Toast.LENGTH_SHORT);
-        // myToast.show();
         Button myBtn = findViewById(R.id.displayTicketBtn);
         myBtn.setOnClickListener(new View.OnClickListener() {
             @Override
