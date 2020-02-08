@@ -1,3 +1,11 @@
+//* FILE			: ShareData.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines share data for using in the app
+
+
+
 package com.example.egoapp;
 
 public class ShareData {

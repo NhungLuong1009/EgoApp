@@ -1,9 +1,15 @@
+//* FILE			: MakeTrip.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the second screen of the app asking for getting trip info
+
+
 package com.example.egoapp;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,8 +20,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.app.DatePickerDialog;
 import android.widget.EditText;
-
-import java.util.Arrays;
 import java.util.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,9 +48,6 @@ public class MakeTrip  extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.make_trip);
-
-//     Toast myToast = Toast.makeText(getApplicationContext(), "we are in layout 2 and the new value is " + ShareData.tripNumberOfPassenger + " and " + ShareData.something2, Toast.LENGTH_SHORT);
-//      myToast.show();
 
         spinner1 = (Spinner) findViewById(R.id.listStartCity);
         spinner2 = (Spinner) findViewById(R.id.listEndCity);
@@ -87,9 +88,6 @@ public class MakeTrip  extends AppCompatActivity
             spinner2.setSelection(positionEndCities);
 
         }
-
-
-
 
 
         // Make trip button
@@ -156,6 +154,9 @@ public class MakeTrip  extends AppCompatActivity
     }
 
 
+    //=============================================================================
+    // Date and time display for allowing user select
+    //=============================================================================
     @Override
     public void onClick(View v) {
         if (v == btnDatePicker) {
@@ -206,11 +207,16 @@ public class MakeTrip  extends AppCompatActivity
     }
 
 
+
+
+    /* =========================================================================================================================*
+     * Name		: findIndex
+     * Purpose	: to find index of the string
+     * Inputs	: int errorCode : the input error code
+     * Outputs	: None
+     * Returns	: an error string
+     *===========================================================================================================================*/
     public static int findIndex (String[] array , String name) {
-// For loop to determine index value of string object , the loop is continued
-// until 3 instead of 2 because you know that when you hit the index value of 3
-// that the name is not going to be found because with the 3 element array the
-// maximum array value would be 2
         for (int i=0; i<array.length; i++ ) {
             if (array[i].equals(name)) {
                 return i;

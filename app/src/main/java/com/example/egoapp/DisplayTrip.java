@@ -1,12 +1,17 @@
+//* FILE			: DisplayTrip.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the third screen of the app asking for getting trip info
+
+
 package com.example.egoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class DisplayTrip extends AppCompatActivity implements View.OnClickListener{
@@ -38,10 +43,10 @@ public class DisplayTrip extends AppCompatActivity implements View.OnClickListen
         // assign parameter for RoundTrip
         TextView selectedRoundTrip = findViewById(R.id.inSelectedRoundTrip);
         if(ShareData.tripSelectedRoundTripOption == true){
-            selectedRoundTrip.setText("YES");
+            selectedRoundTrip.setText("No");
         }
         else{
-            selectedRoundTrip.setText("NO");
+            selectedRoundTrip.setText("Yes");
         }
 
         /*

@@ -1,3 +1,10 @@
+//* FILE			: MainActivity.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
+
+
 package com.example.egoapp;
 
 import androidx.annotation.NonNull;
@@ -28,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Debug
-        Toast myToast = Toast.makeText(getApplicationContext(), "hello there how are you", Toast.LENGTH_SHORT);
+        Toast myToast = Toast.makeText(getApplicationContext(), "Please select your trip or make your new trip", Toast.LENGTH_SHORT);
         myToast.show();
 
         // Make a trip by default
