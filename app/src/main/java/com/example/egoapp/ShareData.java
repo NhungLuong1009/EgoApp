@@ -11,6 +11,9 @@ public class ShareData {
             "Toronto to Quebec",
             "Toronto to Vancouver"};
 
+    public static int selectedTrip = 0;
+    public static Boolean makeOwnTrip = false;
+
     public static String mDescription[] = {"$140", "$50", "$100", "$200", "$500"};
 
     public static int images[] = {R.drawable.ottawa,
@@ -24,5 +27,27 @@ public class ShareData {
     public static String tripSelectedStartCity = "";
     public static String tripSelectedEndCity = "";
     public static String tripNumberOfPassenger = "";
-    public static Boolean tripSelectedRoundTripOption = false;
+    public static boolean tripSelectedRoundTripOption = false;
+
+    public static int StartCityISEmpty = 1;
+    public static int EndCityISEmpty = 2;
+    public static int DateISEmpty = 3;
+    public static int TimeIsEmpty = 4;
+    public static int NoOfPassEmpty = 5;
+    public static int RoundTripIsEmpty = 6;
+    public static int SUCCESS = 7;
+
+    public static boolean isNumeric(String str)
+    {
+        try
+        {
+            double d = Double.parseDouble(String.valueOf(str));
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
+    }
+
 }

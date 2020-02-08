@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         myToast.show();
 
         // Make a trip by default
-        // Get ID from the listtView for Listener
+        // Get ID from the listView for Listener
         listView_tripList = findViewById(R.id.listView_tripList);
 
 
@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         listView_tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ShareData.selectedTrip = position;
+                ShareData.makeOwnTrip = false;
+
                 // Item 1
                 if (position == 0)
                 {
@@ -128,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                ShareData.makeOwnTrip = true;
 
                 Intent myIntent = new Intent(MainActivity.this, MakeTrip.class);
                 startActivity(myIntent);
