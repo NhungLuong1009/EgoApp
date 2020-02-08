@@ -1,3 +1,9 @@
+/*
+ * File: PriceMetaData.java
+ * Name: Trung Nguyen - Abdullah - Nhung Luong - Huynchul Choi
+ * Date: 08 Feb, 2020
+ * Description: contains the metadata for Trip Planner App
+ */
 package com.example.egoapp;
 
 import java.util.HashMap;

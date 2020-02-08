@@ -1,3 +1,9 @@
+/*
+ * File: DisplayTicket.java
+ * Name: Trung Nguyen - Abdullah - Nhung Luong - Huynchul Choi
+ * Date: 08 Feb, 2020
+ * Description: contains the back end of the ticket confiramtion screen for Trip Planner App
+ */
 package com.example.egoapp;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +17,12 @@ import java.util.Map;
 
 public class DisplayTicket  extends AppCompatActivity implements View.OnClickListener
 {
-
+    /*
+     * Function: onCreate
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

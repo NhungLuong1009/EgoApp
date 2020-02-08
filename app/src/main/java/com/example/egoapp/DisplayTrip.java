@@ -1,3 +1,9 @@
+/*
+ * File: DisplayTrip.java
+ * Name: Trung Nguyen - Abdullah - Nhung Luong - Huynchul Choi
+ * Date: 08 Feb, 2020
+ * Description: contains the back end of the trip display screen for Trip Planner App
+ */
 package com.example.egoapp;
 
 import android.content.Intent;

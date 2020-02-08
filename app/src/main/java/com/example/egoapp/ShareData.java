@@ -1,3 +1,9 @@
+/*
+ * File: MainActivity.java
+ * Name: Trung Nguyen - Abdullah - Nhung Luong - Huynchul Choi
+ * Date: 08 Feb, 2020
+ * Description: contains the data sharing for Trip Planner App
+ */
 package com.example.egoapp;
 
 public class ShareData {
@@ -25,4 +31,18 @@ public class ShareData {
     public static String tripSelectedEndCity = "";
     public static String tripNumberOfPassenger = "";
     public static Boolean tripSelectedRoundTripOption = false;
+
+    public static String GetStartCity(String mTitle)
+    {
+        String delimeter = " to ";
+        String[] tripSelectedStartCity = mTitle.split(delimeter);
+        return tripSelectedStartCity[0];
+    }
+
+    public static String GetEndCity(String mTitle[])
+    {
+        String delimeter = " to ";
+        String[] tripSelectedEndCity = mTitle.split(delimeter);
+        return tripSelectedEndCity[1];
+    }
 }

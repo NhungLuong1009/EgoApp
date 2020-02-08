@@ -1,3 +1,9 @@
+/*
+ * File: MainActivity.java
+ * Name: Trung Nguyen - Abdullah - Nhung Luong - Huynchul Choi
+ * Date: 08 Feb, 2020
+ * Description: contains the back end of the first screen for Trip Planner App
+ */
 package com.example.egoapp;
 
 import androidx.annotation.NonNull;
@@ -20,9 +26,14 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    // DECLARATION OF VARAIBLES
     ListView listView_tripList;
 
+    /*
+     * Function: onCreate
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
         // Make a trip by default
         // Get ID from the listtView for Listener
         listView_tripList = findViewById(R.id.listView_tripList);
-
-
         // Set new Adapter
         TripAdapter tripAdapter = new TripAdapter(this, ShareData.mTitle, ShareData.mDescription, ShareData.images);
         listView_tripList.setAdapter(tripAdapter);
@@ -153,6 +162,12 @@ public class MainActivity extends AppCompatActivity {
             this.rImages = imgs;
         }
 
+        /*
+         * Function: getView
+         * Description: operation for the listview functionality
+         * Input: position, view, viewGroup
+         * Output: View
+         */
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
