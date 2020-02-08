@@ -117,13 +117,14 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:inputType="textPersonName"
-                android:text="No.Of Cus:"
+                android:text="No. Passenger:"
                 android:textSize="20sp"
                 android:textColor="#013220"/>
 
             <EditText
                 android:id="@+id/passenger_edittext"
-                android:layout_width="208dp" />
+                android:layout_width="208dp"
+                android:inputType="number"/>
 
 
         </TableRow>

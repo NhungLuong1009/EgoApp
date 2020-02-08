@@ -70,6 +70,8 @@ public class PriceMetaData {
         hMap.put(new PriceVO("Ottawa", "Toronto", 230), "Ottawa->Toronto");
         hMap.put(new PriceVO("Kingston", "Ottawa", 100), "Kingston->Ottawa");
         hMap.put(new PriceVO("Ottawa", "Kingston", 100), "Ottawa->Kingston");
+        hMap.put(new PriceVO("Toronto", "Quebec", 200), "Toronto->Quebec");
+        hMap.put(new PriceVO("Toronto", "Vancouver", 500), "Toronto->Vancouver");
 
         return hMap;
     }
@@ -88,18 +90,6 @@ public class PriceMetaData {
                 break;
             }
         }
-
-        /*
-        map.entrySet().forEach(x->{
-            int price;
-            if((x.getKey().startCity=="Waterloo") && (x.getKey().endCity=="Cambridge")){
-                System.out.println(x.getKey().startCity + ":" + x.getKey().endCity + ":" + x.getKey().price );
-                priceInfo = x.getKey();
-                price = priceInfo.price;
-                return price;
-            }
-        });
-         */
 
         return price;
     }

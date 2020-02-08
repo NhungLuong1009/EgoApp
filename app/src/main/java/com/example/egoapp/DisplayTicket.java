@@ -1,9 +1,12 @@
-/*
- * File: DisplayTicket.java
- * Name: Trung Nguyen - Abdullah - Nhung Luong - Huynchul Choi
- * Date: 08 Feb, 2020
- * Description: contains the back end of the ticket confiramtion screen for Trip Planner App
- */
+//* FILE			: Display Ticket.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the last screen of the app asking for getting trip info
+
+
+
+
 package com.example.egoapp;
 import android.content.Intent;
 import android.os.Bundle;
@@ -75,7 +78,7 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
         myBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(DisplayTicket.this, DisplayTicket.class);
+                Intent myIntent = new Intent(DisplayTicket.this, MainActivity.class);
                 startActivity(myIntent);
             }
         });

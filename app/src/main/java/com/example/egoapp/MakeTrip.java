@@ -1,12 +1,12 @@
-/*
- * File: MakeTrip.java
- * Name: Trung Nguyen - Abdullah - Nhung Luong - Huynchul Choi
- * Date: 08 Feb, 2020
- * Description: contains the back end of the make trip screen for Trip Planner App
- */
+//* FILE			: MakeTrip.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the second screen of the app asking for getting trip info
+
+
 package com.example.egoapp;
 
-import android.app.Notification;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +16,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.app.DatePickerDialog;
-import android.text.InputType;
 import android.widget.EditText;
 import java.util.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,8 +30,18 @@ public class MakeTrip  extends AppCompatActivity
 {
 
     Button btnDatePicker, btnTimePicker;
-    EditText txtDate, txtTime;
+    EditText txtDate;
+    EditText txtTime;
+    String txtNumOfPass;
+    int buttonSelected;
     private int mYear, mMonth, mDay, mHour, mMinute;
+
+    Boolean isAllFieldFilled = true;
+
+    String selectedStartCities = "";
+    String selectedEndCities = "";
+    Spinner spinner1 = null;
+    Spinner spinner2 = null;
 
 
     @Override
@@ -41,11 +49,13 @@ public class MakeTrip  extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.make_trip);
 
-     Toast myToast = Toast.makeText(getApplicationContext(), "we are in layout 2 and the new value is " + ShareData.tripNumberOfPassenger + " and " + ShareData.something2, Toast.LENGTH_SHORT);
-      myToast.show();
+        spinner1 = (Spinner) findViewById(R.id.listStartCity);
+        spinner2 = (Spinner) findViewById(R.id.listEndCity);
+
+
+        String[] allAvailableCities = getResources().getStringArray(R.array.Cities);
 
         // Start city spinner
-        final Spinner spinner1 = (Spinner) findViewById(R.id.listStartCity);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
                 R.array.Cities, android.R.layout.simple_spinner_item);
@@ -56,7 +66,6 @@ public class MakeTrip  extends AppCompatActivity
 
 
         // End city spinner
-        final Spinner spinner2 = (Spinner) findViewById(R.id.listEndCity);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.Cities, android.R.layout.simple_spinner_item);
@@ -64,6 +73,21 @@ public class MakeTrip  extends AppCompatActivity
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner2.setAdapter(adapter2);
+
+        if(ShareData.makeOwnTrip == false)
+        {
+            // parse selected trip to 2 end and start city
+            String selectedTripCitiy = ShareData.mTitle[ShareData.selectedTrip];
+            String[] splitedSelectedTripCity = selectedTripCitiy.split(" to ");
+            selectedStartCities = splitedSelectedTripCity[0];
+            selectedEndCities = splitedSelectedTripCity[1];
+            int positionStartCities = findIndex(allAvailableCities, selectedStartCities);
+            int positionEndCities = findIndex(allAvailableCities, selectedEndCities);
+
+            spinner1.setSelection(positionStartCities);
+            spinner2.setSelection(positionEndCities);
+
+        }
 
 
         // Make trip button
@@ -78,27 +102,44 @@ public class MakeTrip  extends AppCompatActivity
                 EditText selectedNumberOfPassenger = findViewById(R.id.passenger_edittext);
                 RadioGroup selectedRoundtripButton = findViewById(R.id.roundtrip_radioGroup);
 
-
-                ShareData.tripSelectedStartCity = spinner1.getSelectedItem().toString();
-                ShareData.tripSelectedEndCity = spinner2.getSelectedItem().toString();
-
-                ShareData.tripSelectedDate = selectedDate.getText().toString();
-                ShareData.tripSelectedTime = selectedTime.getText().toString();
-
-                ShareData.tripNumberOfPassenger = selectedNumberOfPassenger.getText().toString();
-                int selectedButtonId = selectedRoundtripButton.getCheckedRadioButtonId();
-                if(selectedButtonId == 0)
+                //==========================================================================================================//
+                //  - WE VALIDATE THE INPUT. THEN WE CHECK IF:
+                //      - The return value of validateInput() is different from SUCCESS, display Toast message
+                //      - Otherwise, update ex expected mark, course name and open the info screen
+                //==========================================================================================================//
+                int retCode = validateInput();
+                if(retCode == ShareData.SUCCESS)
                 {
-                    ShareData.tripSelectedRoundTripOption = true;
+                    ShareData.tripSelectedStartCity = spinner1.getSelectedItem().toString();
+                    ShareData.tripSelectedEndCity = spinner2.getSelectedItem().toString();
+
+                    ShareData.tripSelectedDate = selectedDate.getText().toString();
+                    ShareData.tripSelectedTime = selectedTime.getText().toString();
+
+                    ShareData.tripNumberOfPassenger = selectedNumberOfPassenger.getText().toString();
+                    txtNumOfPass = ShareData.tripNumberOfPassenger;
+                    int selectedButtonId = selectedRoundtripButton.getCheckedRadioButtonId();
+                    if(selectedButtonId == 0)
+                    {
+                        ShareData.tripSelectedRoundTripOption = true;
+                        buttonSelected = selectedButtonId;
+                    }
+                    else
+                    {
+                        ShareData.tripSelectedRoundTripOption = false;
+                    }
+
+                    Intent myIntent = new Intent(MakeTrip.this, DisplayTrip.class);
+                    startActivity(myIntent);
+
                 }
                 else
                 {
-                    ShareData.tripSelectedRoundTripOption = false;
+                    Toast myToast = Toast.makeText(getApplicationContext(), getErrorString(retCode), Toast.LENGTH_SHORT);
+                    myToast.show();
                 }
 
 
-                Intent myIntent = new Intent(MakeTrip.this, DisplayTrip.class);
-                startActivity(myIntent);
             }
         });
 
@@ -113,6 +154,9 @@ public class MakeTrip  extends AppCompatActivity
     }
 
 
+    //=============================================================================
+    // Date and time display for allowing user select
+    //=============================================================================
     @Override
     public void onClick(View v) {
         if (v == btnDatePicker) {
@@ -156,7 +200,116 @@ public class MakeTrip  extends AppCompatActivity
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
+
+
         }
+
     }
+
+
+
+
+    /* =========================================================================================================================*
+     * Name		: findIndex
+     * Purpose	: to find index of the string
+     * Inputs	: int errorCode : the input error code
+     * Outputs	: None
+     * Returns	: an error string
+     *===========================================================================================================================*/
+    public static int findIndex (String[] array , String name) {
+        for (int i=0; i<array.length; i++ ) {
+            if (array[i].equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+
+    /* =========================================================================================================================*
+     * Name		: validateInput
+     * Purpose	: to validate all input and return a retCode represent for the validity
+     * Inputs	: int errorCode : the input error code
+     * Outputs	: None
+     * Returns	: an error string
+     *===========================================================================================================================*/
+    private int validateInput() {
+        String temptStartcity = spinner1.getSelectedItem().toString();
+        String temptEndCity = spinner2.getSelectedItem().toString();
+        String temptDate = ((EditText)findViewById(R.id.in_date)).getText().toString();
+        String temptTime = ((EditText)findViewById(R.id.in_time)).getText().toString();
+        EditText numberOfPassenger = findViewById(R.id.passenger_edittext);
+        int temptNoOfPass = 0;
+        if(!numberOfPassenger.getText().toString().trim().isEmpty())
+        {
+            temptNoOfPass = Integer.valueOf(numberOfPassenger.getText().toString());
+        }
+
+
+        // VALIDATE THE MARK
+        if (temptStartcity.isEmpty() == true)
+        {
+            return ShareData.StartCityISEmpty;
+        }
+        else if (temptNoOfPass <=0 )
+        {
+            return ShareData.NoOfPassEmpty;
+        }
+        else if (temptEndCity.isEmpty() == true)
+        {
+            return ShareData.EndCityISEmpty;
+        }
+        else if (temptDate.isEmpty() == true)
+        {
+            return ShareData.DateISEmpty;
+        }
+        else if (temptTime.isEmpty() == true)
+        {
+            return ShareData.TimeIsEmpty;
+        }
+
+        return ShareData.SUCCESS;
+    }
+
+
+
+    /* =========================================================================================================================*
+     * Name		: getErrorString
+     * Purpose	: to get an appropriate error string base on the input int errorCode
+     * Inputs	: int errorCode : the input error code
+     * Outputs	: None
+     * Returns	: an error string
+     *===========================================================================================================================*/
+    private String getErrorString(int errorCode)
+    {
+        String retString = "";
+        if (errorCode == ShareData.StartCityISEmpty)
+        {
+            retString = "Start city name cannot be empty";
+        }
+        else if (errorCode == ShareData.EndCityISEmpty)
+        {
+            retString = "End city cannot contain any character";
+        }
+        else if (errorCode == ShareData.DateISEmpty)
+        {
+            retString = "Date cannot be empty";
+        }
+        else if (errorCode == ShareData.TimeIsEmpty)
+        {
+            retString = "Time cannot be empty";
+        }
+        else if (errorCode == ShareData.RoundTripIsEmpty)
+        {
+            retString = "Please select round trip or not";
+        }
+        else if (errorCode == ShareData.NoOfPassEmpty)
+        {
+            retString = "Please enter number of passenger";
+        }
+        return retString;
+    }
+
 
 }

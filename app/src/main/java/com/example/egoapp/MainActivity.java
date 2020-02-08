@@ -1,9 +1,10 @@
-/*
- * File: MainActivity.java
- * Name: Trung Nguyen - Abdullah - Nhung Luong - Huynchul Choi
- * Date: 08 Feb, 2020
- * Description: contains the back end of the first screen for Trip Planner App
- */
+//* FILE			: MainActivity.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
+
+
 package com.example.egoapp;
 
 import androidx.annotation.NonNull;
@@ -39,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Debug
-        Toast myToast = Toast.makeText(getApplicationContext(), "hello there how are you", Toast.LENGTH_SHORT);
+        Toast myToast = Toast.makeText(getApplicationContext(), "Please select your trip or make your new trip", Toast.LENGTH_SHORT);
         myToast.show();
 
         // Make a trip by default
-        // Get ID from the listtView for Listener
+        // Get ID from the listView for Listener
         listView_tripList = findViewById(R.id.listView_tripList);
         // Set new Adapter
         TripAdapter tripAdapter = new TripAdapter(this, ShareData.mTitle, ShareData.mDescription, ShareData.images);
@@ -52,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
         listView_tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ShareData.selectedTrip = position;
+                ShareData.makeOwnTrip = false;
+
                 // Item 1
                 if (position == 0)
                 {
@@ -137,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                ShareData.makeOwnTrip = true;
 
                 Intent myIntent = new Intent(MainActivity.this, MakeTrip.class);
                 startActivity(myIntent);

@@ -12,5 +12,7 @@
     <item>Toronto</item>
     <item>Kingston</item>
     <item>Ottawa</item>
+    <item>Quebec</item>
+    <item>Vancouver</item>
 </string-array>
 </resources>
