@@ -21,6 +21,7 @@ public class ShareData {
             R.drawable.cambridge,
             R.drawable.quebec,
             R.drawable.vancouver};
+
     // Make trip global variables
     public static String tripSelectedDate = "";
     public static String tripSelectedTime = "";
@@ -36,18 +37,4 @@ public class ShareData {
     public static int NoOfPassEmpty = 5;
     public static int RoundTripIsEmpty = 6;
     public static int SUCCESS = 7;
-
-    public static boolean isNumeric(String str)
-    {
-        try
-        {
-            double d = Double.parseDouble(String.valueOf(str));
-        }
-        catch(NumberFormatException nfe)
-        {
-            return false;
-        }
-        return true;
-    }
-
 }
