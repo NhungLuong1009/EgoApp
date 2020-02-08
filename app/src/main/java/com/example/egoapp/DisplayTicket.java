@@ -30,6 +30,7 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Set all data from Display Trip screen by getting the share data class values
         setContentView(R.layout.display_ticket);
         TextView startCity = findViewById(R.id.showedStartCity);
         startCity.setText(ShareData.tripSelectedStartCity);
@@ -42,6 +43,7 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
         TextView numOfPassenger = findViewById(R.id.showedNumberOfPassenger);
         numOfPassenger.setText(ShareData.tripNumberOfPassenger);
 
+        // Get ID from TextView for Tax & Amount
         TextView tax = findViewById(R.id.showedTax);
         TextView amount = findViewById(R.id.showedAmount);
 

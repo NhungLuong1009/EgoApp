@@ -76,6 +76,12 @@ public class PriceMetaData {
         return hMap;
     }
 
+    /*
+     * Function: getPriceInfo
+     * Description: return the price details to the screen based on start city & end city
+     * Input: Map<PriceVO, String> map, String startCity, String endCity
+     * Return: Int - price
+     */
     public static int getPriceInfo(Map<PriceVO, String> map, String startCity, String endCity){
         PriceVO priceInfo;
         int price=0;

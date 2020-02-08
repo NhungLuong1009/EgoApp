@@ -5,8 +5,9 @@
 //* DESCRIPTION		: The file defines share data for using in the app
 
 
-
 package com.example.egoapp;
+
+import java.lang.String;
 
 public class ShareData {
 
@@ -36,7 +37,6 @@ public class ShareData {
     public static String tripSelectedStartCity = "";
     public static String tripSelectedEndCity = "";
     public static String tripNumberOfPassenger = "";
-    public static Boolean tripSelectedRoundTripOption = false;
 
     public static String GetStartCity(String mTitle)
     {
@@ -45,7 +45,7 @@ public class ShareData {
         return tripSelectedStartCity[0];
     }
 
-    public static String GetEndCity(String mTitle[])
+    public static String GetEndCity(String mTitle)
     {
         String delimeter = " to ";
         String[] tripSelectedEndCity = mTitle.split(delimeter);

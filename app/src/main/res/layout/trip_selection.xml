@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    File: trip_selection.xml
+    Name: Trung Nguyen - Huynchul Choi- Nhung Luong - Abdullah
+    Description: This is the component that works for the ListView features
+    that contains default values
+-->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

@@ -23,8 +23,6 @@ import android.widget.EditText;
 import java.util.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 
-
-
 public class MakeTrip  extends AppCompatActivity
     implements View.OnClickListener
 {
@@ -43,18 +41,24 @@ public class MakeTrip  extends AppCompatActivity
     Spinner spinner1 = null;
     Spinner spinner2 = null;
 
-
+    /*
+     * Function: onCreate
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.make_trip);
 
+        // Get ID from 2 Spinner (Start City & End City)
         spinner1 = (Spinner) findViewById(R.id.listStartCity);
         spinner2 = (Spinner) findViewById(R.id.listEndCity);
 
-
+        // Load Array into 2 seperate spinner
         String[] allAvailableCities = getResources().getStringArray(R.array.Cities);
-
+        // ******************************** SPINNER **************************************** //
         // Start city spinner
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
@@ -63,7 +67,6 @@ public class MakeTrip  extends AppCompatActivity
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner1.setAdapter(adapter1);
-
 
         // End city spinner
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -74,24 +77,27 @@ public class MakeTrip  extends AppCompatActivity
         // Apply the adapter to the spinner
         spinner2.setAdapter(adapter2);
 
+        // Check if user click on default trip on screen
         if(ShareData.makeOwnTrip == false)
         {
+            // This step will do some manipulation with string to split the mTitle into startcity & endcity String
             // parse selected trip to 2 end and start city
             String selectedTripCitiy = ShareData.mTitle[ShareData.selectedTrip];
             String[] splitedSelectedTripCity = selectedTripCitiy.split(" to ");
+            // Start City Stirng
             selectedStartCities = splitedSelectedTripCity[0];
+            // End City String
             selectedEndCities = splitedSelectedTripCity[1];
             int positionStartCities = findIndex(allAvailableCities, selectedStartCities);
             int positionEndCities = findIndex(allAvailableCities, selectedEndCities);
-
+            // Set the position of spinner based on the result from 2 cities
             spinner1.setSelection(positionStartCities);
             spinner2.setSelection(positionEndCities);
-
         }
 
-
-        // Make trip button
+        // ******************** Make Trip button ***************************************************** //
         Button myBtn = findViewById(R.id.makeTripBtn);
+        // Event trigger fot "Make Trip" Button
         myBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -131,15 +137,12 @@ public class MakeTrip  extends AppCompatActivity
 
                     Intent myIntent = new Intent(MakeTrip.this, DisplayTrip.class);
                     startActivity(myIntent);
-
                 }
                 else
                 {
                     Toast myToast = Toast.makeText(getApplicationContext(), getErrorString(retCode), Toast.LENGTH_SHORT);
                     myToast.show();
                 }
-
-
             }
         });
 
@@ -167,7 +170,7 @@ public class MakeTrip  extends AppCompatActivity
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Open the DatePicker for user to choose one special date on screen
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
@@ -200,14 +203,8 @@ public class MakeTrip  extends AppCompatActivity
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
-
-
         }
-
     }
-
-
-
 
     /* =========================================================================================================================*
      * Name		: findIndex

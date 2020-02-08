@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    File: activity_main.xml
+    Name: Trung Nguyen - Huynchul Choi- Nhung Luong - Abdullah
+    Description: This is the first screen where user begins to establish new trip based on
+    default cities or can make their own trip
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

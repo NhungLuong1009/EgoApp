@@ -15,6 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 
 public class DisplayTrip extends AppCompatActivity implements View.OnClickListener{
+
+    /*
+     * Function: onCreate
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +55,6 @@ public class DisplayTrip extends AppCompatActivity implements View.OnClickListen
         else{
             selectedRoundTrip.setText("Yes");
         }
-
-        /*
-        Toast myToast = Toast.makeText(getApplicationContext(), "we are in layout 3 and the new value is " + ShareData.tripSelectedStartCity +
-                " and " + ShareData.tripSelectedRoundTripOption, Toast.LENGTH_SHORT);
-        myToast.show();
-        */
 
         Button myBtn = findViewById(R.id.displayTripBtn);
         myBtn.setOnClickListener(new View.OnClickListener() {

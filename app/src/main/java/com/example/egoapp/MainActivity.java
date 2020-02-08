@@ -39,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Debug
-        Toast myToast = Toast.makeText(getApplicationContext(), "Please select your trip or make your new trip", Toast.LENGTH_SHORT);
-        myToast.show();
 
         // Make a trip by default
         // Get ID from the listView for Listener
