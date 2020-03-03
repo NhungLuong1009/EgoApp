@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigationView">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_search"
+              android:icon="@drawable/ic_search"
+              android:title="Search Trip">
+        </item>
+        <item android:id="@+id/nav_view_Trip"
+            android:icon="@drawable/ic_view_headline"
+            android:title="View Trip">
+        </item>
+        <item android:id="@+id/nav_make_trip"
+            android:icon="@drawable/ic_make_trip"
+            android:title="Make Trip">
+        </item>
+        <item android:id="@+id/nav_about_app"
+            android:icon="@drawable/ic_help"
+            android:title="About Ego App">
+        </item>
+    </group>
+</menu>
