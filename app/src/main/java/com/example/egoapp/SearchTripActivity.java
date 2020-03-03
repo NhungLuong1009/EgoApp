@@ -1,13 +1,14 @@
 package com.example.egoapp;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SearchView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
-
-public class SearchTrip extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class SearchTripActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     // Declare Variables
     ListView list;
@@ -20,7 +21,7 @@ public class SearchTrip extends AppCompatActivity implements SearchView.OnQueryT
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_trip);
+        setContentView(R.layout.activity_search_trip);
 
         // Generate sample data
 

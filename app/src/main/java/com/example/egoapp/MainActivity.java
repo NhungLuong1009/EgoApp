@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, SearchTrip.class);
+                Intent myIntent = new Intent(MainActivity.this, SearchTripActivity.class);
                 startActivity(myIntent);
             }
         });
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewTripBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, ViewTripOption.class);
+                Intent myIntent = new Intent(MainActivity.this, ViewTripOptionActivity.class);
                 startActivity(myIntent);
             }
         });
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 Intent myIntent;
-                myIntent = new Intent(MainActivity.this, AboutEgoApp.class);
+                myIntent = new Intent(MainActivity.this, AboutEgoAppActivity.class);
                 startActivity(myIntent);
             }
         });

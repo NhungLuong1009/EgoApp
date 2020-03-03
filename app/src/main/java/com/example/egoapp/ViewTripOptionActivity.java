@@ -1,16 +1,9 @@
-//* FILE			: ViewTripOption.java
-//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
-//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSION	: Feb 8, 2018
-//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
-
 package com.example.egoapp;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,12 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Button;
 
-public class ViewTripOption extends AppCompatActivity {
+public class ViewTripOptionActivity extends AppCompatActivity {
     ListView listView_tripList;
 
     /*
@@ -139,7 +132,7 @@ public class ViewTripOption extends AppCompatActivity {
             public void onClick(View v) {
                 ShareData.makeOwnTrip = true;
 
-                Intent myIntent = new Intent(ViewTripOption.this, MakeTrip.class);
+                Intent myIntent = new Intent(ViewTripOptionActivity.this, MakeTrip.class);
                 startActivity(myIntent);
             }
         });
@@ -147,7 +140,7 @@ public class ViewTripOption extends AppCompatActivity {
     }
 
     /* --------------------------------NEW CLASS ------------------------------*/
-    class TripAdapter extends ArrayAdapter<String>{
+    class TripAdapter extends ArrayAdapter<String> {
 
         Context context;
         String rTitle[];

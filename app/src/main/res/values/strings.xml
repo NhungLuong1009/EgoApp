@@ -3,16 +3,16 @@
 
     <string name="selectedCity">Selected city:</string>
 
-<string-array name="Cities">
-    <item>Waterloo</item>
-    <item>Kitchener</item>
-    <item>Cambridge</item>
-    <item>Mississauga</item>
-    <item>Hamilton</item>
-    <item>Toronto</item>
-    <item>Kingston</item>
-    <item>Ottawa</item>
-    <item>Quebec</item>
-    <item>Vancouver</item>
-</string-array>
+    <string-array name="Cities">
+        <item>Waterloo</item>
+        <item>Kitchener</item>
+        <item>Cambridge</item>
+        <item>Mississauga</item>
+        <item>Hamilton</item>
+        <item>Toronto</item>
+        <item>Kingston</item>
+        <item>Ottawa</item>
+        <item>Quebec</item>
+        <item>Vancouver</item>
+    </string-array>
 </resources>
