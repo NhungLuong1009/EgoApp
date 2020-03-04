@@ -29,7 +29,7 @@ public class ViewTripOptionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_trip);
+        setContentView(R.layout.activity_view_trip_option);
 
         // Make a trip by default
         // Get ID from the listView for Listener
