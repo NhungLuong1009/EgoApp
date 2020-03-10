@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(myIntent);
             }
         });
+        
 
         makeNewTripBtn = (Button)findViewById(R.id.makeNewTripButton);
         makeNewTripBtn.setOnClickListener(new View.OnClickListener(){
