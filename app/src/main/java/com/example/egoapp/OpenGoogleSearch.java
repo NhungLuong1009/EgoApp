@@ -4,29 +4,53 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-public class AboutEgoAppActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class OpenGoogleSearch extends AppCompatActivity {
+
+    private WebView mWebView;
+    String myUrl = "https://www.google.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_ego_app);
+        setContentView(R.layout.activity_open_google_search);
+
+        mWebView = findViewById(R.id.webview);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+
+        mWebView.loadUrl(myUrl); // URL
+        mWebView.setWebChromeClient(new WebChromeClient());
+        mWebView.setWebViewClient(new WebViewClientClass());
+
     }
+
+
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+            mWebView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
+    private class WebViewClientClass extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Log.d("check URL",url);
+            view.loadUrl(url);
+            return true;
+        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,17 +72,16 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
             case R.id.nav_search:
                 startActivity(new Intent(this, SearchTripActivity.class));
                 return true;
-            case R.id.nav_view_Trip:
-                startActivity(new Intent(this, ViewTripOptionActivity.class));
-                return true;
             case R.id.nav_google_search:
                 startActivity(new Intent(this, OpenGoogleSearch.class));
                 return true;
-            case R.id.nav_app_main:
-                startActivity(new Intent(this, MainActivity.class));
+            case R.id.nav_view_Trip:
+                startActivity(new Intent(this, ViewTripOptionActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
+
 }

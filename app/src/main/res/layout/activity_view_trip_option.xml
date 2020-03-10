@@ -24,6 +24,7 @@
             android:layout_height="fill_parent">
 
             <LinearLayout
+                android:id="@+id/firstLayout"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:orientation="vertical"
@@ -50,9 +51,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="300dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/firstLayout">
 
                 <ListView
                     android:id="@+id/listView_tripList"
@@ -66,7 +67,8 @@
                     android:layout_height="70dp"
                     android:background="#008000"
                     android:textColor="#ffffff"
-                    android:text="Make your Own Trip"></Button>
+                    android:text="Make your Own Trip"
+                    android:layout_below="@id/listView_tripList"></Button>
 
 
             </RelativeLayout>

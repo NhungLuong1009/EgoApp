@@ -10,175 +10,246 @@
     android:layout_height="match_parent"
     tools:context=".MakeTrip">
 
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="3"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="200dp">
-
-            <TextView
-                android:layout_gravity="center"
-                android:layout_span="3"
-
-                android:inputType="textPersonName"
-                android:text="MAKE YOUR TRIP"
-                android:textColor="#013220"
-                android:textSize="25sp"
-                android:gravity="center"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/startCity"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:inputType="textPersonName"
-                android:text="Start:"
-                android:textSize="20sp"
-                android:textColor="#013220"/>
-
-            <Spinner
-                android:id="@+id/listStartCity"
-                android:layout_height="match_parent" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/endCity"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:inputType="textPersonName"
-                android:text="End:"
-                android:textSize="20sp"
-                android:textColor="#013220"/>
-
-            <Spinner
-                android:id="@+id/listEndCity"
-                android:layout_height="match_parent" />
-        </TableRow>
-
-        <TableRow android:layout_width="match_parent">
-
-            <TextView
-                android:id="@+id/in_date_textview"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:inputType="textPersonName"
-                android:text="Date:"
-                android:textSize="20sp"
-                android:textColor="#013220"/>
-
-            <EditText
-                android:id="@+id/in_date"
-                android:layout_width="186dp"
-                android:layout_height="48dp" />
-
-            <Button
-                android:id="@+id/btn_date"
-                android:background="#008000"
-                android:text="SELECT"
-                android:textColor="#ffffff" />
-
-        </TableRow>
-
-        <TableRow android:layout_width="match_parent">
-
-            <TextView
-                android:id="@+id/in_time_textview"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:inputType="textPersonName"
-                android:text="Time:"
-                android:textSize="20sp"
-                android:textColor="#013220"/>
-
-            <EditText
-                android:id="@+id/in_time"
-                android:layout_width="200dp" />
-
-            <Button
-                android:id="@+id/btn_time"
-                android:background="#008000"
-                android:text="SELECT"
-                android:textColor="#ffffff" />
-
-        </TableRow>
-
-        <TableRow android:layout_width="match_parent">
-
-            <TextView
-                android:id="@+id/passenger_textview"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:inputType="textPersonName"
-                android:text="No. Passenger:"
-                android:textSize="20sp"
-                android:textColor="#013220"/>
-
-            <EditText
-                android:id="@+id/passenger_edittext"
-                android:layout_width="208dp"
-                android:inputType="number"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
 
-        </TableRow>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 
-        <TableRow android:layout_width="match_parent"
-            >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/roundtrip_textview"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:inputType="textPersonName"
-                android:text="Round trip:"
-                android:textSize="20sp"
-                android:textColor="#013220"
-                />
+                    <LinearLayout
+                        android:id="@+id/firstLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/background">
 
-            <RadioGroup
-                android:id="@+id/roundtrip_radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                        <ImageView
+                            android:layout_height="90dp"
+                            android:layout_width="90dp"
+                            android:src="@drawable/icon1"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="THANK YOU FOR USING EGO"
+                            android:textColor="#FF0000"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
 
-                <RadioButton
-                    android:id="@+id/radioYes"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="yes" />
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:stretchColumns="3"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="0dp"
+                        android:layout_below="@+id/firstLayout">
 
-                <RadioButton
-                    android:id="@+id/radioNo"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="no" />
+                        <TableRow
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp">
 
-            </RadioGroup>
+                            <TextView
+                                android:layout_gravity="center"
+                                android:layout_span="3"
+
+                                android:inputType="textPersonName"
+                                android:text="MAKE YOUR TRIP"
+                                android:textColor="#006400"
+                                android:textSize="25sp"
+                                android:textStyle="bold"
+                                android:gravity="center"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/startCity"
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="Start:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <Spinner
+                                android:id="@+id/listStartCity"
+                                android:layout_height="match_parent" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:id="@+id/endCity"
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="End:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <Spinner
+                                android:id="@+id/listEndCity"
+                                android:layout_height="match_parent" />
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:id="@+id/in_date_textview"
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="Date:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <EditText
+                                android:id="@+id/in_date"
+                                android:layout_width="186dp"
+                                android:layout_height="48dp" />
+
+                            <Button
+                                android:id="@+id/btn_date"
+                                android:background="#20B2AA"
+                                android:text="SELECT"
+                                android:textColor="#ffffff" />
+
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:id="@+id/in_time_textview"
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="Time:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <EditText
+                                android:id="@+id/in_time"
+                                android:layout_width="200dp" />
+
+                            <Button
+                                android:id="@+id/btn_time"
+                                android:background="#20B2AA"
+                                android:text="SELECT"
+                                android:textColor="#ffffff" />
+
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:id="@+id/adult_edit_text"
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="No. Adult:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <EditText
+                                android:id="@+id/adult_edit_text"
+                                android:layout_width="208dp"
+                                android:inputType="number"/>
 
 
-        </TableRow>
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:id="@+id/child_view"
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="No. Child:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <EditText
+                                android:id="@+id/child_edit_text"
+                                android:layout_width="208dp"
+                                android:inputType="number"/>
 
 
-        <Button
-            android:id="@+id/makeTripBtn"
-            android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:background="#008000"
-            android:text="Confirm"
-            android:textColor="#ffffff" />
-    </TableLayout>
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent"
+                            >
+
+                            <TextView
+                                android:id="@+id/roundtrip_textview"
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="Round trip:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"
+                                />
+
+                            <RadioGroup
+                                android:id="@+id/roundtrip_radioGroup"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/radioYes"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:checked="true"
+                                    android:text="yes" />
+
+                                <RadioButton
+                                    android:id="@+id/radioNo"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="no" />
+
+                            </RadioGroup>
+
+
+                        </TableRow>
+
+
+                        <Button
+                            android:id="@+id/makeTripBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="78dp"
+                            android:background="#20B2AA"
+                            android:text="Confirm"
+                            android:textColor="#ffffff" />
+                    </TableLayout>
+
+                </RelativeLayout>
+
+            </ScrollView>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

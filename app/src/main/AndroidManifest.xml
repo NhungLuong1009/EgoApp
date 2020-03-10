@@ -3,15 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.egoapp">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ViewTripOptionActivity"></activity>
+        <activity android:name=".OpenGoogleSearch"></activity>
+        <activity android:name=".ViewTripOptionActivity" />
         <activity android:name=".SearchTripActivity" />
         <activity android:name=".AboutEgoAppActivity" />
         <activity android:name=".MainActivity">
@@ -42,6 +46,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Registration" />
     </application>
 
 </manifest>

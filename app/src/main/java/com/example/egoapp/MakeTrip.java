@@ -10,6 +10,9 @@ package com.example.egoapp;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,7 +33,8 @@ public class MakeTrip  extends AppCompatActivity
     Button btnDatePicker, btnTimePicker;
     EditText txtDate;
     EditText txtTime;
-    String txtNumOfPass;
+    String txtNumOfAdult;
+    String txtNumOfChildren;
     int buttonSelected;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -105,7 +109,8 @@ public class MakeTrip  extends AppCompatActivity
 
                 EditText selectedDate = findViewById(R.id.in_date);
                 EditText selectedTime = findViewById(R.id.in_time);
-                EditText selectedNumberOfPassenger = findViewById(R.id.passenger_edittext);
+                EditText selectedNumOfAdult = findViewById(R.id.adult_edit_text);
+                EditText selectedNumberOfChildren = findViewById(R.id.child_edit_text);
                 RadioGroup selectedRoundtripButton = findViewById(R.id.roundtrip_radioGroup);
 
                 //==========================================================================================================//
@@ -122,8 +127,11 @@ public class MakeTrip  extends AppCompatActivity
                     ShareData.tripSelectedDate = selectedDate.getText().toString();
                     ShareData.tripSelectedTime = selectedTime.getText().toString();
 
-                    ShareData.tripNumberOfPassenger = selectedNumberOfPassenger.getText().toString();
-                    txtNumOfPass = ShareData.tripNumberOfPassenger;
+                    ShareData.tripNumberOfAdult = selectedNumOfAdult.getText().toString();
+                    txtNumOfAdult = ShareData.tripNumberOfAdult;
+                    ShareData.tripNumberOfChildren = selectedNumberOfChildren.getText().toString();
+                    txtNumOfChildren = ShareData.tripNumberOfChildren;
+
                     int selectedButtonId = selectedRoundtripButton.getCheckedRadioButtonId();
                     if(selectedButtonId == 0)
                     {
@@ -236,11 +244,17 @@ public class MakeTrip  extends AppCompatActivity
         String temptEndCity = spinner2.getSelectedItem().toString();
         String temptDate = ((EditText)findViewById(R.id.in_date)).getText().toString();
         String temptTime = ((EditText)findViewById(R.id.in_time)).getText().toString();
-        EditText numberOfPassenger = findViewById(R.id.passenger_edittext);
+        EditText numOfAdult = findViewById(R.id.adult_edit_text);
+        EditText numOfChildren = findViewById(R.id.child_edit_text);
         int temptNoOfPass = 0;
-        if(!numberOfPassenger.getText().toString().trim().isEmpty())
+        if(!numOfAdult.getText().toString().trim().isEmpty())
         {
-            temptNoOfPass = Integer.valueOf(numberOfPassenger.getText().toString());
+            temptNoOfPass = Integer.valueOf(numOfAdult.getText().toString());
+        }
+
+        if(!numOfChildren.getText().toString().trim().isEmpty())
+        {
+            temptNoOfPass = Integer.valueOf(numOfChildren.getText().toString());
         }
 
 
@@ -309,4 +323,38 @@ public class MakeTrip  extends AppCompatActivity
     }
 
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.drawer_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+            case R.id.nav_about_app:
+                startActivity(new Intent(this, AboutEgoAppActivity.class));
+                return true;
+            case R.id.nav_make_trip:
+                startActivity(new Intent(this, MakeTrip.class));
+                return true;
+            case R.id.nav_search:
+                startActivity(new Intent(this, SearchTripActivity.class));
+                return true;
+            case R.id.nav_view_Trip:
+                startActivity(new Intent(this, ViewTripOptionActivity.class));
+                return true;
+            case R.id.nav_google_search:
+                startActivity(new Intent(this, OpenGoogleSearch.class));
+                return true;
+            case R.id.nav_app_main:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
