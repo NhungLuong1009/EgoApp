@@ -72,13 +72,13 @@ public class AccountDB {
     }
 
     // Function for DB --------------------------------------------------------------------------------------------------
-    public ArrayList<com.example.egoapp.Object.Account> getAccounts(String accountName) {
-        ArrayList<com.example.egoapp.Object.Account> accounts = new ArrayList<Account>();
+    public ArrayList<Account> getAccounts(String accountName) {
+        ArrayList<Account> accounts = new ArrayList<Account>();
         this.openReadableDB();
         Cursor cursor = db.query(ACCOUNT_TABLE,
                 null, null, null, null, null, null);
         while (cursor.moveToNext()) {
-            com.example.egoapp.Object.Account account = new com.example.egoapp.Object.Account();
+            Account account = new Account();
             account.setId(cursor.getInt(ACCOUNT_ID_COL));
             account.setName(cursor.getString(ACCOUNT_NAME_COL));
             account.setEmail(cursor.getString(ACCOUNT_EMAIL_COL));
@@ -93,7 +93,7 @@ public class AccountDB {
         return accounts;
     }
 
-    public long insertAccount(com.example.egoapp.Object.Account account) {
+    public long insertAccount(Account account) {
         ContentValues cv = new ContentValues();
         cv.put(ACCOUNT_ID, account.getId());
         cv.put(ACCOUNT_NAME, account.getName());
@@ -106,7 +106,7 @@ public class AccountDB {
         return rowID;
     }
 
-    public int updateAccount(com.example.egoapp.Object.Account account) {
+    public int updateAccount(Account account) {
         ContentValues cv = new ContentValues();
         cv.put(ACCOUNT_ID, account.getId());
         cv.put(ACCOUNT_NAME, account.getName());
@@ -129,16 +129,16 @@ public class AccountDB {
         return rowCount;
     }
 
-    public com.example.egoapp.Object.Account findAccount(String accountName) {
+    public Account findAccount(String accountName) {
         String where = ACCOUNT_NAME + "= ?";
         String[] whereArgs = { accountName };
 
         this.openReadableDB();
         Cursor cursor = db.query(ACCOUNT_TABLE, null,
                 where, whereArgs, null, null, null);
-        com.example.egoapp.Object.Account account = null;
+        Account account = null;
         cursor.moveToFirst();
-        account = new com.example.egoapp.Object.Account(cursor.getInt(ACCOUNT_ID_COL),
+        account = new Account(cursor.getInt(ACCOUNT_ID_COL),
                 cursor.getString(ACCOUNT_NAME_COL), cursor.getString(ACCOUNT_EMAIL_COL), cursor.getString(ACCOUNT_PASSWORD_COL), cursor.getString(ACCOUNT_ROLES_ID_COL));
         this.closeCursor(cursor);
         this.closeDB();
