@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "863031668197",
+    "firebase_url": "https://egoapp-48a69.firebaseio.com",
+    "project_id": "egoapp-48a69",
+    "storage_bucket": "egoapp-48a69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863031668197:android:3a6924ba8c4993bb2a930c",
+        "android_client_info": {
+          "package_name": "com.example.egoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863031668197-bhkkk95v8lgmfko0tjsf1sdqgpeabuhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLKM5ZMDY_qvGSylNDB0siNS_aRxQe8y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863031668197-bhkkk95v8lgmfko0tjsf1sdqgpeabuhs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
