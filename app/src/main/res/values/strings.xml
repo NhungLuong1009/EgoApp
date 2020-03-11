@@ -15,4 +15,40 @@
         <item>Quebec</item>
         <item>Vancouver</item>
     </string-array>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="text_accounts">All Accounts</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="text_login">Login</string>
+    <string name="text_register">Register</string>
+    <string name="error_message_name">Enter Full Name</string>
+    <string name="error_message_email">Enter Valid Email</string>
+    <string name="error_message_age">Enter Age</string>
+    <string name="error_message_password">Enter Password</string>
+    <string name="success_message">Registration Successful</string>
+    <string name="text_not_member">No account yet? Create one</string>
+    <string name="text_already_member">Already a member? Login</string>
+    <string name="error_email_exists">Email Already Exists</string>
+    <string name="error_password_match">Password Does Not Matches</string>
+    <string name="error_valid_email_password">Wrong Email or Password</string>
+
+
+    <string name="about_ego_app">
+        What is EGO:\n
+        - Ego is an app for booking trip\n
+        - Ego is designed in friendly and easy to use\n
+        How to use EGO:\n
+        - Using search engine in search trip to search the city you want to come\n
+        - Using view trip option to see trip options in the app\n
+        - Using make trip to start making your own trip\n
+        Optional:\n
+        - You can also use google search in the tool bar to search\n
+    </string>
+
 </resources>
+
+

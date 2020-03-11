@@ -28,9 +28,10 @@
                 android:layout_height="50dp"
                 android:inputType="textPersonName"
                 android:text="Your Trip:"
-                android:textColor="#013220"
+                android:textColor="#006400"
                 android:textSize="25dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textStyle="bold"/>
 
 
 
@@ -128,9 +129,10 @@
                 android:layout_height="50dp"
                 android:inputType="textPersonName"
                 android:text="Your Ticket:"
-                android:textColor="#013220"
+                android:textColor="#006400"
                 android:textSize="25dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textStyle="bold"/>
 
 
 
@@ -222,7 +224,7 @@
             android:id="@+id/displayTicketBtn"
             android:layout_width="match_parent"
             android:layout_height="78dp"
-            android:background="#008000"
+            android:background="#20B2AA"
             android:text="FINISH"
             android:textColor="#FFFFFF" />
     </TableLayout>

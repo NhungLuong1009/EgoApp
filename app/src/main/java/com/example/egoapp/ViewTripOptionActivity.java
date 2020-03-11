@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -137,6 +140,41 @@ public class ViewTripOptionActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.drawer_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+            case R.id.nav_about_app:
+                startActivity(new Intent(this, AboutEgoAppActivity.class));
+                return true;
+            case R.id.nav_make_trip:
+                startActivity(new Intent(this, MakeTrip.class));
+                return true;
+            case R.id.nav_search:
+                startActivity(new Intent(this, SearchTripActivity.class));
+                return true;
+            case R.id.nav_view_Trip:
+                startActivity(new Intent(this, ViewTripOptionActivity.class));
+                return true;
+            case R.id.nav_google_search:
+                startActivity(new Intent(this, OpenGoogleSearch.class));
+                return true;
+            case R.id.nav_app_main:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /* --------------------------------NEW CLASS ------------------------------*/

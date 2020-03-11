@@ -45,7 +45,7 @@ public class DisplayTrip extends AppCompatActivity implements View.OnClickListen
 
         // assign parameter for NumberOfPassenger
         TextView selectedPassenger = findViewById(R.id.inSelectedPassenger);
-        selectedPassenger.setText(ShareData.tripNumberOfPassenger);
+        selectedPassenger.setText(ShareData.tripNumberOfAdult);
 
         // assign parameter for RoundTrip
         TextView selectedRoundTrip = findViewById(R.id.inSelectedRoundTrip);

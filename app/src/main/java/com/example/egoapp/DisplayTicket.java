@@ -41,7 +41,7 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
         TextView timeToGo = findViewById(R.id.showedTime);
         timeToGo.setText(ShareData.tripSelectedTime);
         TextView numOfPassenger = findViewById(R.id.showedNumberOfPassenger);
-        numOfPassenger.setText(ShareData.tripNumberOfPassenger);
+        numOfPassenger.setText(ShareData.tripNumberOfAdult);
 
         // Get ID from TextView for Tax & Amount
         TextView tax = findViewById(R.id.showedTax);

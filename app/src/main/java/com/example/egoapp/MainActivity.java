@@ -7,26 +7,30 @@
 
 package com.example.egoapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button searchBtn, makeNewTripBtn, viewTripBtn, aboutAppBtn;
+    private DrawerLayout drawer;
+
+
     /*
      * Function: onCreate
      * Description: initial function that runs the application
@@ -38,6 +42,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_main);
 
+
+        drawer = findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle (this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
         searchBtn = (Button)findViewById(R.id.searchButton);
         searchBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -46,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(myIntent);
             }
         });
+
 
         makeNewTripBtn = (Button)findViewById(R.id.makeNewTripButton);
         makeNewTripBtn.setOnClickListener(new View.OnClickListener(){
@@ -74,6 +86,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(myIntent);
             }
         });
+    }
+
+    public void setSupportActionBar(Toolbar toolBar) {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.drawer_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection.
+        switch (item.getItemId()) {
+            case R.id.nav_about_app:
+                startActivity(new Intent(this, AboutEgoAppActivity.class));
+                return true;
+            case R.id.nav_make_trip:
+                startActivity(new Intent(this, MakeTrip.class));
+                return true;
+            case R.id.nav_search:
+                startActivity(new Intent(this, SearchTripActivity.class));
+                return true;
+            case R.id.nav_view_Trip:
+                startActivity(new Intent(this, ViewTripOptionActivity.class));
+                return true;
+            case R.id.nav_google_search:
+                startActivity(new Intent(this, OpenGoogleSearch.class));
+                return true;
+            case R.id.nav_app_main:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

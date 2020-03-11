@@ -22,13 +22,14 @@
         <TableRow>
 
             <TextView
-                android:layout_width="398dp"
+                android:layout_width="159dp"
+                android:layout_height="80dp"
                 android:layout_span="2"
                 android:gravity="center"
                 android:text="YOUR TRIP"
-                android:layout_height="80dp"
-                android:textColor="#013220"
-                android:textSize="25sp" />
+                android:textColor="#006400"
+                android:textSize="25sp"
+                android:textStyle="bold"/>
 
         </TableRow>
 
@@ -156,7 +157,7 @@
             android:id="@+id/displayTripBtn"
             android:layout_width="match_parent"
             android:layout_height="78dp"
-            android:background="#008000"
+            android:background="#20B2AA"
             android:textColor="#ffffff"
             android:text="DISPLAY TICKET" />
 

@@ -36,7 +36,8 @@ public class ShareData {
     public static String tripSelectedTime = "";
     public static String tripSelectedStartCity = "";
     public static String tripSelectedEndCity = "";
-    public static String tripNumberOfPassenger = "";
+    public static String tripNumberOfAdult = "";
+    public static String tripNumberOfChildren = "";
 
     public static String GetStartCity(String mTitle)
     {
