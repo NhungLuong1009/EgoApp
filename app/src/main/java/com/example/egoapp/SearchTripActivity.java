@@ -1,5 +1,6 @@
 package com.example.egoapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -8,18 +9,27 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class SearchTripActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
@@ -27,8 +37,17 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
     ListView list;
     ListViewAdapter adapter;
     SearchView editsearch;
-    String[] cityNameList;
+    String[] cityNameList = new String[10];
     ArrayList<CityNames> arraylist = new ArrayList<CityNames>();
+
+    private String TAG = MakeTrip.class.getSimpleName();
+    private ProgressDialog pDialog;
+    private static String url = "http://10.0.2.2:3000/cities/";
+    ArrayList<HashMap<String, String>> citiesList;
+
+    double  percentageScale;
+    ProgressBar pb;
+    double howManyTaskList;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -36,14 +55,12 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_trip);
 
-        // Generate sample data
+        citiesList = new ArrayList<>();
 
-        cityNameList = new String[]{"Toronto", "Ottawa", "Kingston",
-                "Mississauga", "Waterloo", "Cambridge", "Kitchener", "Windsor"};
-
+        // assign data from json-serer with cities
+        new GetContacts().execute();
         new LoadCityList().execute();
-        new GetConnectionStatus().execute();
-
+        //new GetConnectionStatus().execute();
 
     }
 
@@ -68,7 +85,6 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
         editsearch = (SearchView) findViewById(R.id.searchCity);
         editsearch.setOnQueryTextListener(this);
 
-
         SearchView searchBar= findViewById(R.id.searchCity);
         searchBar.setVisibility(View.VISIBLE);
     }
@@ -86,10 +102,6 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
         adapter.filter(text);
         return false;
     }
-
-
-
-
 
     class GetConnectionStatus extends AsyncTask<Boolean, Void, Boolean>
     {
@@ -173,17 +185,112 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
         }
     }
 
+    /**
+     * Async task class to get json by making HTTP call
+     */
+    private class GetContacts extends AsyncTask<Void, Void, Void> {
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(SearchTripActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
 
-    double  percentageScale;
-    ProgressBar pb;
-    double howManyTaskList;
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
 
-    class LoadCityList extends AsyncTask<Void,Integer,Void> {
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    // Getting JSON Array node
+                    JSONArray cities = jsonObj.getJSONArray("cities");
+
+                    // looping through All Contacts
+                    Log.e(TAG, "Size: " + cities.length());
+                    for (int i = 0; i < cities.length(); i++) {
+                        JSONObject c = cities.getJSONObject(i);
+
+                        String id = c.getString("id");
+                        String startCity = c.getString("startCity");
+                        String endCity = c.getString("endCity");
+
+                        // tmp hash map for single contact
+                        HashMap<String, String> contact = new HashMap<>();
+
+                        contact.put("id", id);
+                        contact.put("startCity", startCity);
+                        contact.put("endCity", endCity);
+
+                        // adding contact to contact list
+                        citiesList.add(contact);
+                    }
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            /**
+             * Updating parsed JSON data into ListView
+             * */
+
+            List<String> listStartCity = new ArrayList<String>();
+            Log.e(TAG, "element size: " + citiesList.size());
+
+            for (int i = 0; i < citiesList.size(); i++) {
+                Log.e(TAG, "222222 ");
+                HashMap<String, String> map = citiesList.get(i);
+                cityNameList[i] = map.get("startCity");
+                Log.e(TAG, "Cities Elements: " + cityNameList[i]);
+            }
+        }
+    }
+
+    private class LoadCityList extends AsyncTask<Void,Integer,Void> {
 
         @Override
         protected Void doInBackground(Void... values) {
-
 
             int defaultSize = cityNameList.length;
             percentageScale = (double)(100/defaultSize);
