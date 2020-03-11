@@ -8,11 +8,6 @@ android:layout_height="match_parent"
 android:orientation="vertical"
 tools:context=".AboutEgoAppActivity">
 
-<ScrollView
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -23,7 +18,8 @@ tools:context=".AboutEgoAppActivity">
             android:layout_height="230dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/background">
+            android:background="@drawable/background"
+            android:id="@+id/firstLayout">
 
             <ImageView
                 android:layout_height="90dp"
@@ -41,22 +37,51 @@ tools:context=".AboutEgoAppActivity">
                 android:textSize="18sp"/>
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="300dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="215dp"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp">
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:id="@+id/aboutLayout">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp">
+
+                    <TextView
+                        android:id="@+id/aboutApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="ABOUT EGO APP"
+                        android:textColor="#FF0000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/phoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@+id/aboutApp"
+                        android:text="@string/about_ego_app"></TextView>
 
 
+                </RelativeLayout>
 
 
-        </RelativeLayout>
+            </LinearLayout>
 
+        </LinearLayout>
 
     </RelativeLayout>
-
-</ScrollView>
 
 </LinearLayout>

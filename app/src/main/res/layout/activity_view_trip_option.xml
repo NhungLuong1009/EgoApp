@@ -65,7 +65,7 @@
                     android:id="@+id/mainBtn"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:background="#008000"
+                    android:background="#20B2AA"
                     android:textColor="#ffffff"
                     android:text="Make your Own Trip"
                     android:layout_below="@id/listView_tripList"></Button>
