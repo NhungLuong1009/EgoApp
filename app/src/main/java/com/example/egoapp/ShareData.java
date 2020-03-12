@@ -1,7 +1,7 @@
 //* FILE			: ShareData.java
 //* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
-//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSON	: Feb 8, 2018
+//* PROGRAMMER		: Nhung Luong, Hyunchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Mar 14, 2020
 //* DESCRIPTION		: The file defines share data for using in the app
 
 
