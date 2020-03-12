@@ -52,7 +52,7 @@ public class ShareData {
         String[] tripSelectedEndCity = mTitle.split(delimeter);
         return tripSelectedEndCity[1];
     }
-    public static boolean tripSelectedRoundTripOption = false;
+    public static String tripSelectedRoundTripOption = "";
 
     public static int StartCityISEmpty = 1;
     public static int EndCityISEmpty = 2;

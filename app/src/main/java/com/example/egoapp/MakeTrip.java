@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,7 +32,10 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.*;
 import java.util.List;
+import com.example.egoapp.DBHandler.OrderDB;
+import com.example.egoapp.Object.Orders;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,8 +51,10 @@ import org.json.JSONObject;
         private ListView lv;
 
         private static String url = "http://10.0.2.2:3000/cities/";
+        private static String anotherUrl = "http://10.0.2.2:8888/tourinfo/";
 
         ArrayList<HashMap<String, String>> citiesList;
+        ArrayList<HashMap<String, String>> tourList;
 
         Button btnDatePicker, btnTimePicker;
         EditText txtDate;
@@ -65,6 +71,9 @@ import org.json.JSONObject;
         Spinner spinner1 = null;
         Spinner spinner2 = null;
 
+        OrderDB orderDB;
+        double distanceGlobal;
+
         /*
          * Function: onCreate
          * Description: initial function that runs the application
@@ -76,12 +85,23 @@ import org.json.JSONObject;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.make_trip);
 
+            //Initialize the ArrayList
+            citiesList = new ArrayList<>();
+            tourList = new ArrayList<>();
+
+            // Initialize the ORDER Database
+            orderDB = new OrderDB(this);
+            // Run the Cities JSON-SERVER
+            new GetCitiesAsyncTask().execute();
+            //cityAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
             // Get ID from 2 Spinner (Start City & End City)
             spinner1 = (Spinner) findViewById(R.id.listStartCity);
             spinner2 = (Spinner) findViewById(R.id.listEndCity);
 
             // Load Array into 2 seperate spinner
             String[] allAvailableCities = getResources().getStringArray(R.array.Cities);
+            /*
             // ******************************** SPINNER **************************************** //
             // Start city spinner
             // Create an ArrayAdapter using the string array and a default spinner layout
@@ -99,7 +119,7 @@ import org.json.JSONObject;
             // Specify the layout to use when the list of choices appears
             adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             // Apply the adapter to the spinner
-            spinner2.setAdapter(adapter2);
+            spinner2.setAdapter(adapter2);*/
 
             // Check if user click on default trip on screen
             if (ShareData.makeOwnTrip == false) {
@@ -152,10 +172,32 @@ import org.json.JSONObject;
 
                         int selectedButtonId = selectedRoundtripButton.getCheckedRadioButtonId();
                         if (selectedButtonId == 0) {
-                            ShareData.tripSelectedRoundTripOption = true;
+                            ShareData.tripSelectedRoundTripOption = "RoundTrip";
                             buttonSelected = selectedButtonId;
                         } else {
-                            ShareData.tripSelectedRoundTripOption = false;
+                            ShareData.tripSelectedRoundTripOption = "OneWay";
+                        }
+                        //Log.d("START", ShareData.tripSelectedStartCity);
+                        //Log.d("END", ShareData.tripSelectedEndCity);
+
+                        /*GetTourInfoAsyncTask asyncTask2 = new GetTourInfoAsyncTask(); // Second
+                        asyncTask2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
+                        new GetTourInfoAsyncTask().execute();
+
+                        distanceGlobal = getMilesFromJSON(ShareData.tripSelectedStartCity, ShareData.tripSelectedEndCity);
+                        Log.d("MILE DATA", Double.toString(distanceGlobal));
+
+                        // INSERT DATA into ORDER TABLE
+                        Orders orderObj = new Orders(ShareData.tripSelectedDate, ShareData.tripSelectedTime, ShareData.tripSelectedStartCity,
+                                ShareData.tripSelectedEndCity, Integer.parseInt(ShareData.tripNumberOfAdult) , Integer.parseInt(ShareData.tripNumberOfChildren),
+                                ShareData.tripSelectedRoundTripOption, distanceGlobal);
+
+                        long insertOrderId = orderDB.insertOrder(orderObj);
+                        if (insertOrderId > 0) {
+                            Toast.makeText(MakeTrip.this,"New Order Inserted",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(MakeTrip.this,"Data not Inserted",Toast.LENGTH_LONG).show();
                         }
 
                         Intent myIntent = new Intent(MakeTrip.this, DisplayTrip.class);
@@ -226,6 +268,26 @@ import org.json.JSONObject;
                 timePickerDialog.show();
             }
         }
+
+
+        private double getMilesFromJSON(String startCity, String endCity)
+        {
+            double miles = 0.00;
+            for (HashMap<String, String> entry : tourList) {
+                // for each hashmap, iterate over it
+                Log.d("SC", entry.get("startCity"));
+                Log.d("EC", entry.get("endCity"));
+                Log.d("ASC", ShareData.tripSelectedStartCity);
+                Log.d("AEC", ShareData.tripSelectedEndCity);
+                if (entry.get("startCity").equals(startCity) && entry.get("endCity").equals(endCity))
+                {
+                    Log.d("HELLO", entry.get("distance"));
+                    miles = Double.parseDouble(entry.get("distance"));
+                }
+            }
+            return miles;
+        }
+
 
         /* =========================================================================================================================*
          * Name		: findIndex
@@ -311,6 +373,13 @@ import org.json.JSONObject;
         }
 
 
+        /* =========================================================================================================================*
+         * Name		: onCreateOptionsMenu
+         * Purpose	: as function for Menu
+         * Inputs	: Menu menu : the menu
+         * Outputs	: None
+         * Returns	: boolean
+         *===========================================================================================================================*/
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
             MenuInflater inflater = getMenuInflater();
@@ -318,6 +387,14 @@ import org.json.JSONObject;
             return true;
         }
 
+
+        /* =========================================================================================================================*
+         * Name		: onOptionsItemSelected
+         * Purpose	: as function for menuitem
+         * Inputs	: MenuItem item : the menu item
+         * Outputs	: None
+         * Returns	: boolean
+         *===========================================================================================================================*/
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             // Handle item selection.
@@ -345,10 +422,11 @@ import org.json.JSONObject;
             }
         }
 
+
         /**
          * Async task class to get json by making HTTP call
          */
-        private class GetContacts extends AsyncTask<Void, Void, Void> {
+        private class GetCitiesAsyncTask extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected void onPreExecute() {
@@ -377,7 +455,7 @@ import org.json.JSONObject;
                         // Getting JSON Array node
                         JSONArray cities = jsonObj.getJSONArray("cities");
 
-                        // looping through All Contacts
+                        // looping through All Cities
                         for (int i = 0; i < cities.length(); i++) {
                             JSONObject c = cities.getJSONObject(i);
 
@@ -386,15 +464,15 @@ import org.json.JSONObject;
                             String endCity = c.getString("endCity");
                             //                        String distance = c.getString("distance");
 
-                            // tmp hash map for single contact
-                            HashMap<String, String> contact = new HashMap<>();
+                            // tmp hash map for single cities
+                            HashMap<String, String> cityMap = new HashMap<>();
 
-                            contact.put("id", id);
-                            contact.put("startCity", startCity);
-                            contact.put("endCity", endCity);
+                            cityMap.put("id", id);
+                            cityMap.put("startCity", startCity);
+                            cityMap.put("endCity", endCity);
 
-                            // adding contact to contact list
-                            citiesList.add(contact);
+                            // adding cityMap to cityMap list
+                            citiesList.add(cityMap);
                         }
                     } catch (final JSONException e) {
                         Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -457,6 +535,121 @@ import org.json.JSONObject;
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner2.setAdapter(dataAdapter);
             }
+        }
+
+        /**
+         * Async task class to get json by making HTTP call
+         */
+        private class GetTourInfoAsyncTask extends AsyncTask<Void, Void, Void> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                // Showing progress dialog
+                pDialog = new ProgressDialog(MakeTrip.this);
+                pDialog.setMessage("Please wait...");
+                pDialog.setCancelable(false);
+                pDialog.show();
+
+            }
+
+            @Override
+            protected Void doInBackground(Void... arg0) {
+                HttpHandler sh = new HttpHandler();
+
+                // Making a request to url and getting response
+                String jsonStr = sh.makeServiceCall(anotherUrl);
+
+                Log.e(TAG, "Response from url: " + jsonStr);
+
+                if (jsonStr != null) {
+                    try {
+                        JSONObject jsonObj = new JSONObject(jsonStr);
+
+                        // Getting JSON Array node
+                        JSONArray tours = jsonObj.getJSONArray("tourinfo");
+
+                        // looping through All Tours
+                        for (int i = 0; i < tours.length(); i++) {
+                            JSONObject c = tours.getJSONObject(i);
+
+                            String id = c.getString("id");
+                            String startCity = c.getString("startCity");
+                            String endCity = c.getString("endCity");
+                            String distance = c.getString("distance");
+
+
+                            // tmp hash map for single cityMap
+                            HashMap<String, String> tourMap = new HashMap<>();
+
+                            tourMap.put("id", id);
+                            tourMap.put("startCity", startCity);
+                            tourMap.put("endCity", endCity);
+                            tourMap.put("distance", distance);
+
+                            // Add to the list
+                            tourList.add(tourMap);
+                        }
+                    } catch (final JSONException e) {
+                        Log.e(TAG, "Json parsing error: " + e.getMessage());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Json parsing error: " + e.getMessage(),
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+
+                    }
+                } else {
+                    Log.e(TAG, "Couldn't get json from server.");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result) {
+                super.onPostExecute(result);
+                // Dismiss the progress dialog
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+                /**
+                 * Updating parsed JSON data into ListView
+                 * */
+
+                /*final Spinner spinner1 = (Spinner) findViewById(R.id.listStartCity);
+                final Spinner spinner2 = (Spinner) findViewById(R.id.listEndCity);
+
+                ShareData.tripSelectedStartCity =  spinner1.getSelectedItem().toString();
+                ShareData.tripSelectedEndCity = spinner2.getSelectedItem().toString();*/
+
+                /*for (HashMap<String, String> entry : tourList) {
+                    // for each hashmap, iterate over it
+                    *//*for (String key : entry.keySet()) {*//*
+                    // Do sth with EntrySet, like get the key
+                    Log.d("SC", entry.get("startCity"));
+                    Log.d("EC", entry.get("endCity"));
+                    Log.d("ASC", ShareData.tripSelectedStartCity);
+                    Log.d("AEC", ShareData.tripSelectedEndCity);
+                    if (entry.get("startCity").equals(ShareData.tripSelectedStartCity) && entry.get("endCity").equals(ShareData.tripSelectedEndCity))
+                    {
+                        Log.d("HELLO", entry.get("distance"));
+                        distanceGlobal = Double.parseDouble(entry.get("distance"));
+                    }
+                }*/
+            }
+
 
         }
     }

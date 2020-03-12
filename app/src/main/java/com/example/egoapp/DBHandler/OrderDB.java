@@ -3,6 +3,7 @@ package com.example.egoapp.DBHandler;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -40,19 +41,18 @@ public class OrderDB {
     public static final int     ORDER_MILES_COL = 9;
 
     public static final String CREATE_ORDER_TABLE =
-            "CREATE TABLE" + ORDER_TABLE + " (" +
-                    ORDER_ID + " INTEGER NOT NULL, " +
-                    ORDER_ACCOUNT_ID + " INTEGER NOT NULL" +
-                    ORDER_DATE + " TEXT NOT NULL" +
-                    ORDER_TIME + " TEXT NOT NULL" +
-                    ORDER_START_CITY + " TEXT NOT NULL" +
-                    ORDER_END_CITY + " TEXT NOT NULL" +
-                    ORDER_ADULT_COUNT + " INTEGER NOT NULL" +
-                    ORDER_CHILD_COUNT + " INTEGER NOT NULL" +
-                    ORDER_ROUND_TRIP + " NUMERIC NOT NULL" +
-                    ORDER_MILES + " NUMERIC NOT NULL" +
-                    "FOREIGN KEY (" + ORDER_ACCOUNT_ID +
-                    ") REFERENCES account(" + ORDER_ACCOUNT_ID + ")" +
+            "CREATE TABLE " + ORDER_TABLE + " (" +
+                    ORDER_ID + " INTEGER AUTO INCREMENT PRIMARY KEY NOT NULL, " +
+                    ORDER_DATE + " TEXT NOT NULL, " +
+                    ORDER_TIME + " TEXT NOT NULL, " +
+                    ORDER_START_CITY + " TEXT NOT NULL, " +
+                    ORDER_END_CITY + " TEXT NOT NULL, " +
+                    ORDER_ADULT_COUNT + " INTEGER NOT NULL, " +
+                    ORDER_CHILD_COUNT + " INTEGER NOT NULL, " +
+                    ORDER_ROUND_TRIP + " TEXT NOT NULL, " +
+                    ORDER_MILES + " REAL NOT NULL" +
+                    /*"FOREIGN KEY (" + ORDER_ACCOUNT_ID +
+                    ") REFERENCES account(" + ORDER_ACCOUNT_ID + ")" +*/
                     ");";
 
     public static final String DROP_ORDER_TABLE =
@@ -60,6 +60,11 @@ public class OrderDB {
 
     private SQLiteDatabase db;
     private DBHelper dbHelper;
+
+    // Constructor --------------------------------------------------------
+    public OrderDB(Context context) {
+        dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
+    }
 
     // Opening Database -------------------------------------------------------------------------------------------------
     private void openReadableDB() { db = dbHelper.getReadableDatabase(); }
@@ -75,6 +80,14 @@ public class OrderDB {
     }
 
     // Function for DB --------------------------------------------------------------------------------------------------
+    public long getOrderRowCount()
+    {
+        this.openReadableDB();
+        long numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM " + ORDER_TABLE, null);
+        this.closeDB();
+        return numRows;
+    }
+
     public ArrayList<Orders> getOrders(int orderID) {
         ArrayList<Orders> orders = new ArrayList<Orders>();
         this.openReadableDB();
@@ -83,14 +96,13 @@ public class OrderDB {
         while (cursor.moveToNext()) {
             Orders order = new Orders();
             order.setOrderID(cursor.getInt(ORDER_ID_COL));
-            order.setAccountID(cursor.getInt(ORDER_ACCOUNT_ID_COL));
             order.setOrderDate(cursor.getString(ORDER_DATE_COL));
             order.setOrderTime(cursor.getString(ORDER_TIME_COL));
             order.setStartCity(cursor.getString(ORDER_START_CITY_COL));
             order.setEndCity(cursor.getString(ORDER_END_CITY_COL));
             order.setNumOfAdults(cursor.getInt(ORDER_ADULT_COUNT_COL));
             order.setNumOfChild(cursor.getInt(ORDER_CHILD_COUNT_COL));
-            order.setRoundTrip(cursor.getInt(ORDER_MILES_COL) > 0);
+            order.setRoundTrip(cursor.getString(ORDER_MILES_COL));
 
             orders.add(order);
         }
@@ -103,14 +115,14 @@ public class OrderDB {
 
     public long insertOrder(Orders order) {
         ContentValues cv = new ContentValues();
-        cv.put(ORDER_ID, order.getOrderID());
-        cv.put(ORDER_ACCOUNT_ID, order.getAccountID());
+        cv.put(ORDER_ID, getOrderRowCount() + 1);
         cv.put(ORDER_DATE, order.getOrderDate());
         cv.put(ORDER_TIME, order.getOrderTime());
         cv.put(ORDER_START_CITY, order.getStartCity());
         cv.put(ORDER_END_CITY, order.getEndCity());
         cv.put(ORDER_ADULT_COUNT, order.getNumOfAdults());
         cv.put(ORDER_CHILD_COUNT, order.getNumOfChild());
+        cv.put(ORDER_ROUND_TRIP, order.getRoundTrip());
         cv.put(ORDER_MILES, order.getMiles());
 
         this.openWriteableDB();
@@ -122,7 +134,6 @@ public class OrderDB {
     public int updateOrder(Orders order) {
         ContentValues cv = new ContentValues();
         cv.put(ORDER_ID, order.getOrderID());
-        cv.put(ORDER_ACCOUNT_ID, order.getAccountID());
         cv.put(ORDER_DATE, order.getOrderDate());
         cv.put(ORDER_TIME, order.getOrderTime());
         cv.put(ORDER_START_CITY, order.getStartCity());
