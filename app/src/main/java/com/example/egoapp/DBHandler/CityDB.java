@@ -57,7 +57,7 @@ public class CityDB {
     }
 
     // Function for DB --------------------------------------------------------------------------------------------------
-    public ArrayList<Cities> getCityName(int cityID) {
+    public ArrayList<Cities> getCities() {
         ArrayList<Cities> cities = new ArrayList<Cities>();
         this.openReadableDB();
         Cursor cursor = db.query(CITY_TABLE,
@@ -166,3 +166,4 @@ public class CityDB {
         }
     }  // End of DBHelper class
 }
+
