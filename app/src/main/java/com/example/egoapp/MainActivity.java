@@ -60,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_main);
 
+        //
+        callerCity = new CityDB(this);
+
+        citiesList = new ArrayList<>();
+
+        // assign data from json-serer with cities
+        new GetContacts().execute();
 
         drawer = findViewById(R.id.drawer_layout);
 
@@ -250,6 +257,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0; i < citiesList.size(); i++) {
                 HashMap<String, String> map = citiesList.get(i);
                 Cities findCities = new Cities();
+
+                ArrayList<Cities> allCities = callerCity.getCities();
+                Log.e(TAG, "### Cities Size ### : " + allCities.size());
 
                 // check cities for existing cities
                 findCities = callerCity.findCity(map.get("startCity"));

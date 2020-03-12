@@ -57,11 +57,12 @@ public class CityDB {
     }
 
     // Function for DB --------------------------------------------------------------------------------------------------
-    public ArrayList<Cities> getOrders(int cityID) {
+    public ArrayList<Cities> getCities() {
         ArrayList<Cities> cities = new ArrayList<Cities>();
         this.openReadableDB();
         Cursor cursor = db.query(CITY_TABLE,
                 null, null, null, null, null, null);
+
         while (cursor.moveToNext()) {
             Cities city = new Cities();
             city.setCityID(cursor.getInt(CITY_ID_COL));
