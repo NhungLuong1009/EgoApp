@@ -15,6 +15,7 @@ import java.util.Locale;
 
 
 
+
 public class ListViewAdapter extends BaseAdapter {
 
     // Declare Variables
