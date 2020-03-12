@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+
+
 public class ListViewAdapter extends BaseAdapter {
 
     // Declare Variables
