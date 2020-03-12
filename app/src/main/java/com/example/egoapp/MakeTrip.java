@@ -7,9 +7,13 @@
 
 package com.example.egoapp;
 
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,20 +21,32 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.app.DatePickerDialog;
-import android.widget.EditText;
-import java.util.Calendar;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 public class MakeTrip  extends AppCompatActivity
     implements View.OnClickListener
 {
 
     Button btnDatePicker, btnTimePicker;
+    EditText userFullName;
+    EditText userPhoneNum;
     EditText txtDate;
     EditText txtTime;
     String txtNumOfAdult;
@@ -45,6 +61,15 @@ public class MakeTrip  extends AppCompatActivity
     Spinner spinner1 = null;
     Spinner spinner2 = null;
 
+    private String TAG = MakeTrip.class.getSimpleName();
+
+    private ProgressDialog pDialog;
+    private ListView lv;
+
+    private static String url = "http://10.0.2.2:3000/cities/";
+
+    ArrayList<HashMap<String, String>> citiesList;
+
     /*
      * Function: onCreate
      * Description: initial function that runs the application
@@ -56,49 +81,6 @@ public class MakeTrip  extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.make_trip);
 
-        // Get ID from 2 Spinner (Start City & End City)
-        spinner1 = (Spinner) findViewById(R.id.listStartCity);
-        spinner2 = (Spinner) findViewById(R.id.listEndCity);
-
-        // Load Array into 2 seperate spinner
-        String[] allAvailableCities = getResources().getStringArray(R.array.Cities);
-        // ******************************** SPINNER **************************************** //
-        // Start city spinner
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
-                R.array.Cities, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner1.setAdapter(adapter1);
-
-        // End city spinner
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
-                R.array.Cities, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner2.setAdapter(adapter2);
-
-        // Check if user click on default trip on screen
-        if(ShareData.makeOwnTrip == false)
-        {
-            // This step will do some manipulation with string to split the mTitle into startcity & endcity String
-            // parse selected trip to 2 end and start city
-            String selectedTripCitiy = ShareData.mTitle[ShareData.selectedTrip];
-            String[] splitedSelectedTripCity = selectedTripCitiy.split(" to ");
-            // Start City Stirng
-            selectedStartCities = splitedSelectedTripCity[0];
-            // End City String
-            selectedEndCities = splitedSelectedTripCity[1];
-            int positionStartCities = findIndex(allAvailableCities, selectedStartCities);
-            int positionEndCities = findIndex(allAvailableCities, selectedEndCities);
-            // Set the position of spinner based on the result from 2 cities
-            spinner1.setSelection(positionStartCities);
-            spinner2.setSelection(positionEndCities);
-        }
-
         // ******************** Make Trip button ***************************************************** //
         Button myBtn = findViewById(R.id.makeTripBtn);
         // Event trigger fot "Make Trip" Button
@@ -107,11 +89,14 @@ public class MakeTrip  extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
+                EditText enteredUserName = findViewById(R.id.userName );
+                EditText enteredPhoneNum = findViewById(R.id.userPhoneNumber );
                 EditText selectedDate = findViewById(R.id.in_date);
                 EditText selectedTime = findViewById(R.id.in_time);
                 EditText selectedNumOfAdult = findViewById(R.id.adult_edit_text);
                 EditText selectedNumberOfChildren = findViewById(R.id.child_edit_text);
                 RadioGroup selectedRoundtripButton = findViewById(R.id.roundtrip_radioGroup);
+
 
                 //==========================================================================================================//
                 //  - WE VALIDATE THE INPUT. THEN WE CHECK IF:
@@ -121,6 +106,9 @@ public class MakeTrip  extends AppCompatActivity
                 int retCode = validateInput();
                 if(retCode == ShareData.SUCCESS)
                 {
+                    ShareData.tripUserName = enteredUserName.getText().toString();
+                    ShareData.tripUserPhoneNum = enteredPhoneNum.getText().toString();
+
                     ShareData.tripSelectedStartCity = spinner1.getSelectedItem().toString();
                     ShareData.tripSelectedEndCity = spinner2.getSelectedItem().toString();
 
@@ -162,6 +150,128 @@ public class MakeTrip  extends AppCompatActivity
 
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
+    }
+
+
+    double  percentageScale;
+    ProgressBar pb;
+    double howManyTaskList;
+
+    /**
+     * Async task class to get json by making HTTP call
+     */
+    private class GetContacts extends AsyncTask<Void, Void, Void> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(MakeTrip.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    // Getting JSON Array node
+                    JSONArray cities = jsonObj.getJSONArray("cities");
+
+                    // looping through All Contacts
+                    for (int i = 0; i < cities.length(); i++) {
+                        JSONObject c = cities.getJSONObject(i);
+
+                        String id = c.getString("id");
+                        String startCity = c.getString("startCity");
+                        String endCity = c.getString("endCity");
+//                        String distance = c.getString("distance");
+
+                        // tmp hash map for single contact
+                        HashMap<String, String> contact = new HashMap<>();
+
+                        contact.put("id", id);
+                        contact.put("startCity", startCity);
+                        contact.put("endCity", endCity);
+
+                        // adding contact to contact list
+                        citiesList.add(contact);
+                    }
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            /**
+             * Updating parsed JSON data into ListView
+             * */
+
+            final Spinner spinner1 = (Spinner) findViewById(R.id.listStartCity);
+            final Spinner spinner2 = (Spinner) findViewById(R.id.listEndCity);
+
+            List<String> listStartCity = new ArrayList<String>();
+            List<String> listEndCity = new ArrayList<String>();
+
+            Log.e(TAG, "element size: " + citiesList.size());
+            for (int i = 0; i < citiesList.size(); i++) {
+                HashMap<String, String> map = citiesList.get(i);
+
+                listStartCity.add(map.get("startCity"));
+                listEndCity.add(map.get("endCity"));
+            }
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MakeTrip.this, android.R.layout.simple_spinner_item, listStartCity);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner1.setAdapter(dataAdapter);
+
+            dataAdapter = new ArrayAdapter<String>(MakeTrip.this, android.R.layout.simple_spinner_item, listEndCity);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner2.setAdapter(dataAdapter);
+
+        }
     }
 
 
@@ -352,6 +462,9 @@ public class MakeTrip  extends AppCompatActivity
                 return true;
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

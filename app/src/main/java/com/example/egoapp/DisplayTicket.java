@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
@@ -58,8 +58,7 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
 
         // calculate amount & tax
         // 1. covert amount
-        String toConvertStr;
-        toConvertStr = amount.getText().toString();
+        String toConvertStr = amount.getText().toString();
         int toConvertAmount = Integer.parseInt(toConvertStr);
 
         // 2. convert passenger

@@ -23,7 +23,7 @@ public class ShareData {
     public static int selectedTrip = 0;
     public static Boolean makeOwnTrip = false;
 
-    public static String mDescription[] = {"$140", "$50", "$100", "$200", "$500"};
+    public static String mDescription[] = {"", "", "", "", ""};
 
     public static int images[] = {R.drawable.ottawa,
             R.drawable.waterloo,
@@ -32,6 +32,8 @@ public class ShareData {
             R.drawable.vancouver};
 
     // Make trip global variables
+    public static String tripUserName = "";
+    public static String tripUserPhoneNum = "";
     public static String tripSelectedDate = "";
     public static String tripSelectedTime = "";
     public static String tripSelectedStartCity = "";

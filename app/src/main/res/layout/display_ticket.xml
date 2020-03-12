@@ -15,13 +15,64 @@
         android:collapseColumns="2"
         tools:ignore="MissingConstraints">
 
-
-
         <!-- first row of the table layout-->
+
         <TableRow android:layout_span="2">
+        `<TextView
+            android:id="@+id/userInfo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPersonName"
+            android:text="Your Info:"
+            android:textColor="#006400"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:textStyle="bold"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/userNameText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/userNameTxt"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:inputType="textPersonName"
+            android:text="Pass. Name: "
+            android:textSize="20sp"
+            android:textColor="#0e1111"/>
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:inputType="textPersonName"
+            android:textSize="20sp"
+            tools:ignore="DuplicateIds" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/userPhoneNumText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/userPhoneNumTxt"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                android:text="Tel: "
+                android:textSize="20sp"
+                android:textColor="#0e1111"/>
+
+            <TextView
+                android:id="@+id/userPhoneNum"
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="20sp"
+                tools:ignore="DuplicateIds" />
+        </TableRow>
 
 
-
+        <TableRow android:layout_span="2">
             <TextView
                 android:id="@+id/displayTrip"
                 android:layout_width="match_parent"
@@ -32,9 +83,6 @@
                 android:textSize="25dp"
                 android:gravity="center"
                 android:textStyle="bold"/>
-
-
-
         </TableRow>
         <TableRow
             android:id="@+id/row1"

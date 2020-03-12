@@ -1,13 +1,13 @@
 package com.example.egoapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AboutEgoAppActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -56,6 +56,9 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
                 return true;
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

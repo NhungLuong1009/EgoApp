@@ -66,6 +66,7 @@ public class OpenGoogleSearch extends AppCompatActivity {
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
@@ -87,10 +88,12 @@ public class OpenGoogleSearch extends AppCompatActivity {
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
 
