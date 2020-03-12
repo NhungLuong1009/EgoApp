@@ -1,8 +1,9 @@
 //* FILE			: MakeTrip.java
-//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #2
-//* PROGRAMMER		: Nhung Luong, Hyunchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSION	: Mar 14, 2020
-//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the second screen of the app asking for getting trip info
+
 
 package com.example.egoapp;
 
