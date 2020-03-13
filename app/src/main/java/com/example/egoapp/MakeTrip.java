@@ -50,9 +50,11 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
     private ProgressDialog pDialog;
     private ListView lv;
 
+    // JSON-Server URL, at this step, we are working with file by using two instances
     private static String url = "http://10.0.2.2:3000/cities/";
     private static String anotherUrl = "http://10.0.2.2:8888/tourinfo/";
 
+    // Working with List that contains two hashMap that get the content from the JSON Server
     ArrayList<HashMap<String, String>> citiesList;
     ArrayList<HashMap<String, String>> tourList;
 
@@ -93,9 +95,8 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
 
         // Initialize the ORDER Database
         orderDB = new OrderDB(this);
-        // Run the Cities JSON-SERVER
+        // Run the Cities JSON-SERVER instances using AsyncTask
         new GetCitiesAsyncTask().execute();
-        //cityAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         // Get ID from 2 Spinner (Start City & End City)
         spinner1 = (Spinner) findViewById(R.id.listStartCity);
@@ -103,24 +104,6 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
 
         // Load Array into 2 seperate spinner
         String[] allAvailableCities = getResources().getStringArray(R.array.Cities);
-            /*
-            // ******************************** SPINNER **************************************** //
-            // Start city spinner
-            // Create an ArrayAdapter using the string array and a default spinner layout
-            ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
-                    R.array.Cities, android.R.layout.simple_spinner_item);
-            // Specify the layout to use when the list of choices appears
-            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            // Apply the adapter to the spinner
-            spinner1.setAdapter(adapter1);
-            // End city spinner
-            // Create an ArrayAdapter using the string array and a default spinner layout
-            ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
-                    R.array.Cities, android.R.layout.simple_spinner_item);
-            // Specify the layout to use when the list of choices appears
-            adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            // Apply the adapter to the spinner
-            spinner2.setAdapter(adapter2);*/
 
         // Check if user click on default trip on screen
         if (ShareData.makeOwnTrip == false) {
@@ -180,11 +163,8 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
                     } else {
                         ShareData.tripSelectedRoundTripOption = "OneWay";
                     }
-                    //Log.d("START", ShareData.tripSelectedStartCity);
-                    //Log.d("END", ShareData.tripSelectedEndCity);
 
-                        /*GetTourInfoAsyncTask asyncTask2 = new GetTourInfoAsyncTask(); // Second
-                        asyncTask2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
+                    // Create the second instances that execute and get the Data from the JSON-Server using AsyncTask
                     new GetTourInfoAsyncTask().execute();
 
                     distanceGlobal = getMilesFromJSON(ShareData.tripSelectedStartCity, ShareData.tripSelectedEndCity);
@@ -273,6 +253,13 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
     }
 
 
+    /* =========================================================================================================================*
+     * Name		: getMilesFromJSON
+     * Purpose	: to get the miles data from JSON Server based on startCity and endCity
+     * Inputs	: startCity String - endCity String
+     * Outputs	: double
+     * Returns	: double
+     *===========================================================================================================================*/
     private double getMilesFromJSON(String startCity, String endCity)
     {
         double miles = 0.00;
@@ -290,6 +277,8 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
         }
         return miles;
     }
+
+
 
 
     /* =========================================================================================================================*
@@ -542,6 +531,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
             spinner2.setAdapter(dataAdapter);
         }
     }
+
 
     /**
      * Async task class to get json by making HTTP call
