@@ -2,19 +2,16 @@ package com.example.egoapp.Object;
 
 public class Orders {
     private int orderID;
-    private int accountID;
     private String orderDate;
     private String orderTime;
     private String startCity;
     private String endCity;
     private int numOfAdults;
     private int numOfChild;
-    private boolean roundTrip;
+    private String roundTrip;
     private double miles;
 
-    public Orders(int orderID, int accountID, String orderDate, String orderTime, String startCity, String endCity, int numOfAdults, int numOfChild, boolean roundTrip, double miles) {
-        this.orderID = orderID;
-        this.accountID = accountID;
+    public Orders(String orderDate, String orderTime, String startCity, String endCity, int numOfAdults, int numOfChild, String roundTrip, double miles) {
         this.orderDate = orderDate;
         this.orderTime = orderTime;
         this.startCity = startCity;
@@ -33,14 +30,6 @@ public class Orders {
 
     public void setOrderID(int orderID) {
         this.orderID = orderID;
-    }
-
-    public int getAccountID() {
-        return accountID;
-    }
-
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
     }
 
     public String getOrderDate() {
@@ -91,11 +80,11 @@ public class Orders {
         this.numOfChild = numOfChild;
     }
 
-    public boolean isRoundTrip() {
+    public String getRoundTrip() {
         return roundTrip;
     }
 
-    public void setRoundTrip(boolean roundTrip) {
+    public void setRoundTrip(String roundTrip) {
         this.roundTrip = roundTrip;
     }
 

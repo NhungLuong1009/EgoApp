@@ -7,10 +7,10 @@
 package com.example.egoapp.Object;
 
 public class Cities {
-    private long cityID;
+    private int cityID;
     private String cityName;
 
-    public Cities(long cityID, String cityName) {
+    public Cities(int cityID, String cityName) {
         this.cityID = cityID;
         this.cityName = cityName;
     }
@@ -25,7 +25,7 @@ public class Cities {
         return cityID;
     }
 
-    public void setCityID(long cityID) {
+    public void setCityID(int cityID) {
         this.cityID = cityID;
     }
 

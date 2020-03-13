@@ -32,8 +32,6 @@ public class ShareData {
             R.drawable.vancouver};
 
     // Make trip global variables
-    public static String tripUserName = "";
-    public static String tripUserPhoneNum = "";
     public static String tripSelectedDate = "";
     public static String tripSelectedTime = "";
     public static String tripSelectedStartCity = "";
@@ -54,7 +52,7 @@ public class ShareData {
         String[] tripSelectedEndCity = mTitle.split(delimeter);
         return tripSelectedEndCity[1];
     }
-    public static boolean tripSelectedRoundTripOption = false;
+    public static String tripSelectedRoundTripOption = "";
 
     public static int StartCityISEmpty = 1;
     public static int EndCityISEmpty = 2;

@@ -49,7 +49,7 @@ public class DisplayTrip extends AppCompatActivity implements View.OnClickListen
 
         // assign parameter for RoundTrip
         TextView selectedRoundTrip = findViewById(R.id.inSelectedRoundTrip);
-        if(ShareData.tripSelectedRoundTripOption == true){
+        if(ShareData.tripSelectedRoundTripOption == "OneWay"){
             selectedRoundTrip.setText("No");
         }
         else{

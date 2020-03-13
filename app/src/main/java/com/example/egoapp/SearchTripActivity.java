@@ -24,7 +24,7 @@ import com.example.egoapp.DBHandler.CityDB;
 
 import java.util.ArrayList;
 
-public class SearchTripActivity<objectname> extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class SearchTripActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     // Declare Variables
     ListView list;
@@ -59,8 +59,7 @@ public class SearchTripActivity<objectname> extends AppCompatActivity implements
         list = (ListView) findViewById(R.id.listView);
 
         for (int i = 0; i < cityNameList.length; i++) {
-            Cities cityName = new Cities(cityNameList[i]);
-            // Binds all strings into an array
+            Cities cityName = new Cities(i,cityNameList[i]);            // Binds all strings into an array
             arraylist.add(cityName);
         }
 
