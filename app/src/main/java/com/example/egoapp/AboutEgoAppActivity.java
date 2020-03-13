@@ -1,12 +1,4 @@
-//* FILE			: AboutEgoAppActivity.java
-//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #2
-//* PROGRAMMER		: Nhung Luong, Hyunchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSION	: Mar 14, 2020
-//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
-
 package com.example.egoapp;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AboutEgoAppActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -62,6 +56,9 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
                 return true;
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

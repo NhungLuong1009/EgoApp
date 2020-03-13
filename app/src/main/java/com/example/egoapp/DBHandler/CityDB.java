@@ -57,12 +57,11 @@ public class CityDB {
     }
 
     // Function for DB --------------------------------------------------------------------------------------------------
-    public ArrayList<Cities> getCities() {
+    public ArrayList<Cities> getCityName(int cityID) {
         ArrayList<Cities> cities = new ArrayList<Cities>();
         this.openReadableDB();
         Cursor cursor = db.query(CITY_TABLE,
                 null, null, null, null, null, null);
-
         while (cursor.moveToNext()) {
             Cities city = new Cities();
             city.setCityID(cursor.getInt(CITY_ID_COL));
@@ -137,6 +136,24 @@ public class CityDB {
         {
             // First, create tables
             db.execSQL(CREATE_CITY_TABLE);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("1",CITY_ID);
+            contentValues.put("Waterloo",CITY_NAME);
+            contentValues.put("2",CITY_ID);
+            contentValues.put("Windsor",CITY_NAME);
+            contentValues.put("3",CITY_ID);
+            contentValues.put("Kitchener",CITY_NAME);
+            contentValues.put("4",CITY_ID);
+            contentValues.put("Cambridge",CITY_NAME);
+            contentValues.put("5",CITY_ID);
+            contentValues.put("Mississauga",CITY_NAME);
+            contentValues.put("6",CITY_ID);
+            contentValues.put("Toronto",CITY_NAME);
+            contentValues.put("7",CITY_ID);
+            contentValues.put("Kingston",CITY_NAME);
+            contentValues.put("8",CITY_ID);
+            contentValues.put("Quebec",CITY_NAME);
+            db.insert("Your table name",null,contentValues);
         }
 
         @Override
@@ -149,4 +166,3 @@ public class CityDB {
         }
     }  // End of DBHelper class
 }
-

@@ -1,9 +1,3 @@
-//* FILE			: ListViewAdapter.java
-//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #2
-//* PROGRAMMER		: Nhung Luong, Hyunchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSION	: Mar 14, 2020
-//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
-
 package com.example.egoapp;
 
 import android.content.Context;
@@ -12,9 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.egoapp.Object.Cities;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+
+
+
 
 public class ListViewAdapter extends BaseAdapter {
 
@@ -22,14 +23,14 @@ public class ListViewAdapter extends BaseAdapter {
 
     Context mContext;
     LayoutInflater inflater;
-    private List<CityNames> CityNamesList = null;
-    private ArrayList<CityNames> arraylist;
+    private List<Cities> CityNamesList = null;
+    private ArrayList<Cities> arraylist;
 
-    public ListViewAdapter(Context context, List<CityNames> CityNamesList) {
+    public ListViewAdapter(Context context, ArrayList<Cities> CityNamesList) {
         mContext = context;
         this.CityNamesList = CityNamesList;
         inflater = LayoutInflater.from(mContext);
-        this.arraylist = new ArrayList<CityNames>();
+        this.arraylist = new ArrayList<Cities>();
         this.arraylist.addAll(CityNamesList);
     }
 
@@ -43,7 +44,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public CityNames getItem(int position) {
+    public Cities getItem(int position) {
         return CityNamesList.get(position);
     }
 
@@ -75,7 +76,7 @@ public class ListViewAdapter extends BaseAdapter {
         if (charText.length() == 0) {
             CityNamesList.addAll(arraylist);
         } else {
-            for (CityNames wp : arraylist) {
+            for (Cities wp : arraylist) {
                 if (wp.getCityName().toLowerCase(Locale.getDefault()).contains(charText)) {
                     CityNamesList.add(wp);
                 }

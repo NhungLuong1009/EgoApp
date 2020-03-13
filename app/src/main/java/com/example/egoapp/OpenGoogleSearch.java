@@ -1,9 +1,3 @@
-//* FILE			: OpenGoogleSearch.java
-//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #2
-//* PROGRAMMER		: Nhung Luong, Hyunchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSION	: Mar 14, 2020
-//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
-
 package com.example.egoapp;
 
 import android.content.Intent;
@@ -72,6 +66,7 @@ public class OpenGoogleSearch extends AppCompatActivity {
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
         switch (item.getItemId()) {
@@ -93,10 +88,12 @@ public class OpenGoogleSearch extends AppCompatActivity {
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
 

@@ -1,7 +1,7 @@
 //* FILE			: ShareData.java
 //* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
-//* PROGRAMMER		: Nhung Luong, Hyunchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSON	: Mar 14, 2020
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
 //* DESCRIPTION		: The file defines share data for using in the app
 
 
@@ -23,7 +23,7 @@ public class ShareData {
     public static int selectedTrip = 0;
     public static Boolean makeOwnTrip = false;
 
-    public static String mDescription[] = {"$140", "$50", "$100", "$200", "$500"};
+    public static String mDescription[] = {"", "", "", "", ""};
 
     public static int images[] = {R.drawable.ottawa,
             R.drawable.waterloo,
@@ -52,7 +52,7 @@ public class ShareData {
         String[] tripSelectedEndCity = mTitle.split(delimeter);
         return tripSelectedEndCity[1];
     }
-    public static boolean tripSelectedRoundTripOption = false;
+    public static String tripSelectedRoundTripOption = "";
 
     public static int StartCityISEmpty = 1;
     public static int EndCityISEmpty = 2;

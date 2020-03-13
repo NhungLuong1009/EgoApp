@@ -1,9 +1,3 @@
-//* FILE			: SearchTripActivity.java
-//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #2
-//* PROGRAMMER		: Nhung Luong, Hyunchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSION	: Mar 14, 2020
-//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
-
 package com.example.egoapp;
 
 import android.content.Intent;
@@ -25,27 +19,32 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.egoapp.Object.Cities;
+import com.example.egoapp.DBHandler.CityDB;
+
 import java.util.ArrayList;
 
-public class SearchTripActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class SearchTripActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     // Declare Variables
     ListView list;
     ListViewAdapter adapter;
     SearchView editsearch;
     String[] cityNameList;
-    ArrayList<CityNames> arraylist = new ArrayList<CityNames>();
+    ArrayList<Cities> arraylist = new ArrayList<Cities>();
+    CityDB cityDB;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_trip);
+        cityDB = new CityDB( this );
 
         // Generate sample data
-
-        cityNameList = new String[]{"Toronto", "Ottawa", "Kingston",
-                "Mississauga", "Waterloo", "Cambridge", "Kitchener", "Windsor"};
+        cityNameList = new String[]{"Toronto", "Ottawa", "Kingston", "Mississauga", "Waterloo", "Cambridge", "Kitchener", "Windsor"};
+        String[] from = new String[]{CityDB.CITY_NAME};
 
         new LoadCityList().execute();
         new GetConnectionStatus().execute();
@@ -53,18 +52,18 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
 
     }
 
+
     private void loadBackgroundSearch()
     {
         // Locate the ListView in list_view_main.xml
         list = (ListView) findViewById(R.id.listView);
 
         for (int i = 0; i < cityNameList.length; i++) {
-            CityNames animalNames = new CityNames(cityNameList[i]);
-            // Binds all strings into an array
-            arraylist.add(animalNames);
+            Cities cityName = new Cities(i,cityNameList[i]);            // Binds all strings into an array
+            arraylist.add(cityName);
         }
 
-        // Pass results to ListViewAdapter Class
+        /* Pass results to ListViewAdapter Class */
         adapter = new ListViewAdapter(this, arraylist);
 
         // Binds the Adapter to the ListView
@@ -96,7 +95,7 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
 
 
 
-
+    // Check wifi connection asyn task
     class GetConnectionStatus extends AsyncTask<Boolean, Void, Boolean>
     {
         @Override
@@ -119,7 +118,7 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
                 wifiInfo = wifiManager.getConnectionInfo();
                 if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
                     ip = wifiInfo.getIpAddress();
-//                  String networkName = wifiInfo.getSSID();
+                //String networkName = wifiInfo.getSSID();
                     ipString = String.format("%d.%d.%d.%d”", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
                 }
                 result = "Network connected to " + ipString;
@@ -132,11 +131,9 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
             super.onProgressUpdate(values);
         }
 
-
+        // Check wifi connection
         @Override
         protected Boolean doInBackground(Boolean... voids) {
-
-
             ConnectivityManager conManager = (ConnectivityManager)
                     getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = conManager.getActiveNetworkInfo();
@@ -173,6 +170,9 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
                 return true;
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -234,3 +234,4 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
         }
     }
 }
+
