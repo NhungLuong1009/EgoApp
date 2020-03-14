@@ -4,17 +4,12 @@ public class Payment {
     private int payID;
     private int orderID;
     private int accountID;
-    private int priceTotal;
-    private int paymentType;
+    private float priceTotal;
 
     public Payment() {}
 
-    public Payment(int payID, int orderID, int accountID, int priceTotal, int paymentType) {
-        this.payID = payID;
-        this.orderID = orderID;
-        this.accountID = accountID;
+    public Payment(float priceTotal) {
         this.priceTotal = priceTotal;
-        this.paymentType = paymentType;
     }
 
     public int getPayID() {
@@ -41,19 +36,12 @@ public class Payment {
         this.accountID = accountID;
     }
 
-    public int getPriceTotal() {
+    public float getPriceTotal() {
         return priceTotal;
     }
 
-    public void setPriceTotal(int priceTotal) {
+    public void setPriceTotal(float priceTotal) {
         this.priceTotal = priceTotal;
     }
 
-    public int getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(int paymentType) {
-        this.paymentType = paymentType;
-    }
 }

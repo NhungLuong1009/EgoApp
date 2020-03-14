@@ -30,7 +30,7 @@ public class CityDB {
 
     public static final String CREATE_CITY_TABLE =
             "CREATE TABLE " + CITY_TABLE + " (" +
-                    CITY_ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                    CITY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     CITY_NAME + " INTEGER NOT NULL);";
 
     public static final String DROP_CITY_TABLE =
@@ -77,7 +77,7 @@ public class CityDB {
 
     public long insertCity(Cities city) {
         ContentValues cv = new ContentValues();
-        cv.put(CITY_ID, city.getCityID());
+        cv.put(CITY_ID, getCityIDCount() + 1);
         cv.put(CITY_NAME, city.getCityName());
 
         this.openWriteableDB();
@@ -136,24 +136,6 @@ public class CityDB {
         {
             // First, create tables
             db.execSQL(CREATE_CITY_TABLE);
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("1",CITY_ID);
-            contentValues.put("Waterloo",CITY_NAME);
-            contentValues.put("2",CITY_ID);
-            contentValues.put("Windsor",CITY_NAME);
-            contentValues.put("3",CITY_ID);
-            contentValues.put("Kitchener",CITY_NAME);
-            contentValues.put("4",CITY_ID);
-            contentValues.put("Cambridge",CITY_NAME);
-            contentValues.put("5",CITY_ID);
-            contentValues.put("Mississauga",CITY_NAME);
-            contentValues.put("6",CITY_ID);
-            contentValues.put("Toronto",CITY_NAME);
-            contentValues.put("7",CITY_ID);
-            contentValues.put("Kingston",CITY_NAME);
-            contentValues.put("8",CITY_ID);
-            contentValues.put("Quebec",CITY_NAME);
-            db.insert("Your table name",null,contentValues);
         }
 
         @Override

@@ -35,7 +35,9 @@ import java.util.HashMap;
 import java.util.*;
 import java.util.List;
 import com.example.egoapp.DBHandler.OrderDB;
+import com.example.egoapp.DBHandler.AccountDB;
 import com.example.egoapp.Object.Orders;
+import com.example.egoapp.Object.Account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -76,6 +78,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
     Spinner spinner2 = null;
 
     OrderDB orderDB;
+    AccountDB accountDB;
     double distanceGlobal;
 
     /*
@@ -95,6 +98,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
 
         // Initialize the ORDER Database
         orderDB = new OrderDB(this);
+        accountDB = new AccountDB(this);
         // Run the Cities JSON-SERVER instances using AsyncTask
         new GetCitiesAsyncTask().execute();
 
@@ -167,9 +171,6 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
                     // Create the second instances that execute and get the Data from the JSON-Server using AsyncTask
                     new GetTourInfoAsyncTask().execute();
 
-                    distanceGlobal = getMilesFromJSON(ShareData.tripSelectedStartCity, ShareData.tripSelectedEndCity);
-                    Log.d("MILE DATA", Double.toString(distanceGlobal));
-
                     // Calculate the bill for Display trip
                     ShareData.totalPrice = calculateBill(Integer.parseInt(ShareData.tripNumberOfAdult), Integer.parseInt(ShareData.tripNumberOfChildren));
                     ShareData.userName = enteredUserName.getText().toString();
@@ -178,7 +179,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
                     // INSERT DATA into ORDER TABLE
                     Orders orderObj = new Orders(ShareData.tripSelectedDate, ShareData.tripSelectedTime, ShareData.tripSelectedStartCity,
                             ShareData.tripSelectedEndCity, Integer.parseInt(ShareData.tripNumberOfAdult) , Integer.parseInt(ShareData.tripNumberOfChildren),
-                            ShareData.tripSelectedRoundTripOption, distanceGlobal);
+                            ShareData.tripSelectedRoundTripOption, getMilesFromJSON(ShareData.tripSelectedStartCity, ShareData.tripSelectedEndCity));
 
                     long insertOrderId = orderDB.insertOrder(orderObj);
                     if (insertOrderId > 0) {
@@ -190,7 +191,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
 
                     // INSERT DATA into ACCOUNT TABLE
                     Account accountObj = new Account(ShareData.userName, ShareData.userPhoneNumber);
-                    long insertAccountId = dbHandler.insertAccount(accountObj);
+                    long insertAccountId = accountDB.insertAccount(accountObj);
                     if (insertAccountId > 0)
                     {
                         Log.d("ACCOUNT DATA", "New Account Inserted " + enteredUserName + " " + enteredPhoneNum);
