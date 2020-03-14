@@ -15,7 +15,9 @@ public class Cities {
         this.cityName = cityName;
     }
 
-    public Cities(String s) {}
+    public Cities(String cityName) {
+        this.cityName = cityName;
+    }
 
     public Cities() {
 

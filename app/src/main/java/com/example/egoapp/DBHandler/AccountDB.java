@@ -10,6 +10,7 @@ package com.example.egoapp.DBHandler;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -28,10 +29,9 @@ public class AccountDB {
     public static final int     ACCOUNT_ID_COL = 0;
     public static final String  ACCOUNT_NAME = "account_name";
     public static final int     ACCOUNT_NAME_COL = 1;
-    public static final String  ACCOUNT_EMAIL = "account_email";
-    public static final int     ACCOUNT_EMAIL_COL = 2;
-    public static final String  ACCOUNT_PASSWORD = "account_password";
-    public static final int     ACCOUNT_PASSWORD_COL = 3;
+    public static final String  ACCOUNT_PHONE = "account_phone_number";
+    public static final int     ACCOUNT_PHONE_COL = 2;
+
 
     // ACCOUNT_ROLES table constants
     public static final String  ACCOUNT_ROLES_TABLE = "account_roles";
@@ -45,8 +45,7 @@ public class AccountDB {
             "CREATE TABLE" + ACCOUNT_TABLE + " (" +
                     ACCOUNT_ID + " INTEGER PRIMARY KEY NOT NULL, " +
                     ACCOUNT_NAME + " TEXT NOT NULL, " +
-                    ACCOUNT_EMAIL + " TEXT NOT NULL UNIQUE, " +
-                    ACCOUNT_PASSWORD + " TEXT NOT NULL UNIQUE);";
+                    ACCOUNT_PHONE + " TEXT NOT NULL);";
 
     public static final String CREATE_ACCOUNT_ROLES_TABLE =
             "CREATE TABLE" + ACCOUNT_ROLES_TABLE + " (" +
@@ -65,6 +64,11 @@ public class AccountDB {
     private SQLiteDatabase db;
     private DBHelper dbHelper;
 
+    // Constructor --------------------------------------------------------
+    public AccountDB(Context context) {
+        dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
+    }
+
     // Opening Database -------------------------------------------------------------------------------------------------
     private void openReadableDB() { db = dbHelper.getReadableDatabase(); }
     private void openWriteableDB() { db = dbHelper.getWritableDatabase(); }
@@ -79,7 +83,23 @@ public class AccountDB {
     }
 
     // Function for DB --------------------------------------------------------------------------------------------------
-    public ArrayList<Account> getAccounts(String accountName) {
+
+    /* =========================================================================================================================*
+     * Name		: getAccountRowCount
+     * Purpose	: to get the row count of table
+     * Inputs	:
+     * Outputs	: long
+     * Returns	: long
+     *===========================================================================================================================*/
+    public long getAccountRowCount()
+    {
+        this.openReadableDB();
+        long numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM account" , null);
+        this.closeDB();
+        return numRows;
+    }
+
+    /* public ArrayList<Account> getAccounts(String accountName) {
         ArrayList<Account> accounts = new ArrayList<Account>();
         this.openReadableDB();
         Cursor cursor = db.query(ACCOUNT_TABLE,
@@ -98,22 +118,11 @@ public class AccountDB {
         this.closeDB();
 
         return accounts;
-    }
+    }*/
 
-    public long insertAccount(Account account) {
-        ContentValues cv = new ContentValues();
-        cv.put(ACCOUNT_ID, account.getId());
-        cv.put(ACCOUNT_NAME, account.getName());
-        cv.put(ACCOUNT_EMAIL, account.getEmail());
-        cv.put(ACCOUNT_PASSWORD, account.getPassword());
 
-        this.openWriteableDB();
-        long rowID = db.insert(ACCOUNT_TABLE, null, cv);
-        this.closeDB();
-        return rowID;
-    }
 
-    public int updateAccount(Account account) {
+    /*public int updateAccount(Account account) {
         ContentValues cv = new ContentValues();
         cv.put(ACCOUNT_ID, account.getId());
         cv.put(ACCOUNT_NAME, account.getName());
@@ -151,7 +160,7 @@ public class AccountDB {
         this.closeDB();
 
         return account;
-    }
+    }*/
 
     /* ------------------------------------------------------------------------------------------------------------------
         CLASS: DBHELPER
@@ -167,7 +176,7 @@ public class AccountDB {
         {
             // First, create tables
             db.execSQL(CREATE_ACCOUNT_TABLE);
-            db.execSQL(CREATE_ACCOUNT_ROLES_TABLE);
+            //db.execSQL(CREATE_ACCOUNT_ROLES_TABLE);
         }
 
         @Override
@@ -176,7 +185,7 @@ public class AccountDB {
                     + oldVersion + " to " + newVersion);
 
             db.execSQL(AccountDB.DROP_ACCOUNT_TABLE);
-            db.execSQL(AccountDB.DROP_ACCOUNT_ROLES_TABLE);
+            //db.execSQL(AccountDB.DROP_ACCOUNT_ROLES_TABLE);
             onCreate(db);
         }
     }  // End of DBHelper class

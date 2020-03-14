@@ -85,6 +85,14 @@ public class OrderDB {
     }
 
     // Function for DB --------------------------------------------------------------------------------------------------
+
+    /* =========================================================================================================================*
+     * Name		: getOrderRowCount
+     * Purpose	: to get the row count of table
+     * Inputs	:
+     * Outputs	: long
+     * Returns	: long
+     *===========================================================================================================================*/
     public long getOrderRowCount()
     {
         this.openReadableDB();
@@ -118,6 +126,13 @@ public class OrderDB {
         return orders;
     }
 
+    /* =========================================================================================================================*
+     * Name		: insertOrder
+     * Purpose	: to insert data into order table
+     * Inputs	:
+     * Outputs	: long
+     * Returns	: long
+     *===========================================================================================================================*/
     public long insertOrder(Orders order) {
         ContentValues cv = new ContentValues();
         cv.put(ORDER_ID, getOrderRowCount() + 1);
@@ -184,7 +199,7 @@ public class OrderDB {
             Log.d("Order", "Upgrading db from version "
                     + oldVersion + " to " + newVersion);
 
-            db.execSQL(OrderDB.DROP_ORDER_TABLE);
+            db.execSQL(DROP_ORDER_TABLE);
             onCreate(db);
         }
     }  // End of DBHelper class

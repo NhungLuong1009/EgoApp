@@ -1,3 +1,8 @@
+//* FILE			: ListViewAdapter.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the ListViewAdapter
 package com.example.egoapp;
 
 import android.content.Context;
@@ -13,14 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
-
-
-
 public class ListViewAdapter extends BaseAdapter {
 
     // Declare Variables
-
     Context mContext;
     LayoutInflater inflater;
     private List<Cities> CityNamesList = null;
@@ -34,25 +34,36 @@ public class ListViewAdapter extends BaseAdapter {
         this.arraylist.addAll(CityNamesList);
     }
 
+
     public class ViewHolder {
         TextView name;
     }
+
 
     @Override
     public int getCount() {
         return CityNamesList.size();
     }
 
+
     @Override
     public Cities getItem(int position) {
         return CityNamesList.get(position);
     }
+
 
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+
+    /*
+     * Function: getView
+     * Description:
+     * Input:
+     * Return: none
+     */
     public View getView(final int position, View view, ViewGroup parent) {
         final ViewHolder holder;
         if (view == null) {
@@ -69,7 +80,13 @@ public class ListViewAdapter extends BaseAdapter {
         return view;
     }
 
-    // Filter Class
+
+    /*
+     * Function: filter
+     * Description:
+     * Input:
+     * Return: none
+     */
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
         CityNamesList.clear();

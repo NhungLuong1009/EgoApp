@@ -1,3 +1,8 @@
+//* FILE			: OpenGoogleSearch.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the OpenGoogleSearch Engine
 package com.example.egoapp;
 
 import android.content.Intent;
@@ -25,6 +30,12 @@ public class OpenGoogleSearch extends AppCompatActivity {
     private WebView mWebView;
     String myUrl = "https://www.google.com";
 
+    /*
+     * Function: onCreate
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +47,15 @@ public class OpenGoogleSearch extends AppCompatActivity {
         mWebView.loadUrl(myUrl); // URL
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClientClass());
-
     }
 
 
-
+    /*
+     * Function: onKeyDown
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
@@ -50,7 +65,15 @@ public class OpenGoogleSearch extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     private class WebViewClientClass extends WebViewClient {
+
+        /*
+         * Function: shouldOverrideUrlLoading
+         * Description: initial function that runs the application
+         * Input: Bundle savedInstanceState
+         * Return: none
+         */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.d("check URL",url);
@@ -59,6 +82,12 @@ public class OpenGoogleSearch extends AppCompatActivity {
         }
     }
 
+    /*
+     * Function: onCreateOptionsMenu
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -66,6 +95,12 @@ public class OpenGoogleSearch extends AppCompatActivity {
         return true;
     }
 
+    /*
+     * Function: onOptionsItemSelected
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
@@ -99,11 +134,24 @@ public class OpenGoogleSearch extends AppCompatActivity {
 
     class GetConnectionStatus extends AsyncTask<Boolean, Void, Boolean>
     {
+        /*
+         * Function: onPreExecute
+         * Description: initial function that runs the application
+         * Input: Bundle savedInstanceState
+         * Return: none
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+
+        /*
+         * Function: onPostExecute
+         * Description: initial function that runs the application
+         * Input: Bundle savedInstanceState
+         * Return: none
+         */
         @Override
         protected void onPostExecute(Boolean values) {
             super.onPostExecute(values);
@@ -127,12 +175,23 @@ public class OpenGoogleSearch extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
         }
 
+        /*
+         * Function: onProgressUpdate
+         * Description: initial function that runs the application
+         * Input: Bundle savedInstanceState
+         * Return: none
+         */
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
         }
 
-
+        /*
+         * Function: doInBackground
+         * Description: initial function that runs the application
+         * Input: Bundle savedInstanceState
+         * Return: none
+         */
         @Override
         protected Boolean doInBackground(Boolean... voids) {
 

@@ -11,8 +11,9 @@ import java.lang.String;
 
 public class ShareData {
 
-    public static String something = "";
-    public static String something2 = "";
+    public static int priceForAdult = 3000;
+    public static int priceForChild = 2000;
+    public static int totalPrice = 0;
 
     public static String mTitle[] = {"Toronto to Ottawa",
             "Toronto to Waterloo",
@@ -38,6 +39,8 @@ public class ShareData {
     public static String tripSelectedEndCity = "";
     public static String tripNumberOfAdult = "";
     public static String tripNumberOfChildren = "";
+    public static String userName = "";
+    public static String userPhoneNumber = "";
 
     public static String GetStartCity(String mTitle)
     {

@@ -34,8 +34,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.*;
 import java.util.List;
-import com.example.egoapp.DBHandler.OrderDB;
+
+import com.example.egoapp.DBHandler.DBHandler;
+import com.example.egoapp.Object.Account;
 import com.example.egoapp.Object.Orders;
+import com.example.egoapp.Object.Cities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -75,7 +78,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
     Spinner spinner1 = null;
     Spinner spinner2 = null;
 
-    OrderDB orderDB;
+    DBHandler dbHandler;
     double distanceGlobal;
 
     /*
@@ -93,8 +96,9 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
         citiesList = new ArrayList<>();
         tourList = new ArrayList<>();
 
-        // Initialize the ORDER Database
-        orderDB = new OrderDB(this);
+        // Initialize the Database
+        dbHandler = new DBHandler(this);
+
         // Run the Cities JSON-SERVER instances using AsyncTask
         new GetCitiesAsyncTask().execute();
 
@@ -170,18 +174,39 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
                     distanceGlobal = getMilesFromJSON(ShareData.tripSelectedStartCity, ShareData.tripSelectedEndCity);
                     Log.d("MILE DATA", Double.toString(distanceGlobal));
 
+                    // Calculate the bill for Display trip
+                    ShareData.totalPrice = calculateBill(Integer.parseInt(ShareData.tripNumberOfAdult), Integer.parseInt(ShareData.tripNumberOfChildren));
+
                     // INSERT DATA into ORDER TABLE
                     Orders orderObj = new Orders(ShareData.tripSelectedDate, ShareData.tripSelectedTime, ShareData.tripSelectedStartCity,
                             ShareData.tripSelectedEndCity, Integer.parseInt(ShareData.tripNumberOfAdult) , Integer.parseInt(ShareData.tripNumberOfChildren),
                             ShareData.tripSelectedRoundTripOption, distanceGlobal);
 
-                    long insertOrderId = orderDB.insertOrder(orderObj);
+                    long insertOrderId = dbHandler.insertOrder(orderObj);
                     if (insertOrderId > 0) {
-                        Toast.makeText(MakeTrip.this,"New Order Inserted",Toast.LENGTH_LONG).show();
+                        Log.d("ORDER DATA", "New order inserted");
                     }
                     else {
-                        Toast.makeText(MakeTrip.this,"Data not Inserted",Toast.LENGTH_LONG).show();
+                        Log.d("ORDER DATA", "New order is not inserted");
                     }
+
+                    // INSERT DATA into ACCOUNT TABLE
+                    ShareData.userName = enteredUserName.getText().toString();
+                    ShareData.userPhoneNumber = enteredPhoneNum.getText().toString();
+
+                    Account accountObj = new Account(ShareData.userName, ShareData.userPhoneNumber);
+                    long insertAccountId = dbHandler.insertAccount(accountObj);
+                    if (insertAccountId > 0)
+                    {
+                        Log.d("ACCOUNT DATA", "New Account Inserted " + enteredUserName + " " + enteredPhoneNum);
+                    }
+                    else
+                    {
+                        Log.d("ACCOUNT DATA", "Account data is not inserted");
+                    }
+
+                    // INSERT DATA into CITY TABLE
+
 
                     Intent myIntent = new Intent(MakeTrip.this, DisplayTrip.class);
                     startActivity(myIntent);
@@ -273,12 +298,26 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
             {
                 Log.d("HELLO", entry.get("distance"));
                 miles = Double.parseDouble(entry.get("distance"));
+                if (miles != 0.00)
+                {
+                    break;
+                }
             }
         }
         return miles;
     }
 
 
+    /* =========================================================================================================================*
+     * Name		: calculateBill
+     * Purpose	: to get the price based on num of adults & children
+     * Inputs	: numOfAdult String - numOfAdult String
+     * Outputs	: double
+     * Returns	: double
+     *===========================================================================================================================*/
+    public int calculateBill(int numOfAdult, int numOfChild) {
+        return (numOfAdult*ShareData.priceForAdult) + (numOfChild*ShareData.priceForChild);
+    }
 
 
     /* =========================================================================================================================*

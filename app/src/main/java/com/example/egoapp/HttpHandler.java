@@ -1,3 +1,8 @@
+//* FILE			: HttpHandler.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #2
+//* PROGRAMMER		: Nhung Luong, Hyunchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSION	: Mar 14, 2020
+//* DESCRIPTION		: The file defines the HttpHandler for JSON Server
 package com.example.egoapp;
 
 import android.util.Log;
@@ -19,6 +24,12 @@ public class HttpHandler {
     public HttpHandler() {
     }
 
+    /*
+     * Function: makeServiceCall
+     * Description:
+     * Input: reqUrl String
+     * Return: String
+     */
     public String makeServiceCall(String reqUrl) {
         String response = null;
         try {
@@ -40,6 +51,13 @@ public class HttpHandler {
         return response;
     }
 
+
+    /*
+     * Function: convertStreamToString
+     * Description:
+     * Input: InputStream
+     * Return: String
+     */
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();

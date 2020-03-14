@@ -1,3 +1,8 @@
+//* FILE			: Orders.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the class for Orders
 package com.example.egoapp.Object;
 
 public class Orders {

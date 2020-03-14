@@ -1,20 +1,20 @@
+//* FILE			: Account.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the class for Account
 package com.example.egoapp.Object;
 
 public class Account {
     private int id;
     private String name;
-    private String email;
-    private String password;
-    private String role;
+    private String phoneNumber;
 
     public Account() {}
 
-    public Account(int id, String name, String email, String password, String role) {
-        this.id = id;
+    public Account(String name, String phoneNumber) {
         this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
+        this.phoneNumber = phoneNumber;
     }
 
     public int getId() {
@@ -25,35 +25,19 @@ public class Account {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getName() {
         return name;
     }
 
-    public String getRole() {
-        return role;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
