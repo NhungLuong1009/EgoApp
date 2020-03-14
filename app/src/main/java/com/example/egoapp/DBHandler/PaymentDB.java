@@ -31,7 +31,7 @@ public class PaymentDB {
 
     // CREATE and DROP TABLE statements
     public static final String CREATE_PAYMENT_TABLE =
-            "CREATE TABLE" + PAYMENT_TABLE + " (" +
+            "CREATE TABLE " + PAYMENT_TABLE + " (" +
                     PAYMENT_ID + " INTEGER PRIMARY KEY NOT NULL, " +
                     PAYMENT_ORDER_ID + " INTEGER NOT NULL" +
                     PAYMENT_ACCOUNT_ID + " INTEGER NOT NULL " +

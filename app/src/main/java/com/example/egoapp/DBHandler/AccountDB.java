@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class AccountDB {
     public static final String  DB_NAME = "Ego.db";
-    public static final int     DB_VERSION = 1;
+    public static final int     DB_VERSION = 2;
 
     // ACCOUNT table constants
     public static final String  ACCOUNT_TABLE = "account";
@@ -42,7 +42,7 @@ public class AccountDB {
 
     // CREATE and DROP TABLE statements
     public static final String CREATE_ACCOUNT_TABLE =
-            "CREATE TABLE" + ACCOUNT_TABLE + " (" +
+            "CREATE TABLE " + ACCOUNT_TABLE + " (" +
                     ACCOUNT_ID + " INTEGER PRIMARY KEY NOT NULL, " +
                     ACCOUNT_NAME + " TEXT NOT NULL, " +
                     ACCOUNT_PHONE + " TEXT NOT NULL);";
@@ -97,6 +97,25 @@ public class AccountDB {
         long numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM account" , null);
         this.closeDB();
         return numRows;
+    }
+
+    /* =========================================================================================================================*
+     * Name		: insertAccount
+     * Purpose	: to insert data into account table
+     * Inputs	:
+     * Outputs	: long
+     * Returns	: long
+     *===========================================================================================================================*/
+    public long insertAccount(Account account) {
+        ContentValues cv = new ContentValues();
+        cv.put(ACCOUNT_ID, getAccountRowCount() + 1);
+        cv.put(ACCOUNT_NAME, account.getName());
+        cv.put(ACCOUNT_PHONE, account.getPhoneNumber());
+
+        this.openWriteableDB();
+        long rowID = db.insert(ACCOUNT_TABLE, null, cv);
+        this.closeDB();
+        return rowID;
     }
 
     /* public ArrayList<Account> getAccounts(String accountName) {

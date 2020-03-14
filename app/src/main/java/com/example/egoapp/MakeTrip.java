@@ -34,11 +34,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.*;
 import java.util.List;
-
-import com.example.egoapp.DBHandler.DBHandler;
-import com.example.egoapp.Object.Account;
+import com.example.egoapp.DBHandler.OrderDB;
 import com.example.egoapp.Object.Orders;
-import com.example.egoapp.Object.Cities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -78,7 +75,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
     Spinner spinner1 = null;
     Spinner spinner2 = null;
 
-    DBHandler dbHandler;
+    OrderDB orderDB;
     double distanceGlobal;
 
     /*
@@ -96,9 +93,8 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
         citiesList = new ArrayList<>();
         tourList = new ArrayList<>();
 
-        // Initialize the Database
-        dbHandler = new DBHandler(this);
-
+        // Initialize the ORDER Database
+        orderDB = new OrderDB(this);
         // Run the Cities JSON-SERVER instances using AsyncTask
         new GetCitiesAsyncTask().execute();
 
@@ -176,24 +172,23 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
 
                     // Calculate the bill for Display trip
                     ShareData.totalPrice = calculateBill(Integer.parseInt(ShareData.tripNumberOfAdult), Integer.parseInt(ShareData.tripNumberOfChildren));
+                    ShareData.userName = enteredUserName.getText().toString();
+                    ShareData.userPhoneNumber = enteredPhoneNum.getText().toString();
 
                     // INSERT DATA into ORDER TABLE
                     Orders orderObj = new Orders(ShareData.tripSelectedDate, ShareData.tripSelectedTime, ShareData.tripSelectedStartCity,
                             ShareData.tripSelectedEndCity, Integer.parseInt(ShareData.tripNumberOfAdult) , Integer.parseInt(ShareData.tripNumberOfChildren),
                             ShareData.tripSelectedRoundTripOption, distanceGlobal);
 
-                    long insertOrderId = dbHandler.insertOrder(orderObj);
+                    long insertOrderId = orderDB.insertOrder(orderObj);
                     if (insertOrderId > 0) {
-                        Log.d("ORDER DATA", "New order inserted");
+                        Toast.makeText(MakeTrip.this,"New Order Inserted",Toast.LENGTH_LONG).show();
                     }
                     else {
-                        Log.d("ORDER DATA", "New order is not inserted");
+                        Toast.makeText(MakeTrip.this,"Data not Inserted",Toast.LENGTH_LONG).show();
                     }
 
                     // INSERT DATA into ACCOUNT TABLE
-                    ShareData.userName = enteredUserName.getText().toString();
-                    ShareData.userPhoneNumber = enteredPhoneNum.getText().toString();
-
                     Account accountObj = new Account(ShareData.userName, ShareData.userPhoneNumber);
                     long insertAccountId = dbHandler.insertAccount(accountObj);
                     if (insertAccountId > 0)
@@ -203,10 +198,8 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
                     else
                     {
                         Log.d("ACCOUNT DATA", "Account data is not inserted");
+                        Toast.makeText(MakeTrip.this,"Data not Inserted",Toast.LENGTH_LONG).show();
                     }
-
-                    // INSERT DATA into CITY TABLE
-
 
                     Intent myIntent = new Intent(MakeTrip.this, DisplayTrip.class);
                     startActivity(myIntent);
