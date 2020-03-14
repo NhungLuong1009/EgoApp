@@ -1,0 +1,1 @@
+json-server --watch -p 8888 db2.json

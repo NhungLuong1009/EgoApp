@@ -1,0 +1,46 @@
+{
+  "cities": {
+    "cities": [
+      {
+        "id": 1,
+        "startCity": "Waterloo",
+        "endCity": "Waterloo"
+      },
+      {
+        "id": 2,
+        "startCity": "Kitchener",
+        "endCity": "Kitchener"
+      },
+      {
+        "id": 3,
+        "startCity": "Cambridge",
+        "endCity": "Cambridge"
+      },
+      {
+        "id": 4,
+        "startCity": "Mississauga",
+        "endCity": "Mississauga"
+      },
+      {
+        "id": 5,
+        "startCity": "Hamilton",
+        "endCity": "Hamilton"
+      },
+      {
+        "id": 6,
+        "startCity": "Toronto",
+        "endCity": "Toronto"
+      },
+      {
+        "id": 7,
+        "startCity": "Kingston",
+        "endCity": "Kingston"
+      },
+      {
+        "id": 8,
+        "startCity": "Ottawa",
+        "endCity": "Ottawa"
+      }
+    ]
+  }
+}
