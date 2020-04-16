@@ -6,7 +6,9 @@
 package com.example.egoapp;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -51,21 +53,47 @@ public class PhoneCall extends AppCompatActivity {
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //----------------------when the call button is pressed-----------------------------
-                final int REQUEST_PHONE_CALL = 1;
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:"+ inputPhoneNumber.getText()));
-                //-----------------checks for permission before placing the call--------------------
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(ContextCompat.checkSelfPermission(PhoneCall.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(PhoneCall.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
-                    }else{
-                        //-------------------------------places the call-----------------------------------
-                        startActivity(callIntent);
-                    }
-                }
+                /*
+                    HERE I'M GONNA USE CUSTOM ALERT DIALOG TO PROCEED A CALL
+                 */
+                new AlertDialog.Builder(PhoneCall.this).setMessage("Proceed to Call?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                makeACall();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // clear the input phone number
+                                inputPhoneNumber.getText().clear();
+                            }
+                        })
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // DO NOTHING
+                            }
+                        })
             }
         });
+    }
+
+    public void makeACall() {
+        //----------------------when the call button is pressed-----------------------------
+        final int REQUEST_PHONE_CALL = 1;
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:"+ inputPhoneNumber.getText()));
+        //-----------------checks for permission before placing the call--------------------
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(ContextCompat.checkSelfPermission(PhoneCall.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(PhoneCall.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+            }else{
+                //-------------------------------places the call-----------------------------------
+                startActivity(callIntent);
+            }
+        }
     }
 
     public void fetchContacts() {
