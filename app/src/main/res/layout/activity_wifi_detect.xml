@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".AboutEgoAppActivity">
-
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WifiDetect">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -55,25 +52,19 @@ tools:context=".AboutEgoAppActivity">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="400dp">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/aboutApp"
+                    <Switch
+                        android:id="@+id/wifiSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="ABOUT EGO APP"
-                        android:textColor="#FF0000"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/phoneNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_below="@+id/aboutApp"
-                        android:text="@string/about_ego_app"></TextView>
-
+                        android:layout_gravity="center"
+                        android:layout_span="3"
+                        android:inputType="textPersonName"
+                        android:text="WIFI is off"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        />
 
                 </RelativeLayout>
 
@@ -84,4 +75,4 @@ tools:context=".AboutEgoAppActivity">
 
     </RelativeLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

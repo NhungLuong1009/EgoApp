@@ -1,9 +1,5 @@
 package com.example.egoapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ViewTripOptionActivity extends AppCompatActivity {
     ListView listView_tripList;
@@ -58,7 +58,6 @@ public class ViewTripOptionActivity extends AppCompatActivity {
                     intent.putExtras(bundle);
                     // now put title and description to another activity
                     intent.putExtra("title", ShareData.mTitle[0]);
-                    intent.putExtra("description", ShareData.mDescription[0]);
                     // also put your position
                     intent.putExtra("position", ""+0);
                     startActivity(intent);
@@ -171,6 +170,18 @@ public class ViewTripOptionActivity extends AppCompatActivity {
                 return true;
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
+                return true;
+            case R.id.nav_open_google_map:
+                startActivity(new Intent(this, MapsActivity.class));
+                return true;
+            case R.id.nav_trip_notification:
+                startActivity(new Intent(this, TripNotification.class));
+                return true;
+            case R.id.nav_detect_wifi:
+                startActivity(new Intent(this, WifiDetect.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

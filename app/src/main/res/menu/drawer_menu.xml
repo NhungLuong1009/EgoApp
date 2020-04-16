@@ -26,4 +26,25 @@
         android:icon="@drawable/ic_help"
         android:title="About Ego App">
     </item>
+    <item android:id="@+id/nav_phone_call"
+        android:icon="@drawable/ic_help"
+        android:title="Make Call">
+    </item>
+
+    <item android:id="@+id/nav_trip_notification"
+        android:icon="@drawable/ic_help"
+        android:title="Trip Notification">
+    </item>
+    <item android:id="@+id/nav_detect_wifi"
+        android:icon="@drawable/ic_help"
+        android:title="Detect Wifi Usage">
+    </item>
+
+    <item android:id="@+id/nav_open_google_map"
+        android:icon="@drawable/ic_help"
+        android:title="Open Google Map">
+    </item>
+
+
+
 </menu>

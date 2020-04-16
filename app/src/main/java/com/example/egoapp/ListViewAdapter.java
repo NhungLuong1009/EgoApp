@@ -1,3 +1,8 @@
+//* FILE			: ListViewAdapter.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: Feb 8, 2018
+//* DESCRIPTION		: The file defines the ListViewAdapter
 package com.example.egoapp;
 
 import android.content.Context;
@@ -6,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.egoapp.Object.Cities;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -13,39 +21,49 @@ import java.util.Locale;
 public class ListViewAdapter extends BaseAdapter {
 
     // Declare Variables
-
     Context mContext;
     LayoutInflater inflater;
-    private List<CityNames> CityNamesList = null;
-    private ArrayList<CityNames> arraylist;
+    private List<Cities> CityNamesList = null;
+    private ArrayList<Cities> arraylist;
 
-    public ListViewAdapter(Context context, List<CityNames> CityNamesList) {
+    public ListViewAdapter(Context context, ArrayList<Cities> CityNamesList) {
         mContext = context;
         this.CityNamesList = CityNamesList;
         inflater = LayoutInflater.from(mContext);
-        this.arraylist = new ArrayList<CityNames>();
+        this.arraylist = new ArrayList<Cities>();
         this.arraylist.addAll(CityNamesList);
     }
+
 
     public class ViewHolder {
         TextView name;
     }
+
 
     @Override
     public int getCount() {
         return CityNamesList.size();
     }
 
+
     @Override
-    public CityNames getItem(int position) {
+    public Cities getItem(int position) {
         return CityNamesList.get(position);
     }
+
 
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+
+    /*
+     * Function: getView
+     * Description:
+     * Input:
+     * Return: none
+     */
     public View getView(final int position, View view, ViewGroup parent) {
         final ViewHolder holder;
         if (view == null) {
@@ -62,14 +80,20 @@ public class ListViewAdapter extends BaseAdapter {
         return view;
     }
 
-    // Filter Class
+
+    /*
+     * Function: filter
+     * Description:
+     * Input:
+     * Return: none
+     */
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
         CityNamesList.clear();
         if (charText.length() == 0) {
             CityNamesList.addAll(arraylist);
         } else {
-            for (CityNames wp : arraylist) {
+            for (Cities wp : arraylist) {
                 if (wp.getCityName().toLowerCase(Locale.getDefault()).contains(charText)) {
                     CityNamesList.add(wp);
                 }

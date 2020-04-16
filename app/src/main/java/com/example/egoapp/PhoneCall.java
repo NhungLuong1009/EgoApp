@@ -1,64 +1,55 @@
-//* FILE			: AboutEgoAppActivity.java
+//* FILE			: PhoneCall.java
 //* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
 //* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
 //* FIRST VERSON	: Feb 8, 2018
-//* DESCRIPTION		: The file defines the about screen
+//* DESCRIPTION		: The file defines the class to make phone call
 package com.example.egoapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+public class PhoneCall extends AppCompatActivity {
 
-public class AboutEgoAppActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
-
-    /*
-     * Function: onCreate
-     * Description: initial function that runs the application
-     * Input: Bundle savedInstanceState
-     * Return: none
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_ego_app);
+        setContentView(R.layout.activity_phone_call);
+
+        Button call = (Button) findViewById( R.id.fab );
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //----------------------when the call button is pressed-----------------------------
+                final int REQUEST_PHONE_CALL = 1;
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:1234567890"));
+                //-----------------checks for permission before placing the call--------------------
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(ContextCompat.checkSelfPermission(PhoneCall.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(PhoneCall.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                    }else{
+                        //-------------------------------places the call-----------------------------------
+                        startActivity(callIntent);
+                    }
+                }
+            }
+        });
     }
 
-    /*
-     * Function: onQueryTextSubmit
-     * Description:
-     * Input: Bundle savedInstanceState
-     * Return: none
-     */
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-
-    /*
-     * Function: onQueryTextChange
-     * Description:
-     * Input: Bundle savedInstanceState
-     * Return: none
-     */
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
-    }
-
-
-    /*
-     * Function: onCreateOptionsMenu
-     * Description:
-     * Input: Bundle savedInstanceState
-     * Return: none
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -66,13 +57,6 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
         return true;
     }
 
-
-    /*
-     * Function: onOptionsItemSelected
-     * Description:
-     * Input: Bundle savedInstanceState
-     * Return: none
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection.
@@ -97,15 +81,6 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
                 return true;
             case R.id.nav_phone_call:
                 startActivity(new Intent(this, PhoneCall.class));
-                return true;
-            case R.id.nav_open_google_map:
-                startActivity(new Intent(this, MapsActivity.class));
-                return true;
-            case R.id.nav_trip_notification:
-                startActivity(new Intent(this, TripNotification.class));
-                return true;
-            case R.id.nav_detect_wifi:
-                startActivity(new Intent(this, WifiDetect.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

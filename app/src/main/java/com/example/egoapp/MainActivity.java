@@ -7,29 +7,40 @@
 
 package com.example.egoapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-
+import com.example.egoapp.Object.BoardcastReceiver;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button searchBtn, makeNewTripBtn, viewTripBtn, aboutAppBtn;
+    Button searchBtn, makeNewTripBtn, viewTripBtn, aboutAppBtn, makeTripNotificationBtn, wifiDetectBtn;
     private DrawerLayout drawer;
 
+    public static final String CHANNEL_ID = "egoAppServiceChannel";
+    private Object Built;
+
+
+    // Create BroadcastReciever
+    BoardcastReceiver exampleBoardcastReceiver = new BoardcastReceiver();
+
+    
 
     /*
      * Function: onCreate
@@ -42,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_main);
 
+        createNotificationChannel();
 
         drawer = findViewById(R.id.drawer_layout);
 
@@ -86,6 +98,72 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(myIntent);
             }
         });
+
+        makeTripNotificationBtn= (Button)findViewById(R.id.makeNotificationBtn);
+        makeTripNotificationBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent myIntent;
+                myIntent = new Intent(MainActivity.this, TripNotification.class);
+                startActivity(myIntent);
+            }
+        });
+
+        wifiDetectBtn= (Button)findViewById(R.id.detectWifiBtn);
+        wifiDetectBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent myIntent;
+                myIntent = new Intent(MainActivity.this, WifiDetect.class);
+                startActivity(myIntent);
+            }
+        });
+
+        IntentFilter filter = new IntentFilter( "com.example.EXAMPLE.ACTION");
+        registerReceiver( exampleBoardcastReceiver, filter );
+    }
+
+    /*
+     * Function: onDestroy
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        registerReceiver( exampleBoardcastReceiver );
+    }
+
+
+    /*
+     * Function: onDestroy
+     * Description: initial function that runs the application
+     * Input: Bundle savedInstanceState
+     * Return: none
+     */
+    private void registerReceiver(BoardcastReceiver exampleBoardcastReceiver) {
+    }
+
+
+    private void sendBroadcast (View v){
+        Intent intent = new Intent( "com.example.EXAMPLE_ACTION" );
+        intent.putExtra( "com.example.EXTRA_TEXT", "Broadcast Received" );
+        sendBroadcast( intent );
+    }
+
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel serviceChanel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Ego App Service Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            NotificationManager manager = getSystemService(NotificationManager.class );
+            manager.createNotificationChannel(serviceChanel );
+        }
     }
 
     public void setSupportActionBar(Toolbar toolBar) {
@@ -119,6 +197,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
+                return true;
+            case R.id.nav_open_google_map:
+                startActivity(new Intent(this, MapsActivity.class));
+                return true;
+            case R.id.nav_trip_notification:
+                startActivity(new Intent(this, TripNotification.class));
+                return true;
+            case R.id.nav_detect_wifi:
+                startActivity(new Intent(this, WifiDetect.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

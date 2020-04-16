@@ -60,6 +60,7 @@
                         tools:layout_editor_absoluteY="0dp"
                         android:layout_below="@+id/firstLayout">
 
+
                         <TableRow
                             android:layout_width="wrap_content"
                             android:layout_height="200dp">
@@ -74,6 +75,38 @@
                                 android:textStyle="bold"
                                 android:gravity="center"/>
 
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="Full Name:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <EditText
+                                android:id="@+id/userName"
+                                android:layout_width="186dp"
+                                android:layout_height="48dp" />
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="Phone No.:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <EditText
+                                android:id="@+id/userPhoneNumber"
+                                android:layout_width="186dp"
+                                android:layout_height="48dp" />
                         </TableRow>
 
                         <TableRow

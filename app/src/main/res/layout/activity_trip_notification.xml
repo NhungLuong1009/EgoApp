@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TripNotification">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/firstLayout"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="@drawable/background"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="THANK YOU FOR USING EGO"
+                android:textColor="#FF0000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="215dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:id="@+id/aboutLayout">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:stretchColumns="3"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="0dp"
+                        android:layout_below="@+id/firstLayout"
+                        tools:ignore="NotSibling"
+                        android:id="@+id/tableLayout">
+
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:layout_span="3"
+                                android:gravity="center"
+                                android:inputType="textPersonName"
+                                android:text="MAKE TRIP NOTIFICATION"
+                                android:textColor="#006400"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="Name:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <EditText
+                                android:id="@+id/userName"
+                                android:layout_width="186dp"
+                                android:layout_height="48dp" />
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:inputType="textPersonName"
+                                android:text="Date:"
+                                android:textSize="20sp"
+                                android:textColor="#013220"/>
+
+                            <EditText
+                                android:id="@+id/in_date"
+                                android:layout_width="186dp"
+                                android:layout_height="48dp"
+                                android:hint="dd/mm/yyyy"/>
+
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent"/>
+
+                    </TableLayout>
+                </RelativeLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/buttonmot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="addNotification"
+                android:text="Start Notification"
+                 />
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
