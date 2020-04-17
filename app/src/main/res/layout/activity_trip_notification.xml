@@ -71,14 +71,14 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:layout_gravity="center"
                                 android:layout_span="3"
                                 android:gravity="center"
                                 android:inputType="textPersonName"
                                 android:text="MAKE TRIP NOTIFICATION"
                                 android:textColor="#006400"
-                                android:textSize="25sp"
-                                android:textStyle="bold" />
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                />
 
                         </TableRow>
 

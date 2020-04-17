@@ -19,8 +19,8 @@ import com.example.egoapp.Object.Orders;
 import com.example.egoapp.Object.Payment;
 
 public class PaymentDB {
-    public static final String  DB_NAME = "Ego.db";
-    public static final int     DB_VERSION = 3;
+    public static final String  DB_NAME = "payment.db";
+    public static final int     DB_VERSION = 1;
 
     // PAYMENT table constants
     public static final String  PAYMENT_TABLE = "payment";
@@ -30,21 +30,22 @@ public class PaymentDB {
     public static final int     PAYMENT_ORDER_ID_COL = 1;
     public static final String  PAYMENT_ACCOUNT_ID = "account_id";
     public static final int     PAYMENT_ACCOUNT_ID_COL = 2;
+    public static final String  PAYMENT_TRIP_FROM = "pay_trip_from";
+    public static final int     PAYMENT_TRIP_FROM_COL = 3;
+    public static final String  PAYMENT_TRIP_TO = "pay_trip_to";
+    public static final int     PAYMENT_TRIP_TO_COL = 4;
     public static final String  PAYMENT_PRICE = "total_price";
-    public static final int     PAYMENT_PRICE_COL = 3;
+    public static final int     PAYMENT_PRICE_COL = 5;
 
     // CREATE and DROP TABLE statements
     public static final String CREATE_PAYMENT_TABLE =
             "CREATE TABLE " + PAYMENT_TABLE + " (" +
                     PAYMENT_ID + " INTEGER PRIMARY KEY NOT NULL, " +
-                    PAYMENT_ORDER_ID + " INTEGER NOT NULL" +
-                    PAYMENT_ACCOUNT_ID + " INTEGER NOT NULL " +
-                    PAYMENT_PRICE + " REAL NOT NULL " +
-                    "FOREIGN KEY (" + PAYMENT_ORDER_ID +
-                    ") REFERENCES orders(order_id)" +
-                    "FOREIGN KEY (" + PAYMENT_ACCOUNT_ID +
-                    ") REFERENCES account(account_id)" +
-                    ");";
+                    PAYMENT_ORDER_ID + " INTEGER NOT NULL, " +
+                    PAYMENT_ACCOUNT_ID + " INTEGER NOT NULL, " +
+                    PAYMENT_TRIP_FROM + " TEXT NOT NULL, " +
+                    PAYMENT_TRIP_TO + " TEXT NOT NULL, " +
+                    PAYMENT_PRICE + " REAL);";
 
     public static final String DROP_PAYMENT_TABLE =
             "DROP TABLE IF EXISTS " + PAYMENT_TABLE;
@@ -70,7 +71,7 @@ public class PaymentDB {
             cursor.close();
     }
 
-    /* =========================================================================================================================*
+     /*=========================================================================================================================*
      * Name		: getAccountRowCount
      * Purpose	: to get the row count of table
      * Inputs	:
@@ -85,7 +86,7 @@ public class PaymentDB {
         return numRows;
     }
 
-    /* =========================================================================================================================*
+     /*=========================================================================================================================*
      * Name		: getOrderRowCount
      * Purpose	: to get the row count of table
      * Inputs	:
@@ -100,7 +101,7 @@ public class PaymentDB {
         return numRows;
     }
 
-    /* =========================================================================================================================*
+     /*=========================================================================================================================*
      * Name		: getOrderRowCount
      * Purpose	: to get the row count of table
      * Inputs	:
@@ -115,7 +116,7 @@ public class PaymentDB {
         return numRows;
     }
 
-    /* =========================================================================================================================*
+     /*=========================================================================================================================*
      * Name		: insertOrder
      * Purpose	: to insert data into order table
      * Inputs	:
@@ -124,15 +125,72 @@ public class PaymentDB {
      *===========================================================================================================================*/
     public long insertPayment(Payment payment) {
         ContentValues cv = new ContentValues();
-        cv.put(PAYMENT_ID, getPaymentRowCount() + 1);
-        cv.put(PAYMENT_ORDER_ID, getOrderRowCount());
-        cv.put(PAYMENT_ACCOUNT_ID, getAccountRowCount());
+        cv.put(PAYMENT_ID, payment.getPayID());
+        cv.put(PAYMENT_ORDER_ID, payment.getOrderID());
+        cv.put(PAYMENT_ACCOUNT_ID, payment.getAccountID());
+        cv.put(PAYMENT_TRIP_FROM, payment.getTripFrom());
+        cv.put(PAYMENT_TRIP_TO, payment.getTripTo());
         cv.put(PAYMENT_PRICE, payment.getPriceTotal());
 
         this.openWriteableDB();
         long rowID = db.insert(PAYMENT_TABLE, null, cv);
         this.closeDB();
         return rowID;
+    }
+
+    public Cursor queryPayments(String[] columns, String where,
+                             String[] whereArgs, String orderBy) {
+        this.openReadableDB();
+        Cursor cursor = db.query(PAYMENT_TABLE, columns,
+                where, whereArgs,
+                null, null, orderBy);
+        return cursor;
+    }
+
+    public int updatePayment(ContentValues cv, String where, String[] whereArgs) {
+        this.openWriteableDB();
+        int rowCount = db.update(PAYMENT_TABLE, cv, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
+    public int updatePayment(Payment payment) {
+        ContentValues cv = new ContentValues();
+        cv.put(PAYMENT_ID, payment.getPayID());
+        cv.put(PAYMENT_ORDER_ID, payment.getOrderID());
+        cv.put(PAYMENT_ACCOUNT_ID, payment.getAccountID());
+        cv.put(PAYMENT_TRIP_FROM, payment.getTripFrom());
+        cv.put(PAYMENT_TRIP_TO, payment.getTripTo());
+        cv.put(PAYMENT_PRICE, payment.getPriceTotal());
+
+        String where = PAYMENT_ID + "= ?";
+        String[] whereArgs = { String.valueOf(payment.getPayID()) };
+
+        this.openWriteableDB();
+        int rowCount = db.update(PAYMENT_TABLE, cv, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
+    public int deletePayment(long id) {
+        String where = PAYMENT_ID + "= ?";
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.delete(PAYMENT_TABLE, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
+    public int deletePayment(String where, String[] whereArgs) {
+        this.openWriteableDB();
+        int rowCount = db.delete(PAYMENT_TABLE, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
     }
 
 
@@ -150,6 +208,12 @@ public class PaymentDB {
         {
             // First, create tables
             db.execSQL(CREATE_PAYMENT_TABLE);
+            db.execSQL("INSERT INTO payment VALUES (1, 23, 1, 'Toronto', " +
+                    "'Ottawa', 10.5)");
+            db.execSQL("INSERT INTO payment VALUES (2, 40, 2, 'Kingston', " +
+                    "'Kitchener', 35.9)");
+            db.execSQL("INSERT INTO payment VALUES (3, 50, 3, 'Waterloo', " +
+                    "'london', 88.5)");
         }
 
         @Override

@@ -7,13 +7,13 @@
 
 package com.example.egoapp;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,29 +21,28 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.app.DatePickerDialog;
-import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.*;
-import java.util.List;
-import com.example.egoapp.DBHandler.OrderDB;
-import com.example.egoapp.DBHandler.AccountDB;
-import com.example.egoapp.Object.Orders;
-import com.example.egoapp.Object.Account;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.egoapp.DBHandler.AccountDB;
+import com.example.egoapp.DBHandler.OrderDB;
+import com.example.egoapp.Object.Account;
+import com.example.egoapp.Object.Orders;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 public class MakeTrip  extends AppCompatActivity implements View.OnClickListener {
 
@@ -442,9 +441,6 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
-            case R.id.nav_phone_call:
-                startActivity(new Intent(this, PhoneCall.class));
-                return true;
             case R.id.nav_open_google_map:
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
@@ -453,6 +449,15 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
                 return true;
             case R.id.nav_detect_wifi:
                 startActivity(new Intent(this, WifiDetect.class));
+                return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
+                return true;
+            case R.id.nav_add_cus:
+                startActivity(new Intent(this, AddCustomer.class));
+                return true;
+            case R.id.nav_show_payment:
+                startActivity(new Intent(this, ShowPayment.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

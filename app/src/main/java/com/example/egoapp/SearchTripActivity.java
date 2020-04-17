@@ -177,8 +177,8 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
-            case R.id.nav_phone_call:
-                startActivity(new Intent(this, PhoneCall.class));
+            case R.id.nav_add_cus:
+                startActivity(new Intent(this, AddCustomer.class));
                 return true;
             case R.id.nav_open_google_map:
                 startActivity(new Intent(this, MapsActivity.class));

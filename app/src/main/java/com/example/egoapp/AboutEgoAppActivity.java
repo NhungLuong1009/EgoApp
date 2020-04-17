@@ -95,9 +95,6 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
-            case R.id.nav_phone_call:
-                startActivity(new Intent(this, PhoneCall.class));
-                return true;
             case R.id.nav_open_google_map:
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
@@ -107,8 +104,20 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
             case R.id.nav_detect_wifi:
                 startActivity(new Intent(this, WifiDetect.class));
                 return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
+                return true;
+            case R.id.nav_add_cus:
+                startActivity(new Intent(this, AddCustomer.class));
+                return true;
+            case R.id.nav_show_payment:
+                startActivity(new Intent(this, ShowPayment.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static class CustomerProvider {
     }
 }

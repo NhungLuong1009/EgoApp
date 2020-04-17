@@ -7,11 +7,13 @@
 package com.example.egoapp;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,13 +57,30 @@ public class TripNotification extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText name = findViewById( R.id.userName );
-                EditText date = findViewById( R.id.in_date );
-                int retCode = validateInput(name, date);
-                ShareData.tripNotificationUserName = name.getText().toString();
-                ShareData.tripNotificationDate = date.getText().toString();
+                 /*
+                    HERE I'M GONNA USE CUSTOM ALERT DIALOG
+                 */
+                new AlertDialog.Builder(TripNotification.this).setTitle("NOTIFICATION").setMessage("Are you sure to add a new NOTIFICATION?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                EditText name = findViewById( R.id.userName );
+                                EditText date = findViewById( R.id.in_date );
+                                int retCode = validateInput(name, date);
+                                ShareData.tripNotificationUserName = name.getText().toString();
+                                ShareData.tripNotificationDate = date.getText().toString();
 
-                addNotification();
+                                addNotification();
+                            }
+                        })
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // DO NOTHING
+                            }
+                        })
+                        .show();
+
             }
         });
 
@@ -167,9 +186,6 @@ public class TripNotification extends AppCompatActivity {
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
-            case R.id.nav_phone_call:
-                startActivity(new Intent(this, PhoneCall.class));
-                return true;
             case R.id.nav_open_google_map:
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
@@ -178,6 +194,15 @@ public class TripNotification extends AppCompatActivity {
                 return true;
             case R.id.nav_detect_wifi:
                 startActivity(new Intent(this, WifiDetect.class));
+                return true;
+            case R.id.nav_phone_call:
+                startActivity(new Intent(this, PhoneCall.class));
+                return true;
+            case R.id.nav_add_cus:
+                startActivity(new Intent(this, AddCustomer.class));
+                return true;
+            case R.id.nav_show_payment:
+                startActivity(new Intent(this, ShowPayment.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
