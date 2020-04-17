@@ -71,7 +71,7 @@ public class PaymentDB {
             cursor.close();
     }
 
-     /*=========================================================================================================================*
+    /*=========================================================================================================================*
      * Name		: getAccountRowCount
      * Purpose	: to get the row count of table
      * Inputs	:
@@ -86,7 +86,7 @@ public class PaymentDB {
         return numRows;
     }
 
-     /*=========================================================================================================================*
+    /*=========================================================================================================================*
      * Name		: getOrderRowCount
      * Purpose	: to get the row count of table
      * Inputs	:
@@ -101,7 +101,7 @@ public class PaymentDB {
         return numRows;
     }
 
-     /*=========================================================================================================================*
+    /*=========================================================================================================================*
      * Name		: getOrderRowCount
      * Purpose	: to get the row count of table
      * Inputs	:
@@ -116,7 +116,7 @@ public class PaymentDB {
         return numRows;
     }
 
-     /*=========================================================================================================================*
+    /*=========================================================================================================================*
      * Name		: insertOrder
      * Purpose	: to insert data into order table
      * Inputs	:
@@ -139,7 +139,7 @@ public class PaymentDB {
     }
 
     public Cursor queryPayments(String[] columns, String where,
-                             String[] whereArgs, String orderBy) {
+                                String[] whereArgs, String orderBy) {
         this.openReadableDB();
         Cursor cursor = db.query(PAYMENT_TABLE, columns,
                 where, whereArgs,

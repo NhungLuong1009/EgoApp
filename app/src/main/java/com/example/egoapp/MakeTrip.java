@@ -46,6 +46,9 @@ import java.util.List;
 
 public class MakeTrip  extends AppCompatActivity implements View.OnClickListener {
 
+    //define Logger Class
+    private static final String LOGTAG = "MakeTrip.class";
+
     private String TAG = MakeTrip.class.getSimpleName();
 
     private ProgressDialog pDialog;
@@ -91,13 +94,28 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.make_trip);
 
+        Log.i(LOGTAG, "Running the MakeTrip screen....");
+
         //Initialize the ArrayList
-        citiesList = new ArrayList<>();
-        tourList = new ArrayList<>();
+        try{
+            Log.d(LOGTAG, "Initialize the ArrayList....");
+            citiesList = new ArrayList<>();
+            tourList = new ArrayList<>();
+        }
+        catch(NullPointerException ne){
+            Log.e(LOGTAG, "Initialize the ArrayList Exception: " + ne.getMessage());
+        }
 
         // Initialize the ORDER Database
-        orderDB = new OrderDB(this);
-        accountDB = new AccountDB(this);
+        try{
+            Log.d(LOGTAG, "Initialize the ORDER Database....");
+            orderDB = new OrderDB(this);
+            accountDB = new AccountDB(this);
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "Initialize the ArrayList Exception: " + e.getMessage());
+        }
+
         // Run the Cities JSON-SERVER instances using AsyncTask
         new GetCitiesAsyncTask().execute();
 
@@ -226,6 +244,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
     //=============================================================================
     @Override
     public void onClick(View v) {
+        Log.i(LOGTAG, "Running the ListViewAdapter onClick....");
         if (v == btnDatePicker) {
 
             // Get Current Date
@@ -280,6 +299,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
      *===========================================================================================================================*/
     private double getMilesFromJSON(String startCity, String endCity)
     {
+        Log.d(LOGTAG, "Running the getMilesFromJSON method....");
         double miles = 0.00;
         for (HashMap<String, String> entry : tourList) {
             // for each hashmap, iterate over it
@@ -290,10 +310,15 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
             if (entry.get("startCity").equals(startCity) && entry.get("endCity").equals(endCity))
             {
                 Log.d("HELLO", entry.get("distance"));
-                miles = Double.parseDouble(entry.get("distance"));
-                if (miles != 0.00)
-                {
-                    break;
+                try{
+                    miles = Double.parseDouble(entry.get("distance"));
+                    if (miles != 0.00)
+                    {
+                        break;
+                    }
+                }
+                catch (Exception e) {
+                    Log.e(LOGTAG, "getMilesFromJSON method Exception: " + e.getMessage());
                 }
             }
         }
@@ -309,6 +334,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
      * Returns	: double
      *===========================================================================================================================*/
     public int calculateBill(int numOfAdult, int numOfChild) {
+        Log.d(LOGTAG, "Running the calculateBill method....");
         return (numOfAdult*ShareData.priceForAdult) + (numOfChild*ShareData.priceForChild);
     }
 
@@ -321,6 +347,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
      * Returns	: an error string
      *===========================================================================================================================*/
     public static int findIndex(String[] array, String name) {
+        Log.d(LOGTAG, "Running the findIndex method....");
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(name)) {
                 return i;
@@ -338,6 +365,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
      * Returns	: an error string
      *===========================================================================================================================*/
     private int validateInput() {
+        Log.d(LOGTAG, "Running the validateInput method....");
         String temptStartcity = spinner1.getSelectedItem().toString();
         String temptEndCity = spinner2.getSelectedItem().toString();
         String temptDate = ((EditText) findViewById(R.id.in_date)).getText().toString();
@@ -379,6 +407,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
      * Returns	: an error string
      *===========================================================================================================================*/
     private String getErrorString(int errorCode) {
+        Log.d(LOGTAG, "Running the getErrorString method....");
         String retString = "";
         if (errorCode == ShareData.StartCityISEmpty) {
             retString = "Start city name cannot be empty";
@@ -472,6 +501,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
 
         @Override
         protected void onPreExecute() {
+            Log.d(LOGTAG, "Running the GetCitiesAsyncTask.onPreExecute method....");
             super.onPreExecute();
             // Showing progress dialog
             pDialog = new ProgressDialog(MakeTrip.this);
@@ -484,6 +514,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
         @Override
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
+            Log.d(LOGTAG, "Running the GetCitiesAsyncTask.doInBackground method....");
 
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url);
@@ -547,6 +578,7 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
         }
         @Override
         protected void onPostExecute(Void result) {
+            Log.d(LOGTAG, "Running the GetCitiesAsyncTask.onPostExecute method....");
             super.onPostExecute(result);
             // Dismiss the progress dialog
             if (pDialog.isShowing())
@@ -569,13 +601,18 @@ public class MakeTrip  extends AppCompatActivity implements View.OnClickListener
                 listEndCity.add(map.get("endCity"));
             }
 
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MakeTrip.this, android.R.layout.simple_spinner_item, listStartCity);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner1.setAdapter(dataAdapter);
+            try {
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MakeTrip.this, android.R.layout.simple_spinner_item, listStartCity);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner1.setAdapter(dataAdapter);
 
-            dataAdapter = new ArrayAdapter<String>(MakeTrip.this, android.R.layout.simple_spinner_item, listEndCity);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner2.setAdapter(dataAdapter);
+                dataAdapter = new ArrayAdapter<String>(MakeTrip.this, android.R.layout.simple_spinner_item, listEndCity);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner2.setAdapter(dataAdapter);
+            }
+            catch(Exception e){
+                Log.e(LOGTAG, "getView onPostExecute Exception: " + e.getMessage());
+            }
         }
     }
 

@@ -58,7 +58,8 @@
                 <ListView
                     android:id="@+id/listView_paymentList"
                     android:layout_width="match_parent"
-                    android:layout_height="548dp">
+                    android:layout_height="548dp"
+                    android:layout_weight="1">
                 </ListView>
 
 

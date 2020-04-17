@@ -19,9 +19,11 @@ import java.net.URL;
 
 public class HttpHandler {
 
-    private static final String TAG = HttpHandler.class.getSimpleName();
+    //define Logger Class
+    private static final String LOGTAG = "HttpHandler.class";
 
     public HttpHandler() {
+        Log.i(LOGTAG, "Running the HttpHandler method....");
     }
 
     /*
@@ -32,6 +34,7 @@ public class HttpHandler {
      */
     public String makeServiceCall(String reqUrl) {
         String response = null;
+        Log.i(LOGTAG, "makeServiceCall running... ");
         try {
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -40,13 +43,14 @@ public class HttpHandler {
             InputStream in = new BufferedInputStream(conn.getInputStream());
             response = convertStreamToString(in);
         } catch (MalformedURLException e) {
-            Log.e(TAG, "MalformedURLException: " + e.getMessage());
+            Log.e(LOGTAG, "MalformedURLException: " + e.getMessage());
         } catch (ProtocolException e) {
-            Log.e(TAG, "ProtocolException: " + e.getMessage());
+            Log.e(LOGTAG, "ProtocolException: " + e.getMessage());
+
         } catch (IOException e) {
-            Log.e(TAG, "IOException: " + e.getMessage());
+            Log.e(LOGTAG, "IOException: " + e.getMessage());
         } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.getMessage());
+            Log.e(LOGTAG, "Exception: " + e.getMessage());
         }
         return response;
     }
@@ -63,16 +67,19 @@ public class HttpHandler {
         StringBuilder sb = new StringBuilder();
 
         String line;
+        Log.i(LOGTAG, "convertStreamToString method...");
         try {
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append('\n');
             }
         } catch (IOException e) {
+            Log.e(LOGTAG, "IOException: " + e.getMessage());
             e.printStackTrace();
         } finally {
             try {
                 is.close();
             } catch (IOException e) {
+                Log.e(LOGTAG, "IOException: " + e.getMessage());
                 e.printStackTrace();
             }
         }

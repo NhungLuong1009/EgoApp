@@ -14,18 +14,37 @@ import com.example.egoapp.Object.Orders;
 
 public class DBHandler {
 
+    //define Logger Class
+    private static final String LOGTAG = "DBHandler.class";
+
     private SQLiteDatabase db;
     private DBHelper dbHelper;
 
     // Constructor --------------------------------------------------------
     public DBHandler(Context context) {
+        Log.i(LOGTAG, "Running the DBHandler Logic....");
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
 
-
     // Opening Database -------------------------------------------------------------------------------------------------
-    private void openReadableDB() { db = dbHelper.getReadableDatabase(); }
-    private void openWriteableDB() { db = dbHelper.getWritableDatabase(); }
+    private void openReadableDB() {
+        try{
+            db = dbHelper.getReadableDatabase();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "openReadableDB method Exception: " + e.getMessage());
+        }
+    }
+
+    private void openWriteableDB() {
+        try{
+            db = dbHelper.getWritableDatabase();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "openWriteableDB method Exception: " + e.getMessage());
+        }
+    }
+
     private void closeDB() {
         if (db != null) {
             db.close();
@@ -106,14 +125,14 @@ public class DBHandler {
                     CITY_NAME + " INTEGER NOT NULL);";
 
     public static final String CREATE_PAYMENT_TABLE =
-            "CREATE TABLE" + PAYMENT_TABLE + " (" +
+            "CREATE TABLE " + PAYMENT_TABLE + " (" +
                     PAYMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    PAYMENT_ORDER_ID + " INTEGER NOT NULL" +
-                    PAYMENT_ACCOUNT_ID + " INTEGER NOT NULL " +
-                    PAYMENT_PRICE + " INTEGER NOT NULL " +
-                    PAYMENT_TYPE +  " INTEGER NOT NULL " +
+                    PAYMENT_ORDER_ID + " INTEGER NOT NULL, " +
+                    PAYMENT_ACCOUNT_ID + " INTEGER NOT NULL, " +
+                    PAYMENT_PRICE + " INTEGER NOT NULL, " +
+                    PAYMENT_TYPE +  " INTEGER NOT NULL, " +
                     "FOREIGN KEY (" + PAYMENT_ORDER_ID +
-                    ") REFERENCES orders(order_id)" +
+                    ") REFERENCES orders(order_id), " +
                     "FOREIGN KEY (" + PAYMENT_ACCOUNT_ID +
                     ") REFERENCES account(account_id)" +
                     ");";
@@ -157,8 +176,15 @@ public class DBHandler {
     public long getAccountRowCount()
     {
         this.openReadableDB();
-        long numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM account", null);
-        this.closeDB();
+        long numRows = 0;
+        try{
+            numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM account", null);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "getAccountRowCount method Exception: " + e.getMessage());
+        }
+
         return numRows;
     }
 
@@ -172,8 +198,15 @@ public class DBHandler {
     public long getCityRowCount()
     {
         this.openReadableDB();
-        long numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM cities", null);
-        this.closeDB();
+        long numRows = 0;
+        try{
+            numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM cities", null);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "getCityRowCount method Exception: " + e.getMessage());
+        }
+
         return numRows;
     }
 
@@ -187,8 +220,15 @@ public class DBHandler {
     public long getOrderRowCount()
     {
         this.openReadableDB();
-        long numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM orders", null);
-        this.closeDB();
+        long numRows = 0;
+        try{
+            numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM orders", null);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "getOrderRowCount method Exception: " + e.getMessage());
+        }
+
         return numRows;
     }
 
@@ -201,13 +241,20 @@ public class DBHandler {
      *===========================================================================================================================*/
     public long insertAccount(Account account) {
         ContentValues cv = new ContentValues();
-        cv.put(ACCOUNT_ID, getAccountRowCount() + 1);
-        cv.put(ACCOUNT_NAME, account.getName());
-        cv.put(ACCOUNT_PHONE, account.getPhoneNumber());
+        long rowID = 0;
+        try{
+            cv.put(ACCOUNT_ID, getAccountRowCount() + 1);
+            cv.put(ACCOUNT_NAME, account.getName());
+            cv.put(ACCOUNT_PHONE, account.getPhoneNumber());
 
-        this.openWriteableDB();
-        long rowID = db.insert(ACCOUNT_TABLE, null, cv);
-        this.closeDB();
+            this.openWriteableDB();
+            rowID = db.insert(ACCOUNT_TABLE, null, cv);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "insertAccount method Exception: " + e.getMessage());
+        }
+
         return rowID;
     }
 
@@ -220,12 +267,19 @@ public class DBHandler {
      *===========================================================================================================================*/
     public long insertCity(Cities city) {
         ContentValues cv = new ContentValues();
-        cv.put(CITY_ID, getCityRowCount() + 1);
-        cv.put(CITY_NAME, city.getCityName());
+        long rowID = 0;
+        try{
+            cv.put(CITY_ID, getCityRowCount() + 1);
+            cv.put(CITY_NAME, city.getCityName());
 
-        this.openWriteableDB();
-        long rowID = db.insert(CITY_TABLE, null, cv);
-        this.closeDB();
+            this.openWriteableDB();
+            rowID = db.insert(CITY_TABLE, null, cv);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "insertCity method Exception: " + e.getMessage());
+        }
+
         return rowID;
     }
 
@@ -239,18 +293,25 @@ public class DBHandler {
     public long insertOrder(Orders order) {
         ContentValues cv = new ContentValues();
         //cv.put(ORDER_ID, getOrderRowCount() + 1);
-        cv.put(ORDER_DATE, order.getOrderDate());
-        cv.put(ORDER_TIME, order.getOrderTime());
-        cv.put(ORDER_START_CITY, order.getStartCity());
-        cv.put(ORDER_END_CITY, order.getEndCity());
-        cv.put(ORDER_ADULT_COUNT, order.getNumOfAdults());
-        cv.put(ORDER_CHILD_COUNT, order.getNumOfChild());
-        cv.put(ORDER_ROUND_TRIP, order.getRoundTrip());
-        cv.put(ORDER_MILES, order.getMiles());
+        long rowID = 0;
+        try{
+            cv.put(ORDER_DATE, order.getOrderDate());
+            cv.put(ORDER_TIME, order.getOrderTime());
+            cv.put(ORDER_START_CITY, order.getStartCity());
+            cv.put(ORDER_END_CITY, order.getEndCity());
+            cv.put(ORDER_ADULT_COUNT, order.getNumOfAdults());
+            cv.put(ORDER_CHILD_COUNT, order.getNumOfChild());
+            cv.put(ORDER_ROUND_TRIP, order.getRoundTrip());
+            cv.put(ORDER_MILES, order.getMiles());
 
-        this.openWriteableDB();
-        long rowID = db.insert(ORDER_TABLE, null, cv);
-        this.closeDB();
+            this.openWriteableDB();
+            rowID = db.insert(ORDER_TABLE, null, cv);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "insertOrder method Exception: " + e.getMessage());
+        }
+
         return rowID;
     }
 

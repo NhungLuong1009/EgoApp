@@ -1,3 +1,8 @@
+//* FILE			: SampleWidgets.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #3
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: April 17, 2020
+//* DESCRIPTION		: The file defines widgets for getting trip info
 package com.example.egoapp;
 
 import android.Manifest;
@@ -19,6 +24,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 public class LocationTrack extends Service implements LocationListener {
+
+    //define Logger Class
+    private static final String LOGTAG = "DisplayTrip.class";
+
 
     private final Context mContext;
 

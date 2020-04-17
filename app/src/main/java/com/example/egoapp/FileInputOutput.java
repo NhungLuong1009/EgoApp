@@ -1,3 +1,9 @@
+//* FILE			: SampleWidgets.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #3
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: April 17, 2020
+//* DESCRIPTION		: The file defines widgets for getting trip info
+
 package com.example.egoapp;
 
 import android.content.Context;
@@ -13,11 +19,14 @@ import java.io.OutputStreamWriter;
 
 
 public class FileInputOutput {
-    public static String TaskArchiveFilename = "taskFileArchive";        // File name of file used to store task information.
 
+    //define Logger Class
+    private static final String LOGTAG = "FileInputOutput.class";
+    public static String TaskArchiveFilename = "taskFileArchive";        // File name of file used to store task information.
 
     static void WriteToFile (Context context, String filename, JSONObject data) {
         try {
+            Log.d(LOGTAG, "Running the WriteToFile method....");
             // Open file, set to append.
             FileOutputStream outputStream = context.openFileOutput(filename, context.MODE_PRIVATE | context.MODE_APPEND);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
@@ -25,7 +34,7 @@ public class FileInputOutput {
             outputStreamWriter.close();
             outputStream.close();
         } catch (IOException e) {
-            Log.d("WriteToFile", e.toString());
+            Log.e(LOGTAG, "WriteToFile", e);
         }
 
     }
@@ -36,6 +45,7 @@ public class FileInputOutput {
         JSONObject buffer;
 
         try {
+            Log.d(LOGTAG, "Running the ReadAll method....");
             InputStream inputStream = context.openFileInput(filename);
 
             // Make sure file opened successfully.
@@ -55,7 +65,7 @@ public class FileInputOutput {
                 inputStream.close();
             }
         } catch (Exception e) {
-            Log.d("ReadAll", e.toString());
+            Log.e(LOGTAG, "An error occurred when the ReadAll method was clicked. ", e);
         }
 
 

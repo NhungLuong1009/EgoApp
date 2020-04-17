@@ -31,14 +31,18 @@ import androidx.core.content.ContextCompat;
 
 public class PhoneCall extends AppCompatActivity {
 
+    //define Logger Class
+    private static final String LOGTAG = "PhoneCall.class";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(LOGTAG, "Running the PhoneCall screen....");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_call);
 
         Button call = (Button) findViewById( R.id.fab );
 
+        Log.d(LOGTAG, "Running the setOnClickListener....");
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

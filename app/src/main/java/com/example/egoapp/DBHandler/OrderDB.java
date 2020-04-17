@@ -13,12 +13,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.egoapp.Object.Account;
 import com.example.egoapp.Object.Orders;
 
 import java.util.ArrayList;
 
 public class OrderDB {
+    //define Logger Class
+    private static final String LOGTAG = "OrderDB.class";
+
     public static final String  DB_NAME = "Ego.db";
     public static final int     DB_VERSION = 1;
 
@@ -47,7 +49,7 @@ public class OrderDB {
 
     public static final String CREATE_ORDER_TABLE =
             "CREATE TABLE " + ORDER_TABLE + " (" +
-                    ORDER_ID + " INTEGER AUTO INCREMENT PRIMARY KEY NOT NULL, " +
+                    ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     ORDER_DATE + " TEXT NOT NULL, " +
                     ORDER_TIME + " TEXT NOT NULL, " +
                     ORDER_START_CITY + " TEXT NOT NULL, " +
@@ -68,12 +70,29 @@ public class OrderDB {
 
     // Constructor --------------------------------------------------------
     public OrderDB(Context context) {
+        Log.i(LOGTAG, "Running the OrderDB Logic....");
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
 
     // Opening Database -------------------------------------------------------------------------------------------------
-    private void openReadableDB() { db = dbHelper.getReadableDatabase(); }
-    private void openWriteableDB() { db = dbHelper.getWritableDatabase(); }
+    private void openReadableDB() {
+        try{
+            db = dbHelper.getReadableDatabase();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "openReadableDB method Exception: " + e.getMessage());
+        }
+    }
+
+    private void openWriteableDB() {
+        try{
+            db = dbHelper.getWritableDatabase();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "openWriteableDB method Exception: " + e.getMessage());
+        }
+    }
+
     private void closeDB() {
         if (db != null) {
             db.close();
@@ -96,8 +115,15 @@ public class OrderDB {
     public long getOrderRowCount()
     {
         this.openReadableDB();
-        long numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM " + ORDER_TABLE, null);
-        this.closeDB();
+        long numRows = 0;
+        try{
+            numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM " + ORDER_TABLE, null);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "getOrderRowCount method Exception: " + e.getMessage());
+        }
+
         return numRows;
     }
 
@@ -135,46 +161,67 @@ public class OrderDB {
      *===========================================================================================================================*/
     public long insertOrder(Orders order) {
         ContentValues cv = new ContentValues();
-        cv.put(ORDER_ID, getOrderRowCount() + 1);
-        cv.put(ORDER_DATE, order.getOrderDate());
-        cv.put(ORDER_TIME, order.getOrderTime());
-        cv.put(ORDER_START_CITY, order.getStartCity());
-        cv.put(ORDER_END_CITY, order.getEndCity());
-        cv.put(ORDER_ADULT_COUNT, order.getNumOfAdults());
-        cv.put(ORDER_CHILD_COUNT, order.getNumOfChild());
-        cv.put(ORDER_ROUND_TRIP, order.getRoundTrip());
-        cv.put(ORDER_MILES, order.getMiles());
+        long rowID = 0;
+        try{
+            cv.put(ORDER_ID, getOrderRowCount() + 1);
+            cv.put(ORDER_DATE, order.getOrderDate());
+            cv.put(ORDER_TIME, order.getOrderTime());
+            cv.put(ORDER_START_CITY, order.getStartCity());
+            cv.put(ORDER_END_CITY, order.getEndCity());
+            cv.put(ORDER_ADULT_COUNT, order.getNumOfAdults());
+            cv.put(ORDER_CHILD_COUNT, order.getNumOfChild());
+            cv.put(ORDER_ROUND_TRIP, order.getRoundTrip());
+            cv.put(ORDER_MILES, order.getMiles());
 
-        this.openWriteableDB();
-        long rowID = db.insert(ORDER_TABLE, null, cv);
-        this.closeDB();
+            this.openWriteableDB();
+            rowID = db.insert(ORDER_TABLE, null, cv);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "insertOrder method Exception: " + e.getMessage());
+        }
+
         return rowID;
     }
 
     public int updateOrder(Orders order) {
         ContentValues cv = new ContentValues();
-        cv.put(ORDER_ID, order.getOrderID());
-        cv.put(ORDER_DATE, order.getOrderDate());
-        cv.put(ORDER_TIME, order.getOrderTime());
-        cv.put(ORDER_START_CITY, order.getStartCity());
-        cv.put(ORDER_END_CITY, order.getEndCity());
-        cv.put(ORDER_ADULT_COUNT, order.getNumOfAdults());
-        cv.put(ORDER_CHILD_COUNT, order.getNumOfChild());
-        cv.put(ORDER_MILES, order.getMiles());
+        int rowCount = 0;
+        try{
+            cv.put(ORDER_ID, order.getOrderID());
+            cv.put(ORDER_DATE, order.getOrderDate());
+            cv.put(ORDER_TIME, order.getOrderTime());
+            cv.put(ORDER_START_CITY, order.getStartCity());
+            cv.put(ORDER_END_CITY, order.getEndCity());
+            cv.put(ORDER_ADULT_COUNT, order.getNumOfAdults());
+            cv.put(ORDER_CHILD_COUNT, order.getNumOfChild());
+            cv.put(ORDER_MILES, order.getMiles());
 
-        String where = ORDER_ID + "= ?";
-        String[] whereArgs = { String.valueOf(order.getOrderID()) };
-        this.openWriteableDB();
-        int rowCount = db.update(ORDER_TABLE, cv, where, whereArgs);
-        this.closeDB();
+            String where = ORDER_ID + "= ?";
+            String[] whereArgs = { String.valueOf(order.getOrderID()) };
+            this.openWriteableDB();
+            rowCount = db.update(ORDER_TABLE, cv, where, whereArgs);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "insertOrder method Exception: " + e.getMessage());
+        }
+
         return rowCount;
     }
 
     public int deleteOrder(int ID) {
-        String where = ORDER_ID + "= ?";
-        String[] whereArgs = { String.valueOf(ID) };
-        this.openWriteableDB();
-        int rowCount = db.delete(ORDER_TABLE, where, whereArgs);
+        int rowCount = 0;
+        try{
+            String where = ORDER_ID + "= ?";
+            String[] whereArgs = { String.valueOf(ID) };
+            this.openWriteableDB();
+            rowCount = db.delete(ORDER_TABLE, where, whereArgs);
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "getOrderRowCount method Exception: " + e.getMessage());
+        }
+
         return rowCount;
     }
 

@@ -13,6 +13,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +32,9 @@ import java.util.ArrayList;
 
 public class SearchTripActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
+    //define Logger Class
+    private static final String LOGTAG = "SearchTripActivity.class";
+
     // Declare Variables
     ListView list;
     ListViewAdapter adapter;
@@ -43,6 +47,8 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        Log.i(LOGTAG, "Running the SearchTripActivity screen....");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_trip);
         cityDB = new CityDB( this );
@@ -51,8 +57,13 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
         cityNameList = new String[]{"Toronto", "Ottawa", "Kingston", "Mississauga", "Waterloo", "Cambridge", "Kitchener", "Windsor"};
         String[] from = new String[]{CityDB.CITY_NAME};
 
-        new LoadCityList().execute();
-        new GetConnectionStatus().execute();
+        try{
+            new LoadCityList().execute();
+            new GetConnectionStatus().execute();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "LoadCityList &  GetConnectionStatus Exception: " + e.getMessage());
+        }
 
 
     }
@@ -60,7 +71,10 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
 
     private void loadBackgroundSearch()
     {
+        Log.i(LOGTAG, "loadBackgroundSearch method running...");
+
         // Locate the ListView in list_view_main.xml
+        Log.d(LOGTAG, "Locate the ListView in list_view_main.xml");
         list = (ListView) findViewById(R.id.listView);
 
         for (int i = 0; i < cityNameList.length; i++) {
@@ -204,7 +218,7 @@ public class SearchTripActivity extends AppCompatActivity implements SearchView.
         @Override
         protected Void doInBackground(Void... values) {
 
-
+            Log.d(LOGTAG, "doInBackground running... ");
             int defaultSize = cityNameList.length;
             percentageScale = (double)(100/defaultSize);
             pb = findViewById(R.id.progressBar);

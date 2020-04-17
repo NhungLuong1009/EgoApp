@@ -1,8 +1,8 @@
-//* FILE			: TripNotification.java
-//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* FILE			: SampleWidgets.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #3
 //* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSION	: Feb 8, 2018
-//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
+//* FIRST VERSON	: April 17, 2020
+//* DESCRIPTION		: The file defines widgets for getting trip info
 
 package com.example.egoapp;
 
@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +32,9 @@ import androidx.core.app.NotificationManagerCompat;
 
 
 public class TripNotification extends AppCompatActivity {
+
+    //define Logger Class
+    private static final String LOGTAG = "TripNotification.class";
 
     private NotificationManagerCompat notificationManager;
     private EditText customerName;
@@ -49,6 +53,8 @@ public class TripNotification extends AppCompatActivity {
      *===========================================================================================================================*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(LOGTAG, "Display TripNotification onCreate()...");
+
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_trip_notification );
         Button button = findViewById(R.id.buttonmot);
@@ -94,6 +100,7 @@ public class TripNotification extends AppCompatActivity {
      * Returns	: an error string
      *===========================================================================================================================*/
     private int validateInput(EditText name, EditText date) {
+        Log.i(LOGTAG, "Display TripNotification onCrvalidateInput()...");
         // VALIDATE THE MARK
         if (isEmpty(name) == true)
         {
@@ -120,6 +127,7 @@ public class TripNotification extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.O)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void addNotification() {
+        Log.i(LOGTAG, "Display TripNotification addNotification()...");
         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
         String CHANNEL_ID="MYCHANNEL";
         String message = "You have a trip on " + ShareData.tripNotificationDate.toString();

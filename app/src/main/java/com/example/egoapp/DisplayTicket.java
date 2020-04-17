@@ -7,16 +7,17 @@
 package com.example.egoapp;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Map;
-
 public class DisplayTicket  extends AppCompatActivity implements View.OnClickListener
 {
+    //define Logger Class
+    private static final String LOGTAG = "DisplayTicket.class";
     /*
      * Function: onCreate
      * Description: initial function that runs the application
@@ -29,6 +30,9 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
 
         // Set all data from Display Trip screen by getting the share data class values
         // Show customer Information
+
+        Log.i(LOGTAG, "Display Ticket screen...");
+
         setContentView(R.layout.display_ticket);
         TextView passengerName = findViewById(R.id.userName);
         passengerName.setText(ShareData.userName);
@@ -66,23 +70,34 @@ public class DisplayTicket  extends AppCompatActivity implements View.OnClickLis
         TextView total = findViewById(R.id.showedTotalAmount);
 
         // calculate amount & tax
-        // 1. covert amount
-        String toConvertStr = amount.getText().toString();
-        int toConvertAmount = Integer.parseInt(toConvertStr);
+        try {
+            // 1. covert amount
+            String toConvertStr = amount.getText().toString();
+            int toConvertAmount = Integer.parseInt(toConvertStr);
+            Log.d(LOGTAG, "convert amount");
 
-        // 2. convert passenger
-        toConvertStr = numOfPassenger.getText().toString();
-        int toConvertPassenger = Integer.parseInt(toConvertStr);
-        // 3. assign tax
-        float convertTax = 0.13f;
-        float totalAmount = 0.0f;
+            // 2. convert passenger
+            toConvertStr = numOfPassenger.getText().toString();
+            int toConvertPassenger = Integer.parseInt(toConvertStr);
+            Log.d(LOGTAG, "convert passenger");
 
-        convertTax = convertTax * toConvertAmount * toConvertPassenger;
-        totalAmount = convertTax + toConvertAmount * toConvertPassenger;
+            // 3. assign tax
+            float convertTax = 0.13f;
+            float totalAmount = 0.0f;
 
-        // assign the value for ticket price
-        tax.setText(Float.toString(convertTax));
-        total.setText(Float.toString(totalAmount));
+            convertTax = convertTax * toConvertAmount * toConvertPassenger;
+            totalAmount = convertTax + toConvertAmount * toConvertPassenger;
+
+            Log.d(LOGTAG, "convertTax=" + convertTax + "," + "totalAmount=" + totalAmount);
+
+            // assign the value for ticket price
+            tax.setText(Float.toString(convertTax));
+            total.setText(Float.toString(totalAmount));
+        }
+        catch (Exception e) {
+            Log.e(LOGTAG, "An error occurred when converting a variable to an integer.");
+            Log.e(LOGTAG, "Detailed Log Info", e);
+        }
 
         Button myBtn = findViewById(R.id.displayTicketBtn);
         myBtn.setOnClickListener(new View.OnClickListener() {

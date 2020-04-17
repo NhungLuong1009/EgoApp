@@ -27,6 +27,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class OpenGoogleSearch extends AppCompatActivity {
 
+    //define Logger Class
+    private static final String LOGTAG = "OpenGoogleSearch.class";
+
     private WebView mWebView;
     String myUrl = "https://www.google.com";
 
@@ -38,15 +41,22 @@ public class OpenGoogleSearch extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(LOGTAG, "Running the OpenGoogleSearch screen....");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_google_search);
 
         mWebView = findViewById(R.id.webview);
         mWebView.getSettings().setJavaScriptEnabled(true);
 
-        mWebView.loadUrl(myUrl); // URL
-        mWebView.setWebChromeClient(new WebChromeClient());
-        mWebView.setWebViewClient(new WebViewClientClass());
+        try{
+            Log.d(LOGTAG, "Running the onCreate method....");
+            mWebView.loadUrl(myUrl); // URL
+            mWebView.setWebChromeClient(new WebChromeClient());
+            mWebView.setWebViewClient(new WebViewClientClass());
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "Call the URL Exception: " + e.getMessage());
+        }
     }
 
 
@@ -171,6 +181,7 @@ public class OpenGoogleSearch extends AppCompatActivity {
         protected void onPostExecute(Boolean values) {
             super.onPostExecute(values);
 
+            Log.d(LOGTAG, "onPostExecute running... ");
             String result = "Cannot connected to network!";
             int ip = 0;
             String ipString = "";
@@ -179,12 +190,18 @@ public class OpenGoogleSearch extends AppCompatActivity {
                 WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
                 WifiInfo wifiInfo;
 
-                wifiInfo = wifiManager.getConnectionInfo();
-                if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
-                    ip = wifiInfo.getIpAddress();
+                try{
+                    wifiInfo = wifiManager.getConnectionInfo();
+                    if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+                        ip = wifiInfo.getIpAddress();
 //                  String networkName = wifiInfo.getSSID();
-                    ipString = String.format("%d.%d.%d.%d”", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
+                        ipString = String.format("%d.%d.%d.%d”", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff), (ip >> 24 & 0xff));
+                    }
                 }
+                catch(Exception e){
+                    Log.e(LOGTAG, "onPostExecute method Exception: " + e.getMessage());
+                }
+
                 result = "Network connected to " + ipString;
             }
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -209,8 +226,7 @@ public class OpenGoogleSearch extends AppCompatActivity {
          */
         @Override
         protected Boolean doInBackground(Boolean... voids) {
-
-
+            Log.d(LOGTAG, "doInBackground running... ");
             ConnectivityManager conManager = (ConnectivityManager)
                     getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = conManager.getActiveNetworkInfo();

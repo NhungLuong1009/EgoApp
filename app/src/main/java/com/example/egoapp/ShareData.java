@@ -25,6 +25,8 @@ public class ShareData {
     public static Boolean makeOwnTrip = false;
 
     public static String mDescription[] = {"", "", "", "", ""};
+    public static String mDistance[] = {"400Km", "110Km", "100Km", "800Km"};
+    public static String mTime[] = {"4h 21m", "1h 12m", "1h", "8h"};
 
     public static int images[] = {R.drawable.ottawa,
             R.drawable.waterloo,

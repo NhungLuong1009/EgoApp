@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +30,9 @@ import com.example.egoapp.Object.BoardcastReceiver;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    //define Logger Class
+    private static final String LOGTAG = "MainActivity.class";
 
     Button searchBtn, makeNewTripBtn, viewTripBtn, aboutAppBtn, makeTripNotificationBtn, wifiDetectBtn;
     private DrawerLayout drawer;
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_main);
 
+        Log.i(LOGTAG, "EgoApp Started... ");
+
         createNotificationChannel();
 
         drawer = findViewById(R.id.drawer_layout);
@@ -62,62 +68,115 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toggle.syncState();
 
         searchBtn = (Button)findViewById(R.id.searchButton);
+        Log.d(LOGTAG, "Before search button for OnClickListener");
         searchBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, SearchTripActivity.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent = new Intent(MainActivity.this, SearchTripActivity.class);
+                    startActivity(myIntent);
+                }
+                catch (Exception e)
+                {
+                    Log.e(LOGTAG, "An error occurred when the search button was clicked.");
+                    Log.e(LOGTAG, "Detailed Log Info", e);
+                }
             }
         });
-
+        Log.d(LOGTAG, "after search button for OnClickListener");
 
         makeNewTripBtn = (Button)findViewById(R.id.makeNewTripButton);
+        Log.d(LOGTAG, "Before make trip button for OnClickListener");
         makeNewTripBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, MakeTrip.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent = new Intent(MainActivity.this, MakeTrip.class);
+                    startActivity(myIntent);
+                }
+                catch(Exception e)
+                {
+                    Log.e(LOGTAG, "An error occurred when the make trip button was clicked.");
+                    Log.e(LOGTAG, "Detailed Log Info", e);
+                }
             }
         });
+        Log.d(LOGTAG, "after make trip button for OnClickListener");
 
         viewTripBtn = (Button)findViewById(R.id.viewTripButton);
+        Log.d(LOGTAG, "Before view trip button for OnClickListener");
         viewTripBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, ViewTripOptionActivity.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent = new Intent(MainActivity.this, ViewTripOptionActivity.class);
+                    startActivity(myIntent);
+                }
+                catch(Exception e)
+                {
+                    Log.e(LOGTAG, "An error occurred when the view trip button was clicked.");
+                    Log.e(LOGTAG, "Detailed Log Info", e);
+                }
             }
         });
+        Log.d(LOGTAG, "after view trip button for OnClickListener");
 
         aboutAppBtn = (Button)findViewById(R.id.aboutAppButton);
+        Log.d(LOGTAG, "Before about button for OnClickListener");
         aboutAppBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent myIntent;
-                myIntent = new Intent(MainActivity.this, AboutEgoAppActivity.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent;
+                    myIntent = new Intent(MainActivity.this, AboutEgoAppActivity.class);
+                    startActivity(myIntent);
+                }
+                catch(Exception e)
+                {
+                    Log.e(LOGTAG, "An error occurred when the about button was clicked.");
+                    Log.e(LOGTAG, "Detailed Log Info", e);
+                }
             }
         });
+        Log.d(LOGTAG, "after about button for OnClickListener");
 
         makeTripNotificationBtn= (Button)findViewById(R.id.makeNotificationBtn);
+        Log.d(LOGTAG, "Before about makeTripNotification for OnClickListener");
         makeTripNotificationBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent myIntent;
-                myIntent = new Intent(MainActivity.this, TripNotification.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent;
+                    myIntent = new Intent(MainActivity.this, TripNotification.class);
+                    startActivity(myIntent);
+                }
+                catch(Exception e)
+                {
+                    Log.e(LOGTAG, "An error occurred when the makeTripNotification button was clicked.");
+                    Log.e(LOGTAG, "Detailed Log Info", e);
+                }
             }
         });
+        Log.d(LOGTAG, "after about makeTripNotification for OnClickListener");
 
         wifiDetectBtn= (Button)findViewById(R.id.detectWifiBtn);
+        Log.d(LOGTAG, "Before about wifiDetectBtn for OnClickListener");
         wifiDetectBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent myIntent;
-                myIntent = new Intent(MainActivity.this, WifiDetect.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent;
+                    myIntent = new Intent(MainActivity.this, WifiDetect.class);
+                    startActivity(myIntent);
+                }
+                catch(Exception e)
+                {
+                    Log.e(LOGTAG, "An error occurred when the wifiDetectBtn button was clicked.");
+                    Log.e(LOGTAG, "Detailed Log Info", e);
+                }
             }
         });
+        Log.d(LOGTAG, "after about wifiDetectBtn for OnClickListener");
 
         IntentFilter filter = new IntentFilter( "com.example.EXAMPLE.ACTION");
         registerReceiver( exampleBoardcastReceiver, filter );

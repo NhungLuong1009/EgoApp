@@ -7,6 +7,7 @@ package com.example.egoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,8 +15,10 @@ import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class AboutEgoAppActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+
+    //define Logger Class
+    private static final String LOGTAG = "AboutEgoAppActivity.class";
 
     /*
      * Function: onCreate
@@ -25,8 +28,16 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_ego_app);
+        try{
+            Log.i(LOGTAG, "Running AboutAppActivity...");
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_about_ego_app);
+        }
+        catch (Exception e){
+            Log.e(LOGTAG, "An error occurred when the about button was clicked.");
+            Log.e(LOGTAG, "Detailed Log Info", e);
+        }
+
     }
 
     /*
@@ -95,29 +106,11 @@ public class AboutEgoAppActivity extends AppCompatActivity implements SearchView
             case R.id.nav_app_main:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
-            case R.id.nav_open_google_map:
-                startActivity(new Intent(this, MapsActivity.class));
-                return true;
-            case R.id.nav_trip_notification:
-                startActivity(new Intent(this, TripNotification.class));
-                return true;
-            case R.id.nav_detect_wifi:
-                startActivity(new Intent(this, WifiDetect.class));
-                return true;
             case R.id.nav_phone_call:
                 startActivity(new Intent(this, PhoneCall.class));
-                return true;
-            case R.id.nav_add_cus:
-                startActivity(new Intent(this, AddCustomer.class));
-                return true;
-            case R.id.nav_show_payment:
-                startActivity(new Intent(this, ShowPayment.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public static class CustomerProvider {
     }
 }

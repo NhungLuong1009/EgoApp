@@ -18,6 +18,9 @@ import com.example.egoapp.Object.Cities;
 import java.util.ArrayList;
 
 public class CityDB {
+    //define Logger Class
+    private static final String LOGTAG = "CityDB.class";
+
     public static final String  DB_NAME = "Ego.db";
     public static final int     DB_VERSION = 1;
 
@@ -40,12 +43,29 @@ public class CityDB {
     private DBHelper dbHelper;
 
     public CityDB(Context context) {
+        Log.i(LOGTAG, "Running the CityDB Logic....");
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
 
     // Opening Database -------------------------------------------------------------------------------------------------
-    private void openReadableDB() { db = dbHelper.getReadableDatabase(); }
-    private void openWriteableDB() { db = dbHelper.getWritableDatabase(); }
+    private void openReadableDB() {
+        try{
+            db = dbHelper.getReadableDatabase();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "openReadableDB method Exception: " + e.getMessage());
+        }
+    }
+
+    private void openWriteableDB() {
+        try{
+            db = dbHelper.getWritableDatabase();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "openWriteableDB method Exception: " + e.getMessage());
+        }
+    }
+
     private void closeDB() {
         if (db != null) {
             db.close();
@@ -77,12 +97,19 @@ public class CityDB {
 
     public long insertCity(Cities city) {
         ContentValues cv = new ContentValues();
-        cv.put(CITY_ID, getCityIDCount() + 1);
-        cv.put(CITY_NAME, city.getCityName());
+        long rowID = 0;
+        try{
+            cv.put(CITY_ID, getCityIDCount() + 1);
+            cv.put(CITY_NAME, city.getCityName());
 
-        this.openWriteableDB();
-        long rowID = db.insert(CITY_TABLE, null, cv);
-        this.closeDB();
+            this.openWriteableDB();
+            rowID = db.insert(CITY_TABLE, null, cv);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "insertCity method Exception: " + e.getMessage());
+        }
+
         return rowID;
     }
 

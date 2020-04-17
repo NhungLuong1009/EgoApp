@@ -61,6 +61,10 @@
     <string name="navigation_drawer_close" />
     <string name="title_activity_maps">Map</string>
     <string name="hello_world" />
+    <string name="appwidget_text">TripInfo</string>
+    <string name="appwidget_first_city_text">EXAMPLE123</string>
+    <string name="add_widget">Add widget</string>
+
 
 </resources>
 

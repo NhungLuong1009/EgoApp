@@ -9,12 +9,17 @@ package com.example.egoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class DisplayTrip extends AppCompatActivity implements View.OnClickListener{
+
+    //define Logger Class
+    private static final String LOGTAG = "DisplayTrip.class";
 
     /*
      * Function: onCreate
@@ -26,6 +31,8 @@ public class DisplayTrip extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_trip);
+
+        Log.i(LOGTAG, "Display Trip screen...");
 
         // assign parameter for start city
         TextView startCity = findViewById(R.id.startCity);
@@ -58,14 +65,26 @@ public class DisplayTrip extends AppCompatActivity implements View.OnClickListen
         }
 
         Button myBtn = findViewById(R.id.displayTripBtn);
+        Log.d(LOGTAG, "Before display trip button for OnClickListener");
         myBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                try{
+                    Intent myIntent = new Intent(DisplayTrip.this, DisplayTicket.class);
+                    startActivity(myIntent);
+                }
+                catch(Exception e)
+                {
+                    Log.e(LOGTAG, "An error occurred when the about button was clicked.");
+                    Log.e(LOGTAG, "Detailed Log Info", e);
+                }
+
                 Intent myIntent = new Intent(DisplayTrip.this, DisplayTicket.class);
                 startActivity(myIntent);
             }
         });
+        Log.d(LOGTAG, "after display trip button for OnClickListener");
     }
 
     @Override

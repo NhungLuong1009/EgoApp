@@ -1,8 +1,8 @@
-//* FILE			: WifiDetect.java
-//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #1
+//* FILE			: SampleWidgets.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #3
 //* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
-//* FIRST VERSION	: Feb 8, 2018
-//* DESCRIPTION		: The file defines the first screen of the app asking for getting trip info
+//* FIRST VERSON	: April 17, 2020
+//* DESCRIPTION		: The file defines widgets for getting trip info
 
 package com.example.egoapp;
 
@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,11 +23,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class WifiDetect extends AppCompatActivity {
+    //define Logger Class
+    private static final String LOGTAG = "WifiDetect.class";
+
     private Switch switchWifi;
     private WifiManager wifiManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(LOGTAG, "Display WifiDetect screen...");
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_wifi_detect );
         String result = "Cannot connected to network!";
@@ -71,6 +76,7 @@ public class WifiDetect extends AppCompatActivity {
 
 
     protected void onStart(){
+        Log.i(LOGTAG, "Display WifiDetect start()...");
         super.onStart();
         IntentFilter intentFilter = new IntentFilter( WifiManager.WIFI_STATE_CHANGED_ACTION );
         registerReceiver( wifiStateReceiver, intentFilter );
@@ -78,6 +84,7 @@ public class WifiDetect extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        Log.i(LOGTAG, "Display WifiDetect stop()...");
         super.onStop();
         unregisterReceiver( wifiStateReceiver );
     }
@@ -85,6 +92,7 @@ public class WifiDetect extends AppCompatActivity {
     BroadcastReceiver wifiStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.i(LOGTAG, "Display wifiStateReceiver Listener...");
             int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
                     WifiManager.WIFI_STATE_UNKNOWN);
 

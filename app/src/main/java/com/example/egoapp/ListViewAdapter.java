@@ -6,6 +6,7 @@
 package com.example.egoapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,9 @@ import java.util.Locale;
 
 public class ListViewAdapter extends BaseAdapter {
 
+    //define Logger Class
+    private static final String LOGTAG = "ListViewAdapter.class";
+
     // Declare Variables
     Context mContext;
     LayoutInflater inflater;
@@ -27,6 +31,7 @@ public class ListViewAdapter extends BaseAdapter {
     private ArrayList<Cities> arraylist;
 
     public ListViewAdapter(Context context, ArrayList<Cities> CityNamesList) {
+        Log.i(LOGTAG, "Running the ListViewAdapter screen....");
         mContext = context;
         this.CityNamesList = CityNamesList;
         inflater = LayoutInflater.from(mContext);
@@ -66,17 +71,24 @@ public class ListViewAdapter extends BaseAdapter {
      */
     public View getView(final int position, View view, ViewGroup parent) {
         final ViewHolder holder;
-        if (view == null) {
-            holder = new ViewHolder();
-            view = inflater.inflate(R.layout.list_view_items, null);
-            // Locate the TextViews in listview_item.xml
-            holder.name = (TextView) view.findViewById(R.id.name);
-            view.setTag(holder);
-        } else {
-            holder = (ViewHolder) view.getTag();
+        Log.d(LOGTAG, "getView running... ");
+        try{
+            if (view == null) {
+                holder = new ViewHolder();
+                view = inflater.inflate(R.layout.list_view_items, null);
+                // Locate the TextViews in listview_item.xml
+                holder.name = (TextView) view.findViewById(R.id.name);
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
+            // Set the results into TextViews
+            holder.name.setText(CityNamesList.get(position).getCityName());
         }
-        // Set the results into TextViews
-        holder.name.setText(CityNamesList.get(position).getCityName());
+        catch(Exception e) {
+            Log.e(LOGTAG, "getView method Exception: " + e.getMessage());
+        }
+
         return view;
     }
 
@@ -89,16 +101,23 @@ public class ListViewAdapter extends BaseAdapter {
      */
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
-        CityNamesList.clear();
-        if (charText.length() == 0) {
-            CityNamesList.addAll(arraylist);
-        } else {
-            for (Cities wp : arraylist) {
-                if (wp.getCityName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    CityNamesList.add(wp);
+        Log.d(LOGTAG, "filter running... ");
+        try{
+            CityNamesList.clear();
+            if (charText.length() == 0) {
+                CityNamesList.addAll(arraylist);
+            } else {
+                for (Cities wp : arraylist) {
+                    if (wp.getCityName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                        CityNamesList.add(wp);
+                    }
                 }
             }
         }
+        catch(Exception e){
+            Log.e(LOGTAG, "filter method Exception : " + e.getMessage());
+        }
+
         notifyDataSetChanged();
     }
 

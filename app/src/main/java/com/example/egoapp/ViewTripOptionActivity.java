@@ -3,6 +3,7 @@ package com.example.egoapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ViewTripOptionActivity extends AppCompatActivity {
+    //define Logger Class
+    private static final String LOGTAG = "ViewTripOptionActivity.class";
+
     ListView listView_tripList;
 
     /*
@@ -31,6 +35,8 @@ public class ViewTripOptionActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(LOGTAG, "Running the ViewTripOptionActivity screen....");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_trip_option);
 
@@ -40,6 +46,8 @@ public class ViewTripOptionActivity extends AppCompatActivity {
         // Set new Adapter
         TripAdapter tripAdapter = new TripAdapter(this, ShareData.mTitle, ShareData.mDescription, ShareData.images);
         listView_tripList.setAdapter(tripAdapter);
+        Log.d(LOGTAG, "Running setOnItemClickListener....");
+
         // Listener Event
         listView_tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -124,20 +132,29 @@ public class ViewTripOptionActivity extends AppCompatActivity {
                 }
             } // Override listener
         });
+        Log.d(LOGTAG, "After setOnItemClickListener....");
 
         /* ----------------------------------------------------------------------------------------------------------------- */
         // Make an own trip
         Button myBtn = findViewById(R.id.mainBtn);
+        Log.d(LOGTAG, "Running setOnClickListener....");
         myBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                ShareData.makeOwnTrip = true;
+                try{
+                    ShareData.makeOwnTrip = true;
 
-                Intent myIntent = new Intent(ViewTripOptionActivity.this, MakeTrip.class);
-                startActivity(myIntent);
+                    Intent myIntent = new Intent(ViewTripOptionActivity.this, MakeTrip.class);
+                    startActivity(myIntent);
+                }
+                catch(Exception e){
+                    Log.e(LOGTAG, "setOnClickListener method Exception: " + e.getMessage());
+                }
+
             }
         });
+        Log.d(LOGTAG, "After setOnClickListener....");
 
     }
 

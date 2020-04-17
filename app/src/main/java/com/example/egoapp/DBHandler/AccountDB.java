@@ -17,9 +17,10 @@ import android.util.Log;
 
 import com.example.egoapp.Object.Account;
 
-import java.util.ArrayList;
-
 public class AccountDB {
+    //define Logger Class
+    private static final String LOGTAG = "AccountDB.class";
+
     public static final String  DB_NAME = "Ego.db";
     public static final int     DB_VERSION = 2;
 
@@ -66,12 +67,29 @@ public class AccountDB {
 
     // Constructor --------------------------------------------------------
     public AccountDB(Context context) {
+        Log.i(LOGTAG, "Running the AccountDB Logic....");
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
 
     // Opening Database -------------------------------------------------------------------------------------------------
-    private void openReadableDB() { db = dbHelper.getReadableDatabase(); }
-    private void openWriteableDB() { db = dbHelper.getWritableDatabase(); }
+    private void openReadableDB() {
+        try{
+            db = dbHelper.getReadableDatabase();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "openReadableDB method Exception: " + e.getMessage());
+        }
+    }
+
+    private void openWriteableDB() {
+        try{
+            db = dbHelper.getWritableDatabase();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "openWriteableDB method Exception: " + e.getMessage());
+        }
+    }
+
     private void closeDB() {
         if (db != null) {
             db.close();
@@ -93,9 +111,17 @@ public class AccountDB {
      *===========================================================================================================================*/
     public long getAccountRowCount()
     {
-        this.openReadableDB();
-        long numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM account" , null);
-        this.closeDB();
+        long numRows = 0;
+
+        try{
+            this.openReadableDB();
+            numRows = (long) DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM account" , null);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "getAccountRowCount method Exception: " + e.getMessage());
+        }
+
         return numRows;
     }
 
@@ -107,14 +133,22 @@ public class AccountDB {
      * Returns	: long
      *===========================================================================================================================*/
     public long insertAccount(Account account) {
-        ContentValues cv = new ContentValues();
-        cv.put(ACCOUNT_ID, getAccountRowCount() + 1);
-        cv.put(ACCOUNT_NAME, account.getName());
-        cv.put(ACCOUNT_PHONE, account.getPhoneNumber());
 
-        this.openWriteableDB();
-        long rowID = db.insert(ACCOUNT_TABLE, null, cv);
-        this.closeDB();
+        ContentValues cv = new ContentValues();
+        long rowID = 0;
+
+        try{
+            cv.put(ACCOUNT_ID, getAccountRowCount() + 1);
+            cv.put(ACCOUNT_NAME, account.getName());
+            cv.put(ACCOUNT_PHONE, account.getPhoneNumber());
+
+            this.openWriteableDB();
+            rowID = db.insert(ACCOUNT_TABLE, null, cv);
+            this.closeDB();
+        }
+        catch(Exception e){
+            Log.e(LOGTAG, "insertAccount method Exception: " + e.getMessage());
+        }
         return rowID;
     }
 

@@ -1,3 +1,9 @@
+//* FILE			: AddCustomer.java
+//* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #3
+//* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
+//* FIRST VERSON	: April 17, 2020
+//* DESCRIPTION		: The file defines widgets for getting trip info
+
 package com.example.egoapp;
 
 import android.Manifest;
@@ -33,6 +39,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddCustomer extends AppCompatActivity {
+
+    //define Logger Class
+    private static final String LOGTAG = "AddCustomer.class";
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS=1;
     TextView contactList;
