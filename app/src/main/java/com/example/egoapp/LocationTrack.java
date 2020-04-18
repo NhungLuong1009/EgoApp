@@ -1,8 +1,8 @@
-//* FILE			: SampleWidgets.java
+//* FILE			: LocationTrack.java
 //* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #3
 //* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
 //* FIRST VERSON	: April 17, 2020
-//* DESCRIPTION		: The file defines widgets for getting trip info
+//* DESCRIPTION		: The file defines the function operation for MAPS
 package com.example.egoapp;
 
 import android.Manifest;

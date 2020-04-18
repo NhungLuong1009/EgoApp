@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/orderID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/orderID"
-        android:textSize="15sp" />
+        android:textSize="15sp" />-->
 
     <TextView
         android:id="@+id/tripFrom"
@@ -38,7 +38,7 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/price"
+        android:id="@+id/priceTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tripTo"

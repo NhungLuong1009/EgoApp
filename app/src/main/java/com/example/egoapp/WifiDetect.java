@@ -74,7 +74,12 @@ public class WifiDetect extends AppCompatActivity {
     }
 
 
-
+    /*
+            Function: onStart
+            Description: to get the contact from system database and show on textview
+            Input:
+            Return: void
+     */
     protected void onStart(){
         Log.i(LOGTAG, "Display WifiDetect start()...");
         super.onStart();
@@ -82,6 +87,12 @@ public class WifiDetect extends AppCompatActivity {
         registerReceiver( wifiStateReceiver, intentFilter );
     }
 
+    /*
+            Function: onStop
+            Description: to get the contact from system database and show on textview
+            Input:
+            Return: void
+     */
     @Override
     protected void onStop() {
         Log.i(LOGTAG, "Display WifiDetect stop()...");

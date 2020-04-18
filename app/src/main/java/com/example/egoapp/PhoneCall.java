@@ -67,6 +67,12 @@ public class PhoneCall extends AppCompatActivity {
         });
     }
 
+    /*
+        Function: makeACall
+        Description: to establish a call
+        Input:
+        Return: void
+     */
     public void makeACall() {
         //----------------------when the call button is pressed-----------------------------
         final int REQUEST_PHONE_CALL = 1;

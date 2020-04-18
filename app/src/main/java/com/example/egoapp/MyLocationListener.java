@@ -1,8 +1,8 @@
-//* FILE			: SampleWidgets.java
+//* FILE			: MyLocationListener.java
 //* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #3
 //* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
 //* FIRST VERSON	: April 17, 2020
-//* DESCRIPTION		: The file defines widgets for getting trip info
+//* DESCRIPTION		: The file defines Listener for Map operator
 
 package com.example.egoapp;
 

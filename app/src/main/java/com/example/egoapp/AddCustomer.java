@@ -2,7 +2,7 @@
 //* PROJECT			: SENG2040-20W-Mobile Application Development - Assignment #3
 //* PROGRAMMER		: Nhung Luong, Younchul Choi, Trung Nguyen, Abdullar
 //* FIRST VERSON	: April 17, 2020
-//* DESCRIPTION		: The file defines widgets for getting trip info
+//* DESCRIPTION		: The file defines Add Customer Activity screen
 
 package com.example.egoapp;
 
@@ -58,18 +58,22 @@ public class AddCustomer extends AppCompatActivity {
         Button retrieveBtn = (Button) findViewById(R.id.retrieveCusBtn);
         Button addBtn = (Button) findViewById(R.id.addCusBtn);
 
+        // Retrieve Button Trigger
         retrieveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Asking for granted READ_CONTACT permission
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                         && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
                 } else {
+                    // Load the contact
                     fetchContacts();
                 }
             }
         });
 
+        // Add Button Trigger
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,6 +109,12 @@ public class AddCustomer extends AppCompatActivity {
 
     }
 
+    /*
+        Function: writeContact
+        Description: to get the name and phone number and append them into contact system database
+        Input: name- String, number - String
+        Return: void
+     */
     public void writeContact(String displayName, String number) {
         ArrayList contentProviderOperations = new ArrayList();
         //insert raw contact using RawContacts.CONTENT_URI
@@ -128,6 +138,12 @@ public class AddCustomer extends AppCompatActivity {
         }
     }
 
+    /*
+        Function: onRequestPermissionsResult
+        Description: to get the permission result for granted
+        Input: requestCode,permission, grantResults
+        Return: void
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -144,6 +160,12 @@ public class AddCustomer extends AppCompatActivity {
         }
     }
 
+    /*
+        Function: fetchContacts
+        Description: to get the contact from system database and show on textview
+        Input:
+        Return: void
+     */
     public void fetchContacts() {
         String phoneNumber = null;
         String email = null;
